@@ -1,7 +1,0 @@
-{
-  "name": "Watec-Systems",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}

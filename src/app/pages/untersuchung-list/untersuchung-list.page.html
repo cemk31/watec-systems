@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Untersuchungsliste</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngIf="response">
+    <ion-item *ngFor="let address of response">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>Adresse</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-label>
+            <ion-icon name="home"></ion-icon>
+            <h2>{{ address.strasse }},{{ address.hausnummer }}</h2>
+          </ion-label>
+          <ion-label>
+            <ion-icon name="pin"></ion-icon>
+            <h2>{{ address.plz }} {{ address.ort }}</h2>
+          </ion-label>
+          <ion-label>
+            <ion-icon name="globe"></ion-icon>
+            <h2>{{ address.land }}</h2>
+          </ion-label>
+        </ion-card-content>
+      </ion-card>
+    </ion-item>
+  </ion-list>
+  <ion-text *ngIf="!response" color="danger">
+    Keine Daten verfügbar
+  </ion-text>
+</ion-content>

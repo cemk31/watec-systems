@@ -1,0 +1,114 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      <h1>Trinkwasseruntersuchung</h1>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      <h2>Allgemein</h2>
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label position="stacked">Unternehmensname</ion-label>
+      <ion-input type="text" [(ngModel)]="companyName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Anschrift</ion-label>
+      <ion-input type="text" [(ngModel)]="address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">E-Mail</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Techniker</ion-label>
+      <ion-input type="text" [(ngModel)]="technician"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Besichtigungsdatum</ion-label>
+      <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="inspectionDate"></ion-datetime>
+    </ion-item>
+
+    <ion-list-header>
+      Objekt
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label position="stacked">Strasse</ion-label>
+      <ion-input type="text" [(ngModel)]="street"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Hausnummer</ion-label>
+      <ion-input type="text" [(ngModel)]="houseNumber"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">PLZ</ion-label>
+      <ion-input type="text" [(ngModel)]="zipCode"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Ort</ion-label>
+      <ion-input type="text" [(ngModel)]="city"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Versorgungsart</ion-label>
+      <ion-select [(ngModel)]="supplyType">
+        <ion-select-option value="central">Zentral</ion-select-option>
+        <ion-select-option value="decentral">Dezentral</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Art der Anlage</ion-label>
+      <ion-select [(ngModel)]="systemType">
+        <ion-select-option value="small">Kleinanlage</ion-select-option>
+        <ion-select-option value="large">Großanlage</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Öffentliche Nutzung</ion-label>
+      <ion-select [(ngModel)]="publicUsage">
+        <ion-select-option value="yes">Ja</ion-select-option>
+        <ion-select-option value="no">Nein</ion-select-option>
+      </ion-select>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Anzahl WE / GE</ion-label>
+      <ion-input type="number" [(ngModel)]="numberOfWE_GE"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Objektnutzung</ion-label>
+      <ion-input type="text" [(ngModel)]="objectUsage"></ion-input>
+    </ion-item>
+    
+    <ion-item>
+      <ion-label position="stacked">Zutritt zum Objekt</ion-label>
+      <ion-input type="text" [(ngModel)]="accessToObject"></ion-input>
+    </ion-item>
+      </ion-list>
+    
+      <ion-row>
+        <ion-col>
+          <ion-button expand="block" (click)="save()">Speichern</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="cancel()">Abbrechen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="block" (click)="reset()">Zurücksetzen</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-content>

@@ -1,0 +1,8 @@
+{
+  "name": "watec-systems",
+  "integrations": {
+    "cordova": {},
+    "capacitor": {}
+  },
+  "type": "angular"
+}
