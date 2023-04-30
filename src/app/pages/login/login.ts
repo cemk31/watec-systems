@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Location } from '@angular/common';
+import { AppComponent } from '../../app.component';
 
 
 
@@ -13,25 +16,62 @@ import { UserOptions } from '../../interfaces/user-options';
   templateUrl: 'login.html',
   styleUrls: ['./login.scss'],
 })
-export class LoginPage {
-  login: UserOptions = { username: '', password: '' };
-  submitted = false;
-
-  constructor(
-    public userData: UserData,
-    public router: Router
-  ) { }
-
-  onLogin(form: NgForm) {
-    this.submitted = true;
-
-    if (form.valid) {
-      this.userData.login(this.login.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+export class LoginPage implements OnInit {
+  showLoggedInWarning = false;
+  showLoggedOutMessage = false;
+  ngOnInit(): void {
+    if(sessionStorage.getItem("loggedOut")) {
+      this.showLoggedOutMessage = true;
+      this.showLoggedInWarning = false;
+      sessionStorage.removeItem("loggedOut");
+    }
+    if (sessionStorage.getItem("access_token")) {
+      this.showLoggedInWarning = true;
     }
   }
 
-  onSignup() {
-    this.router.navigateByUrl('/signup');
+  login: UserOptions = {
+    email: '', password: '',
+    token: '',
+    firstName: '',
+    lastName: ''
+  };
+  submitted = false;
+  // email: string;
+  // password: any;
+  showSuccessMessage = false;
+  token: any;
+
+  constructor(
+    public userData: UserData,
+    public router: Router,
+    private http: HttpClient,
+    private appComponent: AppComponent
+  ) { }
+
+  onLogin(loginForm: NgForm) {
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const email = this.login.email;
+    const password = this.login.password;
+    const body = {
+      email,
+      password
+    };
+
+    this.http.post<Response>('http://localhost:3000/auth/signin', body, { headers })
+      .subscribe(response => {
+        sessionStorage.setItem("access_token", response.access_token);
+        this.showSuccessMessage = true;
+        localStorage.setItem("loggedInMessage", "true");
+        this.appComponent.loggedIn = true;
+        this.router.navigate(['/app/tabs/about']);
+      });
   }
+
+
+}
+export interface AuthResponse {
+  access_token: string;
 }

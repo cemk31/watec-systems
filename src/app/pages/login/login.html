@@ -10,34 +10,58 @@
 
 <ion-content>
   <div class="login-logo">
-    <img src="assets/img/appicon.svg" alt="Ionic logo">
+    <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
   </div>
 
-  <form #loginForm="ngForm" novalidate>
+
+  <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
+    <ion-toolbar color="success">
+      <ion-title >Login successful!</ion-title>
+      <ion-title >{{token}}</ion-title>
+    </ion-toolbar>
+  </div>
+  <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
+    <ion-toolbar color="warning">
+      <ion-title >Sie sind schon eingeloggt!</ion-title>
+    </ion-toolbar>
+  </div>
+  <div *ngIf="showLoggedOutMessage" style="background-color: green; text-align: center; color: white;">
+    <ion-toolbar color="success">
+      <ion-title >Erfolgreich ausgeloggt!</ion-title>
+    </ion-toolbar>
+  </div>
+
+  <ion-toolbar color="warning">
+    <ion-title >Test-User</ion-title>
+    <ion-title>cem31@test.de</ion-title>
+    <ion-title>1234</ion-title>
+
+  </ion-toolbar>
+
+  <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate>
     <ion-list>
-      <ion-item>
-        <ion-label position="stacked" color="primary">Username</ion-label>
-        <ion-input [(ngModel)]="login.username" name="username" type="text" #username="ngModel" spellcheck="false" autocapitalize="off"
-          required>
+      <ion-item value="cem31@test.de">
+        <ion-label position="stacked" color="primary">E-Mail</ion-label>
+        <ion-input  [(ngModel)]="login.email" name="email" type="email" #email="ngModel" spellcheck="false" autocapitalize="off" required >
         </ion-input>
       </ion-item>
 
       <ion-text color="danger">
-        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-          Username is required
-        </p>
+        <!-- <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
+          email is required
+        </p> -->
       </ion-text>
 
-      <ion-item>
-        <ion-label position="stacked" color="primary">Password</ion-label>
+      <ion-item value="1234">
+        <ion-label position="stacked" color="primary">Passwort</ion-label>
         <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
         </ion-input>
       </ion-item>
 
       <ion-text color="danger">
-        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
+        <!-- <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
           Password is required
-        </p>
+        </p> -->
       </ion-text>
     </ion-list>
 
@@ -46,7 +70,7 @@
         <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button (click)="onSignup()" color="light" expand="block">Signup</ion-button>
+        <ion-button (click)="onSignup()" color="light" expand="block">Registrieren</ion-button>
       </ion-col>
     </ion-row>
   </form>

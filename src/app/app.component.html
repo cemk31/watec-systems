@@ -6,9 +6,24 @@
       <ion-content>
         <ion-list lines="none">
           <ion-list-header>
-            SILA YOLUM
+            WATEC ADMIN PANEL
           </ion-list-header>
-          <ion-menu-toggle autoHide="false" *ngFor="let p of appPages; let i = index">
+          <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let i = index">
+            <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
+              <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
+              <ion-label>
+                {{a.title}}
+              </ion-label>
+            </ion-item>
+
+          </ion-menu-toggle>
+        </ion-list>
+
+        <ion-list lines="none">
+          <ion-list-header>
+            Account
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false" *ngFor="let p of personalPages; let i = index">
             <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
               <ion-label>
@@ -16,73 +31,6 @@
               </ion-label>
             </ion-item>
 
-          </ion-menu-toggle>
-        </ion-list>
-
-        <ion-list *ngIf="loggedIn" lines="none">
-          <ion-list-header>
-            Account
-          </ion-list-header>
-
-          <ion-menu-toggle autoHide="true">
-            <ion-item routerLink="/account" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="person"></ion-icon>
-              <ion-label>
-                Account
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="help"></ion-icon>
-              <ion-label>
-                Support
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item button (click)="logout()" detail="false">
-              <ion-icon slot="start" name="log-out"></ion-icon>
-              <ion-label>
-                Logout
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-        </ion-list>
-
-        <ion-list *ngIf="!loggedIn" lines="none">
-          <ion-list-header>
-            Account
-          </ion-list-header>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/login" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="log-in"></ion-icon>
-              <ion-label>
-                Login
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/support" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="help"></ion-icon>
-              <ion-label>
-                Support
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-
-          <ion-menu-toggle autoHide="false">
-            <ion-item routerLink="/signup" routerLinkActive="active" routerDirection="root" detail="false">
-              <ion-icon slot="start" name="person-add"></ion-icon>
-              <ion-label>
-                Signup
-              </ion-label>
-            </ion-item>
           </ion-menu-toggle>
 
           <ion-item>

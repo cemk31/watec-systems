@@ -1,0 +1,75 @@
+<ion-content>
+  <div class="content">
+    <h2>Einstellungen</h2>
+    <p>Auf dieser Seite können Sie Ihre persönlichen Daten wie Ihre E-Mail-Adresse, Ihren Vor- und Nachnamen und Ihr Passwort verwalten und aktualisieren. </p>
+  </div>
+
+  <ion-row>
+    <ion-col>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-icon name="pencil"></ion-icon>
+          <ion-button color="accent" (click)="edit()">bearbeiten</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+      <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
+        <ion-toolbar class="success-message" color="success">
+            <p style="padding: 10px;">Änderungen erfolgreich gesichert!</p>
+        </ion-toolbar>
+      </div>
+      <ion-card>
+        <form (ngSubmit)="editUser(firstName, lastName)">
+          <ion-item>
+            <ion-label position="floating">Erstellt am</ion-label>
+            <ion-input disabled [value]="user.createdAt"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Zuletzt aktualisiert am</ion-label>
+            <ion-input disabled [value]="user.updatedAt"></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">
+              <ion-icon name="mail"></ion-icon>
+              {{user.email}}
+            </ion-label>
+            <ion-input disabled></ion-input>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Vorname</ion-label>
+            <ion-textarea name="firstName" [(ngModel)]="firstName" [disabled]="!editMode" placeholder="{{user.firstName}}" value="{{user.firstName}}"></ion-textarea>
+          </ion-item>
+          <ion-item>
+            <ion-label position="floating">Nachname</ion-label>
+            <ion-textarea name="lastName" [(ngModel)]="lastName" [disabled]="!editMode" placeholder="{{user.lastName}}" value="{{user.lastName}}"></ion-textarea>
+          </ion-item>
+          <div *ngIf="showEditButtons">
+            <ion-button expand="block" type="submit" color="primary">speichern</ion-button>
+            <ion-button expand="block" color="secondary" (click)="onCancelClick()">abbrechen</ion-button>
+          </div>
+        </form>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <!-- <div>
+        <h3>Passwort zurücksetzen</h3>
+        <span class="reset-password-button">
+            <form onsubmit="resetPassword()">
+              <ion-item>
+                <ion-label position="floating">Altes Passwort</ion-label>
+                <ion-input type="password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Neues Passwort</ion-label>
+                <ion-input type="password"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Neues Passwort wiederholen</ion-label>
+                <ion-input type="password"></ion-input>
+              </ion-item>
+            </form>
+            <ion-button expand="block" color="primary">Passwort zurücksetzen</ion-button>
+          </span>
+      </div> -->
+    </ion-col>
+  </ion-row>
+</ion-content>

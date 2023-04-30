@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 import { PopoverController } from '@ionic/angular';
 
@@ -9,7 +9,8 @@ import { PopoverPage } from '../about-popover/about-popover';
   templateUrl: 'about.html',
   styleUrls: ['./about.scss'],
 })
-export class AboutPage {
+export class AboutPage implements OnInit {
+  loggedInMessage = false;
   location = 'madison';
   conferenceDate = '2047-05-17';
 
@@ -66,6 +67,12 @@ export class AboutPage {
   ];
 
   constructor(public popoverCtrl: PopoverController) { }
+  ngOnInit(): void {
+    if(localStorage.getItem("loggedInMessage") === 'true') {
+      localStorage.removeItem("loggedInMessage");
+      this.loggedInMessage = true;
+    }
+  }
 
   async presentPopover(event: Event) {
     const popover = await this.popoverCtrl.create({

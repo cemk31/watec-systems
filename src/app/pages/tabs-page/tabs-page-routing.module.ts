@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs-page';
-import { SchedulePage } from '../schedule/schedule';
 
 
 const routes: Routes = [
@@ -9,19 +8,6 @@ const routes: Routes = [
     path: 'tabs',
     component: TabsPage,
     children: [
-      {
-        path: 'schedule',
-        children: [
-          {
-            path: '',
-            component: SchedulePage,
-          },
-          {
-            path: 'session/:sessionId',
-            loadChildren: () => import('../session-detail/session-detail.module').then(m => m.SessionDetailModule)
-          }
-        ]
-      },
       {
         path: 'speakers',
         children: [
@@ -58,15 +44,6 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'dashboard',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../dashboard/dashboard.module').then(m => m.DashboardModule)
-          }
-        ]
-      },
-      {
         path: 'trinkwasseruntersuchung',
         children: [
           {
@@ -85,8 +62,35 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'personal-settings',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../personal-settings/personal-settings.module').then(m => m.PersonalSettingsPageModule)
+          }
+        ]
+      },
+      {
+        path: 'home',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../home/home.module').then(m => m.HomePageModule)
+          }
+        ]
+      },
+      {
+        path: 'customer',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../customer/customer.module').then(m => m.CustomerPageModule)
+          }
+        ]
+      },
+      {
         path: '',
-        redirectTo: '/app/tabs/schedule',
+        redirectTo: '/app/tabs/home',
         pathMatch: 'full'
       }
     ]

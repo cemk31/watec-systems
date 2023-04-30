@@ -40,7 +40,19 @@ const routes: Routes = [
   {
     path: 'untersuchung-list',
     loadChildren: () => import('./pages/untersuchung-list/untersuchung-list.module').then( m => m.UntersuchungListPageModule)
-  }
+  },
+  {
+    path: 'personal-settings',
+    loadChildren: () => import('./pages/personal-settings/personal-settings.module').then( m => m.PersonalSettingsPageModule)
+  },
+  {
+    path: 'home',
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'customer',
+    loadChildren: () => import('./pages/customer/customer.module').then( m => m.CustomerPageModule)
+  },
 ];
 
 @NgModule({

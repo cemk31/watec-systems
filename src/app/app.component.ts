@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
+import { LoginPage } from './pages/login/login';
 
 @Component({
   selector: 'app-root',
@@ -20,34 +21,36 @@ import { UserData } from './providers/user-data';
 export class AppComponent implements OnInit {
   appPages = [
     {
+      title: 'Home',
+      url: '/app/tabs/home',
+      icon: 'home'
+    },
+    {
       title: 'Informationen',
       url: '/app/tabs/about',
       icon: 'information-circle'
     },
     {
-      title: 'Live-Kamera',
-      url: '/app/tabs/schedule',
-      icon: 'camera'
-    },
-    {
-      title: 'Speakers',
-      url: '/app/tabs/speakers',
-      icon: 'clipboard'
-    },
-    {
-      title: 'Dashboard',
-      url: '/app/tabs/dashboard',
-      icon: 'map'
-    },
-    {
-      title: 'Trinkwasseruntersuchung',
+      title: 'Trinkwasseruntersuchung anlegen',
       url: '/app/tabs/trinkwasseruntersuchung',
-      icon: 'map'
+      icon: 'water'
     },
     {
       title: 'Untersuchungen',
       url: '/app/tabs/untersuchung-list',
       icon: 'map'
+    },
+    {
+      title: 'Kunden',
+      url: '/app/tabs/customer',
+      icon: 'person'
+    },
+  ];
+  personalPages = [
+    {
+      title: 'Einstellungen',
+      url: '/app/tabs/personal-settings',
+      icon: 'settings'
     }
   ];
   loggedIn = false;
@@ -62,12 +65,17 @@ export class AppComponent implements OnInit {
     private storage: Storage,
     private userData: UserData,
     private swUpdate: SwUpdate,
-    private toastCtrl: ToastController,
+    private toastCtrl: ToastController
   ) {
     this.initializeApp();
   }
 
   async ngOnInit() {
+    if (!sessionStorage.getItem("access_token")) {
+      this.router.navigateByUrl("login");
+    } else {
+      this.loggedIn = true;
+    }
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
@@ -126,9 +134,11 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/about');
-    });
+    // sessionStorage.clear();
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("loggedIn");
+    sessionStorage.setItem("loggedOut", "true");
+    this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
   openTutorial() {

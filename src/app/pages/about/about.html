@@ -12,6 +12,12 @@
     </ion-toolbar>
   </ion-header>
 
+  <div *ngIf="loggedInMessage" style="background-color: green; text-align: center; color: white;">
+    <ion-toolbar color="success">
+      <ion-title >Login successful!</ion-title>
+    </ion-toolbar>
+  </div>
+
   <div class="about-header">
     <!-- Instead of loading an image each time the select changes, use opacity to transition them -->
     <div class="about-image madison" [ngStyle]="location === 'madison' && {'opacity': '1'}"></div>
@@ -20,48 +26,66 @@
     <div class="about-image seattle" [ngStyle]="location === 'seattle' && {'opacity': '1'}"></div>
   </div>
 
-  <div class="about-info">
-    <h3 class="ion-padding-top ion-padding-start">Informationen</h3>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <h1>20</h1>
+        <ion-card-header>
+          <ion-card-title>Anzahl Trinkwasseruntersuchungen</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <h1>20</h1>
+        <ion-card-header>
+          <ion-card-title>Anzahl Kunden</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col color="primary">
+      <ion-card >
+        <ion-button fill="outline">Anlegen</ion-button>
+        <ion-button fill="solid">Suche</ion-button>
+        <ion-card-header color="primary">
+          <ion-card-title>Trinkwasseruntersuchungen</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-content color="secondary">
+            Here's a small text description for the card content. Nothing more, nothing less.
+          </ion-card-content>
+        </ion-card-header>
+        <ion-card-header color="tertiary">
+          <ion-card-title>Trinkwasseruntersuchungen</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+          <ion-card-content color="secondary">
+            Here's a small text description for the card content. Nothing more, nothing less.
+          </ion-card-content>
+        </ion-card-header>
 
-    <p class="ion-padding-start ion-padding-end">
-      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-    </p>
-
-    <h3 class="ion-padding-top ion-padding-start">Schnellrouten</h3>
-
-    <ion-list lines="none" *ngFor="let routes of routes; let i = index">
-      <ion-item>
-        <ion-button color="success" href="{{routes.href}}">Route</ion-button>
-        <ion-label>
-          {{routes.location}}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-
-    <h3 class="ion-padding-top ion-padding-start">Länder mit Vignetten</h3>
-
-    <ion-list lines="none" *ngFor="let route of routes; let i = index">
-      <ion-item>
-        <ion-thumbnail slot="start">
-          <img alt="Silhouette of mountains" src="{{route.flagImage}}" />
-        </ion-thumbnail>
-        <ion-label>
-          {{route.country}}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-
-    <h3 class="ion-padding-top ion-padding-start">Länder mit Maut</h3>
-
-    <ion-list lines="none" *ngFor="let route of routes; let i = index">
-      <ion-item *ngIf="route.maut">
-        <ion-thumbnail slot="start">
-          <img alt="Silhouette of mountains" src="{{route.flagImage}}" />
-        </ion-thumbnail>
-        <ion-label>
-          {{route.country}}
-        </ion-label>
-      </ion-item>
-    </ion-list>
-  </div>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+        <ion-card-header>
+          <ion-card-title>Kunden</ion-card-title>
+          <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+ 
 </ion-content>
