@@ -62,7 +62,7 @@ export class LoginPage implements OnInit {
 
     this.http.post<Response>('http://localhost:3000/auth/signin', body, { headers })
       .subscribe(response => {
-        sessionStorage.setItem("access_token", response.access_token);
+        sessionStorage.setItem("access_token", "response.access_token");
         this.showSuccessMessage = true;
         localStorage.setItem("loggedInMessage", "true");
         this.appComponent.loggedIn = true;
