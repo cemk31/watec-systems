@@ -11,8 +11,9 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
+import { AuftragPage } from './pages/auftrag/auftrag.page';
 
 @NgModule({
   imports: [
@@ -24,10 +25,12 @@ import { CustomerPipe } from './pages/customer.pipe';
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
-    })
+    }),
+    ReactiveFormsModule
   ],
   declarations: [AppComponent, CustomerPipe],
   providers: [InAppBrowser, SplashScreen, StatusBar],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [ReactiveFormsModule]
 })
 export class AppModule {}

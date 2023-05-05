@@ -80,6 +80,25 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'auftrag',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../auftrag/auftrag.module').then(m => m.AuftragPageModule)
+          }
+        ]
+      },
+
+      {
+        path: 'auftrage',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../auftrage/auftrage.module').then(m => m.AuftragePageModule)
+          }
+        ]
+      },
+      {
         path: 'customer',
         children: [
           {

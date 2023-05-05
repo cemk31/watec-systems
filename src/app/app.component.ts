@@ -45,13 +45,23 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/customer',
       icon: 'person'
     },
+    {
+      title: 'Auftrag anlegen',
+      url: '/app/tabs/auftrag',
+      icon: 'person'
+    },
+    {
+      title: 'Aufträge',
+      url: '/app/tabs/auftrage',
+      icon: 'person'
+    },
   ];
   personalPages = [
     {
       title: 'Einstellungen',
       url: '/app/tabs/personal-settings',
       icon: 'settings'
-    }
+    },
   ];
   loggedIn = false;
   dark = true;
