@@ -27,7 +27,7 @@
     "@angular/pwa": "^0.803.23",
     "@angular/router": "^8.2.14",
     "@angular/service-worker": "^8.2.14",
-      "@awesome-cordova-plugins/video-player": "^5.45.0",
+    "@awesome-cordova-plugins/video-player": "^5.45.0",
     "@capacitor/app": "4.0.1",
     "@capacitor/core": "4.3.0",
     "@capacitor/haptics": "4.0.1",
