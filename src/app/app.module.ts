@@ -13,7 +13,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
-import { AuftragPage } from './pages/auftrag/auftrag.page';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   imports: [
@@ -29,7 +29,7 @@ import { AuftragPage } from './pages/auftrag/auftrag.page';
     ReactiveFormsModule
   ],
   declarations: [AppComponent, CustomerPipe],
-  providers: [InAppBrowser, SplashScreen, StatusBar],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
   bootstrap: [AppComponent],
   exports: [ReactiveFormsModule]
 })

@@ -55,6 +55,11 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/auftrage',
       icon: 'person'
     },
+    {
+      title: 'Auftrag Detail',
+      url: '/app/tabs/auftrag-detail',
+      icon: 'person'
+    },
   ];
   personalPages = [
     {

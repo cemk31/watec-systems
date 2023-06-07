@@ -6,8 +6,8 @@ import { UserData } from '../../providers/user-data';
 
 import { UserOptions } from '../../interfaces/user-options';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Location } from '@angular/common';
 import { AppComponent } from '../../app.component';
+import { AuthService } from '../../auth/auth.service';
 
 
 
@@ -46,8 +46,9 @@ export class LoginPage implements OnInit {
     public userData: UserData,
     public router: Router,
     private http: HttpClient,
-    private appComponent: AppComponent
-  ) { }
+    private appComponent: AppComponent,
+    private authService: AuthService,
+  ) {}
 
   onLogin(loginForm: NgForm) {
     const headers = new HttpHeaders({
@@ -62,7 +63,7 @@ export class LoginPage implements OnInit {
 
     this.http.post<Response>('http://localhost:3000/auth/signin', body, { headers })
       .subscribe(response => {
-        sessionStorage.setItem("access_token", response['access_token']);
+        this.authService.login(response['access_token'], response['userId'])
         this.showSuccessMessage = true;
         localStorage.setItem("loggedInMessage", "true");
         this.appComponent.loggedIn = true;

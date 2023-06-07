@@ -88,13 +88,22 @@ const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'auftrage',
         children: [
           {
             path: '',
             loadChildren: () => import('../auftrage/auftrage.module').then(m => m.AuftragePageModule)
+          }
+        ]
+      },
+
+      {
+        path: 'auftrag-detail',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../auftrag-detail/auftrag-detail.module').then(m => m.AuftragDetailPageModule)
           }
         ]
       },

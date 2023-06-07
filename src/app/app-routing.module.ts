@@ -61,6 +61,10 @@ const routes: Routes = [
     path: 'auftrage',
     loadChildren: () => import('./pages/auftrage/auftrage.module').then(m => m.AuftragePageModule)
   },
+  {
+    path: 'auftrag-detail',
+    loadChildren: () => import('./pages/auftrag-detail/auftrag-detail.module').then(m => m.AuftragDetailPageModule)
+  },
 ];
 
 @NgModule({

@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from '../../auth/auth.service';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 @Component({
   selector: 'app-auftrag',
@@ -9,6 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class AuftragPage implements OnInit {
 
+  exceptionMessage = null;
 
   auftragForm = new FormGroup({
     done: new FormControl(false),
@@ -122,7 +126,7 @@ export class AuftragPage implements OnInit {
 
   auftraege = []; // Replace this with your actual data source
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient ) {
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService : AuthService ) {
     this.createForm();
   }
   createForm() {
@@ -132,9 +136,18 @@ export class AuftragPage implements OnInit {
   ngOnInit() {}
 
   onSubmit(auftragForm: NgForm) {
-
     console.log(auftragForm.value);
-    const body = auftragForm.value;
+    
+    // Convert uhrzeit and datumAushang to Date instances
+    const uhrzeit = new Date(this.auftragForm.controls["uhrzeit"].value);
+    const datumAushang = new Date(this.auftragForm.controls["datumAushang"].value);
+
+    const body = {
+      ...this.auftragForm.value,
+      uhrzeit: uhrzeit.toISOString(),
+      datumAushang: datumAushang.toISOString(),
+    };
+
     const bodyTest = this.example;
 
     const domain = "http://localhost:3000/"
@@ -148,35 +161,16 @@ export class AuftragPage implements OnInit {
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
-    this.http.post<Response>(url, this.example, { headers })
+    this.http.post<Response>(url, body, { headers })
+    .pipe(
+      catchError((error) => {
+        this.exceptionMessage = error.error.message;
+        return throwError(error);
+      })
+    )
     .subscribe(response => {
       console.log(response);
     });
-
-    // if (auftragForm.valid) {
-    //   console.log(auftragForm.value);
-    //   const body = auftragForm.value;
-    //   const bodyTest = this.example;
-
-    //   const domain = "http://localhost:3000/"
-    //   const path =  + 'auftrag'
-    //   const url = "http://localhost:3000/auftrag";
-
-    //   //set token
-    //   const accessToken = sessionStorage.getItem("access_token");
-    //   const authorization = accessToken ? "Bearer " + accessToken : null;
-    //   let headers = new HttpHeaders();
-    //   if (accessToken) {
-    //     headers = headers.append('Authorization', "Bearer " + accessToken);
-    //   }
-    //   this.http.post<Response>(url, this.example, { headers })
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   });
-    //   // Hier können Sie Ihre Formulardaten verarbeiten und an einen Server senden oder eine andere Aktion ausführen
-    // } else {
-    //   console.log('Formular ist ungültig');
-    // }
   }
 
   createAuftrag() {

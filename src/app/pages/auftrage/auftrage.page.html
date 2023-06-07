@@ -1,9 +1,33 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>auftrage</ion-title>
+    <ion-title>Aufträge</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="exportToPDF()">Export to PDF</ion-button>
+      <ion-button (click)="exportToExcel()">Export to Excel</ion-button>
+      <ion-button (click)="print()">Print</ion-button>
+    </ion-buttons>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionInput)="search($event.target.value)"></ion-searchbar>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-button (click)="exportToPDF()">Neu</ion-button>
+    <ion-button (click)="exportToExcel()">QuickEdit</ion-button>
+    <ion-button color="danger" (click)="print()">Löschen</ion-button>  </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let key of keysToDisplay">
+        <strong>{{key}}</strong>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngFor="let item of data">
+      <ion-col *ngFor="let key of keysToDisplay">
+        {{item[key]}}
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
+

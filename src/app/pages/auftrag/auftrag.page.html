@@ -1,6 +1,9 @@
-<ion-header>
-  <ion-toolbar>
+<ion-header color="primary">
+  <ion-toolbar >
     <ion-title>Auftrag anlegen</ion-title>
+  </ion-toolbar>
+  <ion-toolbar color="danger" *ngIf="exceptionMessage">
+    <p>{{exceptionMessage}}</p>
   </ion-toolbar>
 </ion-header>
 <ion-content>
