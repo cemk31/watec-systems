@@ -100,8 +100,5 @@
       "cordova-plugin-statusbar": {},
       "cordova-plugin-ionic-keyboard": {}
     }
-  },
-  "engines": {
-    "node": "18.x"
   }
 }
