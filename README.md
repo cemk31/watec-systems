@@ -17,3 +17,4 @@ To get started with Ionic Angular deployed with Vercel, you can use the [Ionic C
 ```shell
 $ npx @ionic/cli start [project-name] conference --type angular && cd [project-name]
 ```
+# watec-systems
