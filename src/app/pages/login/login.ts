@@ -8,6 +8,7 @@ import { UserOptions } from '../../interfaces/user-options';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppComponent } from '../../app.component';
 import { AuthService } from '../../auth/auth.service';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -47,7 +48,7 @@ export class LoginPage implements OnInit {
     public router: Router,
     private http: HttpClient,
     private appComponent: AppComponent,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   onLogin(loginForm: NgForm) {
@@ -61,7 +62,7 @@ export class LoginPage implements OnInit {
       password
     };
 
-    this.http.post<Response>('http://localhost:3000/auth/signin', body, { headers })
+    this.http.post<Response>(environment.backend + environment.url.login, body, { headers })
       .subscribe(response => {
         this.authService.login(response['access_token'], response['userId'])
         this.showSuccessMessage = true;
