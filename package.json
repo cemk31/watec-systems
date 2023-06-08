@@ -86,6 +86,9 @@
     "tslint": "^5.20.1",
     "typescript": "~3.5.3"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "cordova": {
     "platforms": [
       "ios",
