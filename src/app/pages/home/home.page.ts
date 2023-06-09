@@ -16,4 +16,10 @@ export class HomePage implements OnInit {
     }
   }
 
+  showDetails = false;
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
+
 }

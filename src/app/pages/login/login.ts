@@ -18,6 +18,7 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./login.scss'],
 })
 export class LoginPage implements OnInit {
+  isUserLoggedIn: boolean = false;
   showLoggedInWarning = false;
   showLoggedOutMessage = false;
   ngOnInit(): void {
@@ -67,8 +68,9 @@ export class LoginPage implements OnInit {
         this.authService.login(response['access_token'], response['userId'])
         this.showSuccessMessage = true;
         localStorage.setItem("loggedInMessage", "true");
-        this.appComponent.loggedIn = true;
+        localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
         this.router.navigate(['/app/tabs/about']);
+        window.location.reload();
       });
   }
 

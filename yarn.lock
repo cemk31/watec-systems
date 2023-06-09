@@ -3205,6 +3205,7 @@
   "version" "2.4.3"
 
 "cordova-plugin-video-player@github:moust/cordova-plugin-videoplayer":
+  "integrity" "sha512-1JvZoAfg1Mv9x0+0JlFFC2du9jeX4j3VFYlewaTk88fhLagfSgxJiK+b0wZa/glkVIzcGc3MuppDMgKD/WAgUA=="
   "resolved" "git+ssh://git@github.com/moust/cordova-plugin-videoplayer.git#bfbd5ff21411e5997e7c9f734841e2089ba361ed"
   "version" "1.0.1"
 

@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Kunde anlegen</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)">
+        <ion-item>
+          <ion-label>Vorname:</ion-label>
+          <ion-input name="firstName" type="text" [(ngModel)]="customerForm.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Nachname:</ion-label>
+          <ion-input name="lastName" type="text" [(ngModel)]="customerForm.lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input name="email" type="email" [(ngModel)]="customerForm.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Phone:</ion-label>
+          <ion-input name="phoneNumber" type="text" [(ngModel)]="customerForm.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit" [disabled]="!customerForm.valid">Create Customer</ion-button>
+      </form>
+    </ion-col>
+  </ion-row>
+  
+</ion-content>

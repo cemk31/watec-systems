@@ -117,6 +117,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'create-customer',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../create-customer/create-customer.module').then(m => m.CreateCustomerPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'

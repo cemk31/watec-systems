@@ -65,6 +65,10 @@ const routes: Routes = [
     path: 'auftrag-detail',
     loadChildren: () => import('./pages/auftrag-detail/auftrag-detail.module').then(m => m.AuftragDetailPageModule)
   },
+  {
+    path: 'create-customer',
+    loadChildren: () => import('./pages/create-customer/create-customer.module').then( m => m.CreateCustomerPageModule)
+  },
 ];
 
 @NgModule({
