@@ -9,7 +9,8 @@ export const environment = {
     login: '/auth/signin',
     register: '/auth/signup',
     logout: '/auth/logout',
-    customers: '/customers'
+    customers: '/customers',
+    trinkwasseruntersuchungen: '/trinkwasseruntersuchung'
   }
 };
 

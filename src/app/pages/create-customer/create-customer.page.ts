@@ -1,27 +1,27 @@
-import { HttpClient, HttpClientModule, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
-import { throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { HttpClient, HttpClientModule, HttpHeaders } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators, NgForm } from "@angular/forms";
+import { throwError } from "rxjs";
+import { catchError } from "rxjs/operators";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: 'app-create-customer',
-  templateUrl: './create-customer.page.html',
-  styleUrls: ['./create-customer.page.scss'],
+  selector: "app-create-customer",
+  templateUrl: "./create-customer.page.html",
+  styleUrls: ["./create-customer.page.scss"],
 })
 export class CreateCustomerPage implements OnInit {
   customers: any[];
 
   customerForm = new FormGroup({
-    firstName: new FormControl(''),
-    lastName: new FormControl(''),
-    email: new FormControl(''),
-    phoneNumber: new FormControl(''),
-    street: new FormControl(''),
-    zipCode: new FormControl(''),
-    place: new FormControl(''),
-    country: new FormControl(''),
+    firstName: new FormControl(""),
+    lastName: new FormControl(""),
+    email: new FormControl(""),
+    phoneNumber: new FormControl(""),
+    street: new FormControl(""),
+    zipCode: new FormControl(""),
+    place: new FormControl(""),
+    country: new FormControl(""),
   });
 
   constructor(private http: HttpClient) { }

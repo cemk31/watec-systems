@@ -12,11 +12,11 @@
     <ion-title>Kunden</ion-title>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-button >Kunde anlegen +</ion-button>
-    <ion-button>Löschen</ion-button>
+    <ion-button (click)="createNewCustomer()">Kunde anlegen +</ion-button>
+    <ion-button (click)="removeCustomer()">Löschen</ion-button>
   </ion-toolbar>
   <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
+    <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 
