@@ -69,6 +69,10 @@ const routes: Routes = [
     path: 'create-customer',
     loadChildren: () => import('./pages/create-customer/create-customer.module').then( m => m.CreateCustomerPageModule)
   },
+  {
+    path: 'ista',
+    loadChildren: () => import('./pages/ista/ista.module').then( m => m.IstaPageModule)
+  },
 ];
 
 @NgModule({

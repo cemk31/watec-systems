@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { CustomerService } from '../../services/customer.service'; //import the service
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 

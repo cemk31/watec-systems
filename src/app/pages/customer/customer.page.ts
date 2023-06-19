@@ -37,6 +37,10 @@ export class CustomerPage implements OnInit {
         }),
         catchError((error) => {
           this.exceptionMessage = error.error.message;
+          if (this.exceptionMessage == "Unauthorized") {
+            sessionStorage.removeItem("access_token");
+            window.location.href = "/login";
+          }
           return throwError(error);
         })
       )

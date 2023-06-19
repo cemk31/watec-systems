@@ -10,7 +10,12 @@ export const environment = {
     register: '/auth/signup',
     logout: '/auth/logout',
     customers: '/customers',
-    trinkwasseruntersuchungen: '/trinkwasseruntersuchung'
+    trinkwasseruntersuchungen: '/trinkwasseruntersuchung',
+    auftrag: '/auftrag',
+    autraggeber: '/auftraggeber',
+    ista: {
+      url: '/ista',
+    }
   }
 };
 

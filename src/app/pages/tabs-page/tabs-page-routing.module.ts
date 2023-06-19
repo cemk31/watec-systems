@@ -126,6 +126,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'ista',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista/ista.module').then(m => m.IstaPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'

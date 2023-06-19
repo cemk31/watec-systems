@@ -3,7 +3,8 @@ import { FormBuilder, FormControl, FormGroup, NgForm, Validators } from '@angula
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AuthService } from '../../auth/auth.service';
 import { catchError } from 'rxjs/operators';
-import { throwError } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-auftrag',
@@ -11,7 +12,7 @@ import { throwError } from 'rxjs';
   styleUrls: ['./auftrag.page.scss'],
 })
 export class AuftragPage implements OnInit {
-
+  showItems = false;
   exceptionMessage = null;
 
   auftragForm = new FormGroup({
@@ -124,8 +125,19 @@ export class AuftragPage implements OnInit {
     "email": "test@test.com"
   }
 
-  auftraege = []; // Replace this with your actual data source
+  auftraggeberForm = this.formBuilder.group({
+    auftraggeber: [''],
+    ap: [''],
+    strasse: [''],
+    plz: [''],
+    ort: [''],
+    tel: [''],
+    email: [''],
+  });
+  
 
+  auftraege = []; // Replace this with your actual data source
+  auftraggeber : any[] = [];
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService : AuthService ) {
     this.createForm();
   }
@@ -133,7 +145,14 @@ export class AuftragPage implements OnInit {
     this.auftragForm = this.formBuilder.group(this.auftragForm);
   }
   
-  ngOnInit() {}
+  ngOnInit() {
+    this.getAuftraggeber().subscribe(auftraggeber => {
+      this.auftraggeber = auftraggeber;
+    }, error => {
+      console.error(error);
+    });
+  }
+  
 
   onSubmit(auftragForm: NgForm) {
     console.log(auftragForm.value);
@@ -185,4 +204,45 @@ export class AuftragPage implements OnInit {
   deleteAuftrag(auftragId: number) {
     // Add your code for deleting an existing auftrag
   }
+
+  toggleItems() {
+    this.showItems = !this.showItems;
+  }
+
+  searchTerm: string = '';
+  items: any[]; // this should be your actual data source
+  filteredItems: any[];
+
+  setFilteredItems() {
+    if (this.searchTerm) {
+      this.filteredItems = this.items.filter(item =>
+        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    } else {
+      this.filteredItems = this.items;
+    }
+  }
+
+  getAuftraggeber(): Observable<any[]> {
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+    return this.http.get<any[]>(environment.backend + environment.url.autraggeber, { headers });
+  }
+
+  createAuftraggeber(auftraggeberForm: NgForm) {
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+  }
+
+  selectAuftraggeber() {
+    
+  }
+
+
 }

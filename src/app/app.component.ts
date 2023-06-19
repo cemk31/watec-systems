@@ -66,6 +66,11 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/auftrag-detail',
       icon: 'person'
     },
+    {
+      title: 'ISTA',
+      url: '/app/tabs/ista',
+      icon: 'person'
+    }
   ];
   personalPages = [
     {
@@ -78,6 +83,11 @@ export class AppComponent implements OnInit {
     {
       title: 'Login',
       url: '/login',
+      icon: 'person'
+    },
+    {
+      title: 'Registrieren',
+      url: '/signup',
       icon: 'person'
     },
   ];

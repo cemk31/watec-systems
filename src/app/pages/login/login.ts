@@ -36,7 +36,8 @@ export class LoginPage implements OnInit {
     email: '', password: '',
     token: '',
     firstName: '',
-    lastName: ''
+    lastName: '',
+    userRole: ''
   };
   submitted = false;
   // email: string;
