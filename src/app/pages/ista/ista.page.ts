@@ -79,6 +79,6 @@ export class IstaPage implements OnInit {
       })
     )
     .subscribe();
-}
+  }
 
 }
