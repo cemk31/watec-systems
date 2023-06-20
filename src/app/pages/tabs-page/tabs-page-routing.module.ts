@@ -135,6 +135,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'ista-order-list',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-list/ista-order-list.module').then(m => m.IstaOrderListPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'
