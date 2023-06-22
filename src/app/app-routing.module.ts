@@ -81,6 +81,10 @@ const routes: Routes = [
     path: 'ista-order-detail',
     loadChildren: () => import('./pages/ista-order-detail/ista-order-detail.module').then( m => m.IstaOrderDetailPageModule)
   },
+  {
+    path: 'list',
+    loadChildren: () => import('./pages/list/list.module').then( m => m.ListPageModule)
+  },
 ];
 
 @NgModule({

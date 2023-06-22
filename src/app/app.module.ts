@@ -30,7 +30,7 @@ import { IstaTablePipe } from './pages/ista-table.pipe';
     }),
     ReactiveFormsModule
   ],
-  declarations: [AppComponent, CustomerPipe, IstaListComponent, IstaTablePipe],
+  declarations: [AppComponent, CustomerPipe],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
   bootstrap: [AppComponent],
   exports: [ReactiveFormsModule]
