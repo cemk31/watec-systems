@@ -14,6 +14,9 @@ import { environment } from '../environments/environment';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
 import { AuthService } from './auth/auth.service';
+import { TableModule } from 'ngx-easy-table';
+import { IstaListComponent } from './pages/ista-list/ista-list.component';
+import { IstaTablePipe } from './pages/ista-table.pipe';
 
 @NgModule({
   imports: [
@@ -28,7 +31,7 @@ import { AuthService } from './auth/auth.service';
     }),
     ReactiveFormsModule
   ],
-  declarations: [AppComponent, CustomerPipe],
+  declarations: [AppComponent, CustomerPipe, IstaListComponent, IstaTablePipe],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
   bootstrap: [AppComponent],
   exports: [ReactiveFormsModule]

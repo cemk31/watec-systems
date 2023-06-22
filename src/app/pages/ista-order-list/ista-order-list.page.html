@@ -20,9 +20,7 @@
     <ion-col *ngFor="let key of keysToDisplay" style="padding:20px;">
       <strong>{{key}}</strong>
     </ion-col>
-    <ion-col>
 
-    </ion-col>
   </ion-row>
   <div>
     <div *ngFor="let item of orders; let i = index">
@@ -31,10 +29,10 @@
           {{item[key]}}
         </ion-col>
         <ion-col>
-          <ion-button >mehr</ion-button>
+          <ion-button (click)="item.showDetails = !item.showDetails">mehr</ion-button>
         </ion-col>
       </ion-row>
-      <div>
+      <div *ngIf="item.showDetails">
         <div *ngIf="item.status.length > 0" style="background-color: #00008B; padding:10px;">
           <h3>Status</h3>
           <div *ngFor="let status of item.status; let i = index">

@@ -77,6 +77,12 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/ista-order-list',
       icon: 'person'
     }
+    ,
+    {
+      title: 'ISTA DETAIL',
+      url: '/app/tabs/ista-order-detail',
+      icon: 'person'
+    }
   ];
   personalPages = [
     {
