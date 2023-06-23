@@ -20,6 +20,11 @@ export class IstaOrderDetailPage implements OnInit {
   editingIndex: number | null = null; // Track the index of the item being edited
   selectedOrderIdForEdit: number = null; // Add this line
 
+                    showPlanned: boolean = false;
+  showReceived: boolean = false;
+  showRejected: boolean = false;
+
+
   // order = {
   //   number: '',
   //   remarkExternal: ''

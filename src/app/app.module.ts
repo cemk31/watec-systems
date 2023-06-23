@@ -14,8 +14,7 @@ import { environment } from '../environments/environment';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
 import { AuthService } from './auth/auth.service';
-import { IstaListComponent } from './pages/ista-list/ista-list.component';
-import { IstaTablePipe } from './pages/ista-table.pipe';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
@@ -23,16 +22,16 @@ import { IstaTablePipe } from './pages/ista-table.pipe';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
-    ReactiveFormsModule
   ],
   declarations: [AppComponent, CustomerPipe],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
   bootstrap: [AppComponent],
-  exports: [ReactiveFormsModule]
 })
 export class AppModule {}

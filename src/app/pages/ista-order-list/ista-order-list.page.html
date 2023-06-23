@@ -4,32 +4,34 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
     <!-- This is your Search Bar -->
-<ion-searchbar placeholder="Suche" [(ngModel)]="searchTerm" (ionChange)="filterItems()"></ion-searchbar>
+<ion-searchbar placeholder="Suche..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
 
 <!-- This is your List -->
-<ion-list>
-  <ion-item *ngFor="let item of filteredItems">
-    {{ item.name }}
+<!-- <ion-list>
+  <ion-item *ngFor="let order of filteredItems">
+    {{ order.name }}
   </ion-item>
-</ion-list>
+</ion-list> -->
 
 <ion-grid>
   <ion-row style="background-color:green;">
-    <ion-col *ngFor="let key of keysToDisplay" style="padding:20px;">
+    <ion-col *ngFor="let key of keysToDisplay" style="padding:10px;">
       <strong>{{key}}</strong>
     </ion-col>
 
-  </ion-row>
+  </ion-row>  
   <div>
-    <div *ngFor="let item of orders; let i = index">
+    <div *ngFor="let item of orders | filter:filterTerm; let i = index">
       <ion-row>
-        <ion-col *ngFor="let key of keysToDisplay" style="padding:20px;">
+        <ion-col *ngFor="let key of keysToDisplay " style="padding:10px;">
           {{item[key]}}
         </ion-col>
         <ion-col>
-          <ion-button (click)="item.showDetails = !item.showDetails">mehr</ion-button>
+          <ion-button *ngIf="item.status.length > 0 || item.Planned.length > 0 || item.Received.length > 0 || item.Postponed.length > 0
+            || item.Cancelled.length > 0 || item.NotPossible.length > 0 || item.ClosedContractPartner.length > 0" (click)="item.showDetails = !item.showDetails">mehr</ion-button>  
         </ion-col>
       </ion-row>
       <div *ngIf="item.showDetails">
@@ -40,32 +42,74 @@
               <strong>Created:</strong> {{status.createdAt}}</p>
           </div>
         </div>
-          <ion-row *ngIf="item.Received.length > 0" style="padding:10px;">
-            <div>
-              <h2>Received</h2>
-              <div *ngFor="let received of item.Received; let i = index">
-                <p><strong>Order ID:</strong> {{received.orderId}}</p> 
-                <p><strong>Status Type:</strong> {{received.orderstatusType}}</p> 
-                <p><strong>Request ID:</strong> {{received.requestId}}</p>
-                <p><strong>Set On:</strong> {{received.setOn}}</p>
-              </div>        
-            </div> 
-          </ion-row>
-          <ion-row *ngIf="item.Planned.length > 0" style="padding:10px;">
-            <div>
-              <h2>Planned</h2>
-              <div *ngFor="let planned of item.Planned; let i = index">
-                <p><strong>Order ID:</strong> {{planned.orderId}}</p> 
-                <p><strong>Status Type:</strong> {{planned.orderstatusType}}</p> 
-                <p><strong>setOn:</strong> {{planned.setOn}}</p>
-                <p><strong>detailedScheduleDate:</strong> {{planned.detailedScheduleDate}}</p>
-                <p><strong>detailedScheduleTimeFrom:</strong> {{planned.detailedScheduleTimeFrom}}</p>
-                <p><strong>detailedScheduleTimeTo:</strong> {{planned.detailedScheduleTimeTo}}</p>
-                <p><strong>detailedScheduleDelayReason:</strong> {{planned.detailedScheduleDelayReason}}</p>
-                <p><strong>requestId:</strong> {{planned.requestId}}</p>
-              </div>        
-            </div> 
-          </ion-row>
+        <ion-row *ngIf="item.Received.length > 0" style="padding:10px;">
+          <div>
+            <ion-toolbar color="primary">
+              <ion-title>Received</ion-title>
+            </ion-toolbar>
+            <ion-list *ngFor="let received of item.Received; let i = index">
+              <ion-item>
+                <ion-label><strong>Order ID:</strong></ion-label> 
+                <ion-note slot="end">{{received.orderId}}</ion-note>
+              </ion-item> 
+              <ion-item>
+                <ion-label><strong>Status Type:</strong></ion-label>
+                <ion-note slot="end">{{received.orderstatusType}}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Request ID:</strong></ion-label>
+                <ion-note slot="end">{{received.requestId}}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Set On:</strong></ion-label>
+                <ion-note slot="end">{{received.setOn}}</ion-note>
+              </ion-item>
+            </ion-list>        
+          </div> 
+        </ion-row>   
+
+  <ion-row *ngIf="item.Planned.length > 0" style="padding:10px;">
+    <div>
+      <ion-toolbar color="primary">
+        <ion-title>Planned</ion-title>
+      </ion-toolbar>
+      <ion-list *ngFor="let planned of item.Planned; let i = index">
+        <ion-item>
+          <ion-label><strong>Order ID:</strong></ion-label> 
+          <ion-note slot="end">{{planned.orderId}}</ion-note>
+        </ion-item> 
+        <ion-item>
+          <ion-label><strong>Status Type:</strong></ion-label>
+          <ion-note slot="end">{{planned.orderstatusType}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Set On:</strong></ion-label>
+          <ion-note slot="end">{{planned.setOn}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Date:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleDate}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Time From:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleTimeFrom}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Time To:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleTimeTo}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Delay Reason:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleDelayReason}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Request ID:</strong></ion-label>
+          <ion-note slot="end">{{planned.requestId}}</ion-note>
+        </ion-item>
+      </ion-list>        
+    </div> 
+  </ion-row>
+
       
           <ion-row *ngIf="item.Postponed.length > 0" style="padding:10px;">
             <div>
@@ -100,6 +144,7 @@
           <ion-row *ngIf="item.Rejected.length > 0" style="padding:10px;">
             <div>
               <h2>Rejected</h2>
+              <ion-button>Neu Hinzufügen</ion-button>
               <div *ngFor="let rejected of item.Rejected; let i = index">
                 <p><strong>id:</strong> {{rejected.id}}</p> 
                 <p><strong>requestId:</strong> {{rejected.requestId}}</p> 
@@ -141,9 +186,6 @@
           </ion-row>
       </div>
       </div>
-  </div>
-
-      
-  
+  </div>  
   </ion-grid>
 </ion-content>

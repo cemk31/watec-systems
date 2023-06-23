@@ -10,9 +10,10 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./ista-order-list.page.scss'],
 })
 export class IstaOrderListPage implements OnInit {
-  filterTerm: string = '';
+  filterTerm: string;
   orders: any[];  // change this according to your data type
   filteredOrders: any[];
+  filteredItems: any[] = []; // This would hold the filtered data
 
   toggleReceived = false;
   togglePlanned = false;
@@ -21,7 +22,7 @@ export class IstaOrderListPage implements OnInit {
   opened = '';
 
   data: any[];
-  keysToDisplay = ['id', 'createdAt', 'updatedAt', 'number', 'actualStatus'];
+  keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
   
   items = [
@@ -30,7 +31,6 @@ export class IstaOrderListPage implements OnInit {
     { field1: 'Data 7', field2: 'Data 8', field3: 'Data 9'}
   ];
   detailsVisible: boolean[] = [];
-
   constructor(private http: HttpClient) { 
   }
 
@@ -57,5 +57,34 @@ export class IstaOrderListPage implements OnInit {
       })
     )
     .subscribe();
+  }
+
+  filterItems() {
+    if (!this.filterTerm.trim()) {
+      // If search term is empty, display all items
+      this.filteredItems = this.orders;
+      return;
+    }
+  
+    this.filteredItems = this.orders.filter((order) => {
+      // Change this line to target the property you want to filter by
+      return order.name.toLowerCase().includes(this.filterTerm.toLowerCase());
+    });
+  }
+
+  sortType = 'asc';  // asc or desc
+
+  sortOrderID() {
+    if (this.sortType === 'asc') {
+      this.orders.sort((a, b) => a.orderId - b.orderId);
+      this.sortType = 'desc';
+    } else {
+      this.orders.sort((a, b) => b.orderId - a.orderId);
+      this.sortType = 'asc';
+    }
+  }
+
+  filterOrderID() {
+    this.orders = this.orders.filter(order => order.orderId.includes(this.filterTerm));
   }
 }

@@ -53,198 +53,268 @@
       <ion-input type="text" [(ngModel)]="order.createdAt" name="createdAt"></ion-input>
     </ion-item>
 
-    <ion-row>
-      
-    </ion-row>
-    <ion-card *ngIf="order.Received.length > 0">
-      <ion-card-content *ngFor="let received of order.Received; let i = index">
-        <ion-toolbar color="secondary">
-          <ion-title>Received - {{received.id}}</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="toggleEditMode(received.id)">Edit</ion-button>
+    <ion-toolbar color="primary">
+      <ion-title>Aktivitäten</ion-title>
+      <ion-buttons slot="primary">
+        <ion-button> Erstellen 
+          <ion-icon slot="end" name="create"></ion-icon>
+        </ion-button>
+        <ion-button fill="outline">
+          mehr
+          <ion-icon name="arrow-down-outline"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    <div *ngIf="order.Received.length > 0">
+      <ng-container *ngFor="let received of order.Received; let i = index">
+        <ion-toolbar  color="danger">
+            <ion-title>Received - (ID: {{received.id}})</ion-title>
+        </ion-toolbar>
+        <ion-toolbar color="danger">
+          <ion-buttons slot="primary">
+            <ion-button fill="outline">
+              Bearbeiten
+              <ion-icon slot="end" name="create"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline" (click)="showReceived = !showReceived">
+              mehr
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
           </ion-buttons>
         </ion-toolbar>
-    
-        <div>
-          <ion-item>
-            <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-            <ion-input type="text" [(ngModel)]="received.orderId" name="orderId" [readonly]="!editModes[received.id]"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-            <ion-input type="text" [(ngModel)]="received.orderstatusType" name="orderstatusType" [readonly]="!editModes[received.id]"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-            <ion-input type="text" [(ngModel)]="received.requestId" name="requestId" [readonly]="!editModes[received.id]"></ion-input>
-          </ion-item>
-          <ion-item>
-            <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-            <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="received.setOn" name="setOn" [disabled]="!editModes[received.id]"></ion-datetime>
-          </ion-item>
-        </div>
-      </ion-card-content>
-    </ion-card>
-        <ion-card *ngIf="order.Planned.length > 0">
-          <ion-toolbar color="success">
-            <ion-title>Planned</ion-title>
-          </ion-toolbar> 
-          <ion-card-content>
-            <div *ngFor="let planned of order.Planned; let i = index">
-              <ion-item>
-                <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="planned.orderId" name="orderId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="planned.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-                <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="planned.setOn" name="setOn"></ion-datetime>
-              </ion-item>
-              <!-- add other fields similarly -->
-              <ion-item>
-                <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="planned.requestId" name="requestId" appearance="outline"></ion-input>
-              </ion-item>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card *ngIf="order.Postponed.length > 0">
-          <ion-toolbar color="dark">
-            <ion-title>Postponed</ion-title>
-          </ion-toolbar> 
-          <ion-card-content>
-            <div *ngFor="let postponed of order.Postponed; let i = index">
-              <ion-item>
-                <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="postponed.orderId" name="orderId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="postponed.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-                <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="postponed.setOn" name="setOn"></ion-datetime>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="postponed.requestId" name="requestId" appearance="outline"></ion-input>
-              </ion-item>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        <ion-card *ngIf="order.Cancelled.length > 0">
-          <ion-toolbar color="danger">
-            <ion-title>Cancelled</ion-title>
-          </ion-toolbar> 
-          <ion-card-content>
-            <div *ngFor="let cancelled of order.Cancelled; let i = index">
-              <ion-item>
-                <ion-label position="stacked"><strong>Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="cancelled.id" name="id" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="cancelled.requestId" name="requestId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="cancelled.orderId" name="orderId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="cancelled.statusType" name="statusType" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-                <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="cancelled.setOn" name="setOn"></ion-datetime>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Cancellation Reason:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="cancelled.cancellationReason" name="cancellationReason" appearance="outline"></ion-input>
-              </ion-item>
-            </div>
-          </ion-card-content>
-        </ion-card>
-        
-        <ion-card *ngIf="order.Rejected.length > 0">
-          <ion-toolbar color="dark">
-            <ion-title>Rejected</ion-title>
-          </ion-toolbar> 
-          <ion-card-content>
-            <div *ngFor="let rejected of order.Rejected; let i = index">
-              <ion-item>
-                <ion-label position="stacked"><strong>Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.id" name="id" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.requestId" name="requestId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.orderId" name="orderId" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.statusType" name="statusType" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Reason:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.reason" name="reason" appearance="outline"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label position="stacked"><strong>Reason Text:</strong></ion-label>
-                <ion-input type="text" [(ngModel)]="rejected.reasonText" name="reasonText" appearance="outline"></ion-input>
-              </ion-item>
-            </div>
-          </ion-card-content>
-        </ion-card>          
+        //show if showReceived is true
+        <ion-item>
+          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="received.orderId" name="orderId" [readonly]="!editModes[received.id]"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="received.orderstatusType" name="orderstatusType" [readonly]="!editModes[received.id]"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="received.requestId" name="requestId" [readonly]="!editModes[received.id]"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="received.setOn" name="setOn" [disabled]="!editModes[received.id]"></ion-datetime>
+        </ion-item>
+      </ng-container>
+    </div>
 
-      <ion-card  *ngIf="order.ClosedContractPartner.length > 0" style="padding:10px;">
-        <ion-card-header>
-          <ion-card-title>ClosedContractPartner</ion-card-title>
-        </ion-card-header>
-        <ion-card-content>
-          <div *ngFor="let closedContractPartner of order.ClosedContractPartner; let i = index">
+    <div *ngIf="order.Planned.length > 0">
+      <ng-container *ngFor="let planned of order.Planned; let i = index">
+        <ion-toolbar color="success">
+          <ion-title>Planned - (ID: {{planned.id}})</ion-title>
+        </ion-toolbar> 
+        <ion-toolbar color="success">
+          <ion-buttons slot="primary">
+            <ion-button fill="outline">
+              Bearbeiten
+              <ion-icon slot="end" name="create"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline">
+              mehr
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-item>
+          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="planned.orderId" name="orderId" appearance="outline"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="planned.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="planned.setOn" name="setOn"></ion-datetime>
+        </ion-item>
+        <!-- add other fields similarly -->
+        <ion-item>
+          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="planned.requestId" name="requestId" appearance="outline"></ion-input>
+        </ion-item>
+      </ng-container>
+    </div>
+
+    <div *ngIf="order.Postponed.length > 0">
+      <ng-container *ngFor="let postponed of order.Postponed; let i = index">
+        <ion-toolbar color="success">
+          <ion-title>Postponed - (ID: {{postponed.id}})</ion-title>
+        </ion-toolbar> 
+        <ion-toolbar color="success">
+          <ion-buttons slot="primary">
+            <ion-button fill="outline">
+              Bearbeiten
+              <ion-icon slot="end" name="create"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline">
+              mehr
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ion-item>
+          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="postponed.orderId" name="orderId" appearance="outline"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="postponed.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
+          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="postponed.setOn" name="setOn"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
+          <ion-input type="text" [(ngModel)]="postponed.requestId" name="requestId" appearance="outline"></ion-input>
+        </ion-item>
+      </ng-container>
+    </div>
+
+        <div *ngIf="order.Cancelled.length > 0">
+          <ng-container *ngFor="let cancelled of order.Cancelled; let i = index">
+            <ion-toolbar color="warning">
+              <ion-title>Cancelled - (ID: {{cancelled.id}})</ion-title>
+            </ion-toolbar>
+            <ion-toolbar color="warning">
+              <ion-buttons slot="primary">
+                <ion-button fill="outline">
+                  Bearbeiten
+                  <ion-icon slot="end" name="create"></ion-icon>
+                </ion-button>
+                <ion-button fill="outline">
+                  mehr
+                  <ion-icon name="arrow-down-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
             <ion-item>
-              <ion-label color="primary"><strong>Id:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.id}}</ion-note>
+              <ion-label position="stacked"><strong>Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="cancelled.id" name="id" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Request Id:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.requestId}}</ion-note>
+              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="cancelled.requestId" name="requestId" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Order Id:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.orderId}}</ion-note>
+              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="cancelled.orderId" name="orderId" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Orderstatus Type:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.orderstatusType}}</ion-note>
+              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="cancelled.statusType" name="statusType" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Set On:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.setOn}}</ion-note>
+              <ion-label position="stacked"><strong>Set On:</strong></ion-label>
+              <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="cancelled.setOn" name="setOn"></ion-datetime>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Deficiency Description:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.deficiencyDescription}}</ion-note>
+              <ion-label position="stacked"><strong>Cancellation Reason:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="cancelled.cancellationReason" name="cancellationReason" appearance="outline"></ion-input>
+            </ion-item>
+          </ng-container>
+        </div>
+
+        <div *ngIf="order.Rejected.length > 0">
+          <ng-container *ngFor="let rejected of order.Rejected; let i = index">
+            <ion-toolbar color="warning">
+              <ion-title>Rejected - (ID: {{rejected.id}})</ion-title>
+            </ion-toolbar>
+            <ion-toolbar color="warning">
+              <ion-buttons slot="primary">
+                <ion-button fill="outline">
+                  Bearbeiten
+                  <ion-icon slot="end" name="create"></ion-icon>
+                </ion-button>
+                <ion-button fill="outline">
+                  mehr
+                  <ion-icon name="arrow-down-outline"></ion-icon>
+                </ion-button>
+              </ion-buttons>
+            </ion-toolbar>
+            <ion-item>
+              <ion-label position="stacked"><strong>Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.id" name="id" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Registration Health Authorities On:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.registrationHealthAuthoritiesOn}}</ion-note>
+              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.requestId" name="requestId" appearance="outline"></ion-input>
             </ion-item>
             <ion-item>
-              <ion-label color="primary"><strong>Extraordinary Expenditure Reason:</strong></ion-label>
-              <ion-note slot="end">{{closedContractPartner.extraordinaryExpenditureReason}}</ion-note>
+              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.orderId" name="orderId" appearance="outline"></ion-input>
             </ion-item>
-          </div>
-        </ion-card-content>
-      </ion-card>   
+            <ion-item>
+              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.statusType" name="statusType" appearance="outline"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>Reason:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.reason" name="reason" appearance="outline"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>Reason Text:</strong></ion-label>
+              <ion-input type="text" [(ngModel)]="rejected.reasonText" name="reasonText" appearance="outline"></ion-input>
+            </ion-item>
+          </ng-container>
+        </div>
+
+      <div *ngIf="order.ClosedContractPartner.length > 0" style="padding:10px;">
+        <ion-toolbar color="warning">
+          <ion-title>ClosedContractPartner</ion-title>
+        </ion-toolbar>
+        <ion-toolbar color="warning">
+          <ion-buttons slot="primary">
+            <ion-button fill="outline">
+              Bearbeiten
+              <ion-icon slot="end" name="create"></ion-icon>
+            </ion-button>
+            <ion-button fill="outline">
+              mehr
+              <ion-icon name="arrow-down-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+        <ng-container *ngFor="let closedContractPartner of order.ClosedContractPartner; let i = index">
+          <ion-item>
+            <ion-label color="primary"><strong>Id:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.id}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Request Id:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.requestId}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Order Id:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.orderId}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Orderstatus Type:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.orderstatusType}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Set On:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.setOn}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Deficiency Description:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.deficiencyDescription}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Registration Health Authorities On:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.registrationHealthAuthoritiesOn}}</ion-note>
+          </ion-item>
+          <ion-item>
+            <ion-label color="primary"><strong>Extraordinary Expenditure Reason:</strong></ion-label>
+            <ion-note slot="end">{{closedContractPartner.extraordinaryExpenditureReason}}</ion-note>
+          </ion-item>
+        </ng-container>
+      </div>
+  
 
     <ion-button expand="full" type="submit">Submit</ion-button>
 
