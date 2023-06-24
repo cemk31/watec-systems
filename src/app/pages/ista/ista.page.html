@@ -156,10 +156,10 @@
     <div *ngIf="data.Planned.length > 0" style="background-color: red; padding:10px;">
       <h2>Planned</h2>
       <div *ngFor="let planned of data.Planned; let i = index">
-        <p><strong>Order ID:</strong> {{received.orderId}} | 
-           <strong>Status Type:</strong> {{received.orderstatusType}} | 
-           <strong>Request ID:</strong> {{received.requestId}} | 
-           <strong>Set On:</strong> {{received.setOn}}</p>
+        <p><strong>Order ID:</strong> {{planned.orderId}} | 
+           <strong>Status Type:</strong> {{planned.orderstatusType}} | 
+           <strong>Request ID:</strong> {{planned.requestId}} | 
+           <strong>Set On:</strong> {{planned.setOn}}</p>
       </div>        
     </div>
   </ion-label>

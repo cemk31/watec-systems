@@ -153,6 +153,33 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'test',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../test/test.module').then(m => m.TestPageModule)
+          }
+        ]
+      },
+      {
+        path: 'create-ista-order',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../create-ista-order/create-ista-order.module').then(m => m.CreateIstaOrderPageModule)
+          }
+        ]
+      },
+      {
+        path: 'list',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../list/list.module').then(m => m.ListPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'

@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-ista-order-list',
@@ -24,14 +25,29 @@ export class IstaOrderListPage implements OnInit {
   data: any[];
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
+
+  statusForm: FormGroup;
   
-  items = [
-    { field1: 'Data 1', field2: 'Data 2', field3: 'Data 3'},
-    { field1: 'Data 4', field2: 'Data 5', field3: 'Data 6'},
-    { field1: 'Data 7', field2: 'Data 8', field3: 'Data 9'}
-  ];
+  showForm = false; // variable to toggle form
+  newActivity = { select: '', id: '', description: '', status: '', contactAttemptOn: '', contactPersonCustomer: '', agentCP: '', result: '', remark: '' };
+
+  
+  items: {
+    Postponed: Array<any>,
+    Cancelled: Array<any>,
+    Rejected: Array<any>,
+    ClosedContractPartner: Array<any>,
+    NotPossible: Array<any>
+  } = {
+    Postponed: [],
+    Cancelled: [],
+    Rejected: [],
+    ClosedContractPartner: [],
+    NotPossible: []
+  };
+
   detailsVisible: boolean[] = [];
-  constructor(private http: HttpClient) { 
+  constructor(private fb: FormBuilder, private http: HttpClient) { 
   }
 
   ngOnInit() {
@@ -87,4 +103,24 @@ export class IstaOrderListPage implements OnInit {
   filterOrderID() {
     this.orders = this.orders.filter(order => order.orderId.includes(this.filterTerm));
   }
+
+  statusTypes = [
+    { title: 'Postponed', items: this.items.Postponed },
+    { title: 'Cancelled', items: this.items.Cancelled },
+    { title: 'Rejected', items: this.items.Rejected },
+    { title: 'ClosedContractPartner', items: this.items.ClosedContractPartner },
+    { title: 'NotPossible', items: this.items.NotPossible },
+  ];
+
+  activityLog = [
+    {id: 1, description: 'Task 1', status: 'completed', more: 'details'},
+    {id: 2, description: 'Task 2', status: 'in progress', more: 'details'},
+    // more objects...
+  ];
+  
+  getItemKeys(item: any) {
+    return Object.keys(item);
+  }
+  
+  onSubmit(){}
 }

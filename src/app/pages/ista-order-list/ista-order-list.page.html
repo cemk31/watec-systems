@@ -35,13 +35,88 @@
         </ion-col>
       </ion-row>
       <div *ngIf="item.showDetails">
-        <div *ngIf="item.status.length > 0" style="background-color: #00008B; padding:10px;">
+        <div *ngIf="item.status.length > 0" style="#background-color: #00008B; padding:10px;">
           <h3>Status</h3>
-          <div *ngFor="let status of item.status; let i = index">
-            <p><strong>Type:</strong> {{status.type}} | 
-              <strong>Created:</strong> {{status.createdAt}}</p>
-          </div>
+          <ion-list *ngFor="let status of item.status; let i = index" color="primary">
+            <ion-item>
+              <ion-label>Statustype:</ion-label>
+              <ion-input type="text" value="{{status.type}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Statustype:</ion-label>
+              <ion-input type="date" value="{{status.createdAt}}"></ion-input>
+            </ion-item>
+          </ion-list>
         </div>
+
+        <h3>Aktivitätenprotokoll</h3>
+        <ion-button (click)="showForm = true">+ Hinzufügen</ion-button>
+        
+        <ion-grid>
+          <ion-row>
+            <ion-col>Select</ion-col>
+            <ion-col>ID</ion-col>
+            <ion-col>Beschreibung</ion-col>
+            <ion-col>Aktueller Status</ion-col>
+            <ion-col>contactAttemptOn</ion-col>
+            <ion-col>contactPersonCustomer</ion-col>
+            <ion-col>agentCP</ion-col>
+            <ion-col>result</ion-col>
+            <ion-col>remark</ion-col>
+          </ion-row>
+
+          <!-- for display -->
+          <ion-row>
+            <ion-col>Select</ion-col>
+            <ion-col>ID</ion-col>
+            <ion-col>Beschreibung</ion-col>
+            <ion-col>Aktueller Status</ion-col>
+            <ion-col>contactAttemptOn</ion-col>
+            <ion-col>contactPersonCustomer</ion-col>
+            <ion-col>agentCP</ion-col>
+            <ion-col>result</ion-col>
+            <ion-col>remark</ion-col>
+          </ion-row>
+
+        </ion-grid>
+        
+        <ion-button *ngIf="showForm" (click)="addActivity()">Submit</ion-button>
+
+        
+        <ion-row *ngFor="let s of statusTypes" style="padding:10px;">
+          <div *ngIf="s.items.length > 0">
+            <h2>{{s.title}}</h2>
+            <div *ngFor="let item of s.items; let i = index">
+              <p *ngFor="let key of getItemKeys(item)"><strong>{{key}}:</strong> {{item[key]}}</p>
+            </div>
+          </div>
+        </ion-row>
+
+        <ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col><strong>ID</strong></ion-col>
+            <ion-col><strong>Request ID</strong></ion-col>
+            <ion-col><strong>Order ID</strong></ion-col>
+            <ion-col><strong>Status Type</strong></ion-col>
+            <ion-col><strong>Set On</strong></ion-col>
+            <!-- Add more headers as needed -->
+        </ion-row>
+
+        <!-- Repeat this for each category (Postponed, Cancelled, etc.) -->
+        <ion-row *ngFor="let item of items.Postponed">
+            <ion-col>{{item.id}}</ion-col>
+            <ion-col>{{item.requestId}}</ion-col>
+            <ion-col>{{item.orderId}}</ion-col>
+            <ion-col>{{item.statusType}}</ion-col>
+            <ion-col>{{item.setOn}}</ion-col>
+            <!-- Add more columns as needed -->
+        </ion-row>
+        <!-- End repeat -->
+
+    </ion-grid>
+</ion-content>
+
         <ion-row *ngIf="item.Received.length > 0" style="padding:10px;">
           <div>
             <ion-toolbar color="primary">

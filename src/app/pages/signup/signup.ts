@@ -7,6 +7,7 @@ import { UserData } from '../../providers/user-data';
 import { UserOptions } from '../../interfaces/user-options';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { NotificationService } from '../../services/notification.service';
 
 
 
@@ -27,12 +28,16 @@ export class SignupPage implements OnInit {
   inviteCodeForm = new FormGroup({
     token: new FormControl(""),
   });
+  message: string;
 
   constructor(
     public router: Router,
     public userData: UserData,
     private http: HttpClient,
-  ) {}
+    private notificationService: NotificationService
+  ) {
+    this.notificationService.currentMessage.subscribe(message => this.message = message);
+  }
   
   ngOnInit(): void {
     if (sessionStorage.getItem("access_token")) {
@@ -64,32 +69,32 @@ export class SignupPage implements OnInit {
   }
 
   validateCode(inviteCodeForm: NgForm) {
-    const accessToken = inviteCodeForm.value.token; // assuming 'token' is the name of your form control
-  
-    let role: string;
-  
-    switch (accessToken) {
-      case 'MITARBEITER2023':
-        role = 'MITARBEITER';
-        break;
-      case 'ADMIN2020':
-        role = 'Administrator';
-        break;
-      case 'SUPERADMIN22':
-        role = 'SuperAdministrator';
-        break;
-      default:
-        role = 'Unknown';
+    try {
+      const accessToken = inviteCodeForm.value.token;
+      let role: string;
+
+      switch (accessToken) {
+        case 'MITARBEITER2023':
+          role = 'MITARBEITER';
+          break;
+        case 'ADMIN2020':
+          role = 'Administrator';
+          break;
+        case 'SUPERADMIN22':
+          role = 'SuperAdministrator';
+          break;
+        default:
+          throw new Error("Invalid access token");
+      }
+
+      this.showRegisterForm = true;
+      this.userRole = role;
+      // display success message
+      this.notificationService.show('Successfully validated the access token');
+      return role;
+    } catch (error) {
+      // display error message
+      this.notificationService.show(error.message);
     }
-  
-    // assuming you have a service to set the user role
-    // this.userService.setUserRole(role);
-  
-    // then show the register form
-    this.showRegisterForm = true;
-    this.userRole = role;
-    // return the role, but this won't be visible in the UI. Use for debugging
-    return role;
   }
-  
 }

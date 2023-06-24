@@ -13,7 +13,7 @@ import { IstaOrderDetailPage } from './ista-order-detail.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    IstaOrderDetailPageRoutingModule
+    IstaOrderDetailPageRoutingModule,
   ],
   declarations: [IstaOrderDetailPage]
 })

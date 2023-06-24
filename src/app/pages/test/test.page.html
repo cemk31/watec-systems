@@ -1,0 +1,20 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-title>Reactive Form</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label>Name:</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!myForm.valid">Submit</ion-button>
+    </form>
+  </ion-content>
+  

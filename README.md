@@ -20,3 +20,6 @@ $ npx @ionic/cli start [project-name] conference --type angular && cd [project-n
 # watec-systems
 
 # Notizen
+
+$ nvm install 16
+$ nvm use 16
