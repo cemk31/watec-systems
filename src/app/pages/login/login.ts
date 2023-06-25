@@ -9,6 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { AppComponent } from '../../app.component';
 import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment';
+import { toUnicode } from 'punycode';
 
 
 
@@ -21,6 +22,7 @@ export class LoginPage implements OnInit {
   isUserLoggedIn: boolean = false;
   showLoggedInWarning = false;
   showLoggedOutMessage = false;
+
   ngOnInit(): void {
     if(sessionStorage.getItem("loggedOut")) {
       this.showLoggedOutMessage = true;
@@ -75,6 +77,9 @@ export class LoginPage implements OnInit {
       });
   }
 
+  onSignup(){
+    this.router.navigateByUrl("signup");
+  }
 
 }
 export interface AuthResponse {

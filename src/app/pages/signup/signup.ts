@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -67,7 +67,8 @@ export class SignupPage implements OnInit {
     public router: Router,
     public userData: UserData,
     private http: HttpClient,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private ngZone: NgZone
   ) {
     this.notificationService.currentMessage.subscribe(message => this.message = message);
   }
@@ -85,10 +86,9 @@ export class SignupPage implements OnInit {
           sessionStorage.setItem("access_token", res.access_token);
           sessionStorage.setItem("loggedIn", "true");
           this.notificationMessage = this.notificationMessages.success;
-          setTimeout(() => {
-            this.router.navigate(["/app/tabs/about"]);
-
-          }, 5000);
+          this.ngZone.runOutsideAngular(() => {
+            window.location.href = '/app/tabs/about';
+        });
         } else {
           // Handle unexpected server response
           console.error("Unexpected server response:", res);
