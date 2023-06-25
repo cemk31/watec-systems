@@ -5,6 +5,12 @@
     </ion-buttons>
     <ion-title>Registrieren</ion-title>
   </ion-toolbar>
+  <ion-toolbar style="padding:10px;" [color]="notificationMessage.color">
+    {{ notificationMessage.message }}
+  </ion-toolbar>  
+  <ion-toolbar *ngIf="showLoggedInWarning" color="warning">
+    <ion-title >Sie sind schon eingeloggt!</ion-title>
+  </ion-toolbar>  
 </ion-header>
 
 <ion-content>
@@ -14,11 +20,11 @@
   </div>
   <ion-row>
     <ion-col>
-      <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
+      <!-- <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
         <ion-toolbar color="warning">
           <ion-title >Sie sind schon eingeloggt!</ion-title>
         </ion-toolbar>
-      </div>
+      </div> -->
       <form #signupForm="ngForm" *ngIf="!showLoggedInWarning" novalidate>
         <ion-list lines="none">
           <ion-row>
@@ -62,7 +68,7 @@
             </ion-item>
             <ion-text color="danger">
               <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
-                Username is required
+                E-Mail ist erforderlich
               </p>
             </ion-text>
       
@@ -92,70 +98,7 @@
             </div>
           </ng-container>
           </ion-list>
-
-    
-
       </form>
     </ion-col>
   </ion-row>
-  <!-- <form #signupForm="ngForm" novalidate>
-    <ion-list lines="none">
-      <ion-row>
-        <ion-col>
-          <ion-item>
-            <ion-label position="stacked" color="primary">EINLADUNGS-CODE</ion-label>
-            <ion-input [(ngModel)]="signup.token" name="token" type="text" #token="ngModel" required placeholder="Diesen Code erhalten Sie druch den Administrator.">
-            </ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>          
-          <ion-item>
-            <ion-button>Code prüfen</ion-button>
-          </ion-item>
-      </ion-col>
-      </ion-row>
-      <ion-item>
-        <ion-label position="stacked" color="primary">E-Mail</ion-label>
-        <ion-input [(ngModel)]="signup.email" name="email" type="email" #email="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked" color="primary">Username</ion-label>
-        <ion-input [(ngModel)]="signup.username" name="username" type="text" #username="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="username.valid || submitted == false" class="ion-padding-start">
-          Username is required
-        </p>
-      </ion-text>
-
-      <ion-item>
-        <ion-label position="stacked" color="primary">Password</ion-label>
-        <ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-text color="danger">
-        <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          Password is required
-        </p>
-      </ion-text>
-      <ion-title>Persönliche Angaben</ion-title>
-      <ion-item>
-        <ion-label position="stacked" color="primary">Vorname</ion-label>
-        <ion-input [(ngModel)]="signup.firstName" name="firstName" type="text" #username="ngModel" required>
-        </ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="stacked" color="primary">Nachname</ion-label>
-        <ion-input [(ngModel)]="signup.lastName" name="lastName" type="text" #username="ngModel" required>
-        </ion-input>
-      </ion-item>
-    </ion-list>
-
-    <div class="ion-padding">
-      <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Create</ion-button>
-    </div>
-  </form> -->
-
 </ion-content>

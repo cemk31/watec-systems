@@ -18,6 +18,39 @@ import { NotificationService } from '../../services/notification.service';
 })
 
 export class SignupPage implements OnInit {
+
+   notificationMessage = {
+    message: '',
+    color: ''    
+  }
+
+  notificationMessages = {
+    success:  {
+      message: "Registration successful! Please login to continue.",
+      color: "success", 
+    },
+    error: {
+      message: "Registration failed! Please contact admin or try it again later!",
+      color: "danger", 
+    },
+    invalidCode: {
+      message: "Code is invalid!",
+      color: "danger", 
+    },
+    validCode: {
+      message: "Code is valid!",
+      color: "success", 
+    },
+    unexpected: {
+      message: "Unexpected server response:",
+      color: "danger"
+    },
+    userNameAlreadyInUs: {
+      message: "The username or email is already in use. Please try another one.",
+      color: "danger"
+    }
+  }
+
   signup: UserOptions = { email: '', password: '', token: '', firstName: '', lastName: '', userRole: ''};
   submitted = false;
   showSuccessMessage = false;
@@ -46,27 +79,35 @@ export class SignupPage implements OnInit {
   }
 
   onSignup() {
-    const body = { 
-      ...this.signup,
-      userRole: this.userRole
-    };
-    
-    this.http.post<any>(environment.url.register, body).subscribe(
+    this.http.post<any>(environment.backend + environment.url.register, this.signup).subscribe(
       res => {
-        console.log(res.access_token);
-        sessionStorage.setItem("access_token", res.access_token);
-        sessionStorage.setItem("loggedIn", "true");
-        this.showSuccessMessage = true;
-        setTimeout(() => {
-          // Your code here
-        }, 5000);
-        // this.router.navigate(["/app/tabs/about"]);
+        if (res && res.access_token) {
+          sessionStorage.setItem("access_token", res.access_token);
+          sessionStorage.setItem("loggedIn", "true");
+          this.notificationMessage = this.notificationMessages.success;
+          setTimeout(() => {
+            this.router.navigate(["/app/tabs/about"]);
+
+          }, 5000);
+        } else {
+          // Handle unexpected server response
+          console.error("Unexpected server response:", res);
+          this.notificationMessage = this.notificationMessages.unexpected;
+        }
       },
       err => {
-        console.error(err);
+
+        if (err.status === 403 && err.error.message === "Credentials taken") {
+          // display the error to the user
+          this.notificationMessage = this.notificationMessages.userNameAlreadyInUs;
+        } else {
+          console.error(err);
+          // Better error handling: show a message to the user, for example
+          this.notificationMessage = this.notificationMessages.error;
+        }
       }
     );
-  }
+  }  
 
   validateCode(inviteCodeForm: NgForm) {
     try {
@@ -88,13 +129,13 @@ export class SignupPage implements OnInit {
       }
 
       this.showRegisterForm = true;
-      this.userRole = role;
-      // display success message
-      this.notificationService.show('Successfully validated the access token');
+      this.signup.userRole = role;
+      this.notificationMessage = this.notificationMessages.validCode;
+      
       return role;
     } catch (error) {
       // display error message
-      this.notificationService.show(error.message);
+      this.notificationMessage = this.notificationMessages.invalidCode;
     }
   }
 }
