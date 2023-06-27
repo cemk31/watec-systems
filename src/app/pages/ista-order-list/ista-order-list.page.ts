@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-ista-order-list',
@@ -22,6 +22,8 @@ export class IstaOrderListPage implements OnInit {
   exceptionMessage = null;
   opened = '';
 
+  statuses = ['Received', 'Planned', 'Postponed', 'Closed']; // Add more statuses as needed
+  
   data: any[];
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
@@ -31,7 +33,11 @@ export class IstaOrderListPage implements OnInit {
   showForm = false; // variable to toggle form
   newActivity = { select: '', id: '', description: '', status: '', contactAttemptOn: '', contactPersonCustomer: '', agentCP: '', result: '', remark: '' };
 
-  
+  selectedStatus: string;
+
+  orderId: string;
+  id: number; // or string, depending on your data
+
   items: {
     Postponed: Array<any>,
     Cancelled: Array<any>,
@@ -48,10 +54,47 @@ export class IstaOrderListPage implements OnInit {
 
   detailsVisible: boolean[] = [];
   constructor(private fb: FormBuilder, private http: HttpClient) { 
+    this.statusForm = new FormGroup({
+      id: new FormControl(''),
+      remarkExternal: new FormControl(''),
+      actualStatus: new FormControl(''),
+      Received: new FormArray([]),
+      Planned: new FormArray([]),
+      Execution: new FormArray([]),
+      Closed: new FormArray([]),
+    });
+
+    this.statusForm.get('actualStatus').valueChanges.subscribe(val => {
+      this.adjustForm(val);
+    });
+  }
+
+  adjustForm(val) {
+    const control = this.statusForm.get(val);
+    if (control instanceof FormArray) {
+      control.push(new FormGroup({
+        id: new FormControl(''),
+        orderstatusType: new FormControl(''),
+        CustomerContact: new FormArray([
+          new FormGroup({
+            contactAttemptOn: new FormControl(''),
+            contactPersonCustomer: new FormControl(''),
+            agentCP: new FormControl(''),
+            result: new FormControl(''),
+            remark: new FormControl(''),
+          })
+        ])
+      }));
+    }
   }
 
   ngOnInit() {
-    this.getIstaOrders();
+    const response = this.getIstaOrders();
+
+    // list attributes
+    // ID, Status, contactPersonCustomer, agentCP, result, remark
+    
+    //fill 
   }
 
   getIstaOrders() {
@@ -122,5 +165,85 @@ export class IstaOrderListPage implements OnInit {
     return Object.keys(item);
   }
   
-  onSubmit(){}
+  onSubmit(form: NgForm) {
+    const formValue = form.value;
+    const transformedData = {
+      id: formValue.id,
+      remarkExternal: formValue.remarkExternal,
+      actualStatus: formValue.actualStatus,
+      [formValue.actualStatus]: [
+        {
+          orderstatusType: formValue.description,
+          CustomerContacts: [
+            {
+              contactAttemptOn: formValue.contactAttemptOn,
+              contactPersonCustomer: formValue.contactPersonCustomer,
+              agentCP: formValue.agentCP,
+              result: formValue.result,
+              remark: formValue.remark,
+            }
+          ],
+        },
+      ],
+    };
+
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+    
+    this.http.patch<any[]>(environment.backend + environment.url.ista.url, transformedData, { headers })
+    .pipe(
+      map(response => {
+        this.orders = response;
+        return response;
+      }),
+      catchError((error) => {
+        this.exceptionMessage = error.error.message;
+        return throwError(error);
+      })
+    )
+    .subscribe();
+  }
+  
+  
+  createOrderStatusFormGroup(): FormGroup {
+    return this.fb.group({
+      orderstatusType: [''],
+      CustomerContact: this.fb.array([
+        this.createCustomerContactFormGroup()
+      ])
+    });
+  }
+
+  createCustomerContactFormGroup(): FormGroup {
+    return this.fb.group({
+      contactAttemptOn: [''],
+      contactPersonCustomer: [''],
+      agentCP: [''],
+      result: [''],
+      remark: ['']
+    });
+  }
+
+  onSelectChange(event: any) {
+    this.selectedStatus = event.detail.value; // update your variable with the new selected value
+  }
+  
+  segments = [
+    {value: 'entries', label: 'Einträge', content: 'entry'},
+    {value: 'neu', label: 'Neu', content: 'new'},
+    // Add more segment options as needed
+  ];
+  selectedSegment = this.segments[0].value;  // default to the first segment
+  selectedContent = this.segments[0].content; // default content
+  // other properties, methods, etc...
+
+  segmentChanged(event: any) {
+    const selectedIndex = this.segments.findIndex(segment => segment.value === event.detail.value);
+    this.selectedContent = this.segments[selectedIndex].content;
+  }
+  
+
 }
