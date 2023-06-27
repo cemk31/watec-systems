@@ -8,9 +8,9 @@
   <form (ngSubmit)="onSubmit(orderForm)" #orderForm="ngForm">
     <ion-row>
       <ion-col>
-        <ion-row>
-          <ion-button disabled expand="block">Status</ion-button>
-        </ion-row>
+        <ion-toolbar>
+          Status
+        </ion-toolbar>
         <ion-row>
           <ion-button color="secondary" *ngIf="order.actualStatus === 'RECEIVED' || showButtons" expand="block">RECEIVED</ion-button>
           <ion-button color="success" *ngIf="order.actualStatus === 'PLANNED' || showButtons" expand="block">PLANNED</ion-button>

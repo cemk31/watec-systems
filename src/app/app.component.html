@@ -1,6 +1,4 @@
 <ion-app [class.dark-theme]="dark">
-
-
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content">
       <ion-content>
@@ -10,14 +8,14 @@
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let i = index">
 
-          <div *ngIf="isUserLoggedIn">
-            <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
-              <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
-              <ion-label>
-                {{a.title}}
-              </ion-label>
-            </ion-item>
-          </div>
+            <div *ngIf="isUserLoggedIn">
+              <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
+                <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
+                <ion-label>
+                  {{a.title}}
+                </ion-label>
+              </ion-item>
+            </div>
 
 
           </ion-menu-toggle>
