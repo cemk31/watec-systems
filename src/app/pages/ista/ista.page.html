@@ -1,177 +1,388 @@
-<ion-header class="custom-header">
-  <h1>ISTA</h1>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bestellungen</ion-title>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar placeholder="Suche..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
-
-
 <ion-content>
-  <ion-row>
-    <ion-col>
-      <ion-card style="background-color: #FF8C00">
-        <ion-card-content>
-          <h2>Card Title 1</h2>
-          <p>This is some information about this card.</p>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    
-    <ion-col>
-      <ion-card style="background-color: #00008B">
-        <ion-card-content>
-          <h2>Card Title 2</h2>
-          <p>This is some information about this card.</p>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    
-    <ion-col>
-      <ion-card style="background-color: #e74c3c">
-        <ion-card-content>
-          <h2>Card Title 3</h2>
-          <p>This is some information about this card.</p>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-    
-    <ion-col>
-      <ion-card style="background-color: #27ae60">
-        <ion-card-content>
-          <h2>Card Title 4</h2>
-          <p>This is some information about this card.</p>
-        </ion-card-content>
-      </ion-card>
-    </ion-col>
-  </ion-row>
+  <!-- This is your Search Bar -->
+  <ion-list>
+    <ion-item style="padding:10px;">
+      <ion-item>
+        <ion-label><ion-checkbox></ion-checkbox></ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Bestell-ID</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-chip>
+          <ion-label>Aktueller Status</ion-label>
+        </ion-chip>
+      </ion-item>
+      <ion-item>
+        <ion-label>Aktivität</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>setOn</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>Bemerkungen</ion-label>
+      </ion-item>
+      <ion-item>
+        <ion-label>mehr</ion-label>
+      </ion-item>
+    </ion-item>
+  </ion-list>
 
-<!-- <div class="container" *ngFor="let data of orders; let i = index" style="padding: 20px;">
-  <ion-card *ngFor="let data of orders; let i = index">
-    <ion-card-header (click)="opened = opened === 'order' + i ? '' : 'order' + i">
-      <h2>Order: {{data.id}}</h2>
-    </ion-card-header>
-    <ion-card-content *ngIf="opened === 'order' + i">
-      <table>
-          <tr>
-              <th>Number</th>
-              <th>Remark</th>
-              <th>Created At</th>
-          </tr>
-          <tr>
-              <td>{{data.number}}</td>
-              <td>{{data.remarkExternal}}</td>
-              <td>{{data.createdAt}}</td>
-          </tr>
-      </table>
-    </ion-card-content>
-  </ion-card>
+  <ng-container *ngFor="let order of orders">
+    <ion-list>
+      <ion-item style="padding:5px;">
+        <ion-item>
+          <ion-label><ion-checkbox></ion-checkbox></ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{order.id}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-chip>
+            <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+            <ion-label>{{order.actualStatus}}</ion-label>
+          </ion-chip>
+        </ion-item>
+        <ion-item>
+          <ion-label>Bestellung ist eingegangen!</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{order.createdAt}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>{{order.remarkExternal}}</ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-button (click)="toggleList(order.id)"><ion-icon name="caret-down-circle-outline"></ion-icon></ion-button>
+        </ion-item>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="showList[order.id]" style="padding: 10px; background-color:#A0C2FF;">
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Allgemeine Informationen</ion-card-title>
+              <ion-card-subtitle color="primary">#{{order.id}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-row>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">createdAt:</ion-label>
+                <ion-input value="{{order.createdAt}}"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">updatedAt:</ion-label>
+                <ion-input value="{{order.updatedAt}}"></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label color="primary" position="floating">actualStatus:</ion-label>
+              <ion-input value="{{order.actualStatus}}"></ion-input>
+            </ion-item>
+            <!-- <ion-item fill="outline" shape="round" readonly disabled>
+            <ion-label position="floating">Email:</ion-label>
+            <ion-input value="1234"></ion-input>
+          </ion-item> -->
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">number:</ion-label>
+              <ion-input value="1234"></ion-input>
+            </ion-item>
+            <ion-card-content>
+            </ion-card-content>
 
-  
-  <div *ngFor="let status of data.status; let i = index" style="padding: 20px;">
-    <ion-card>
-      <ion-card-header (click)="opened = opened === 'status' + i ? '' : 'status' + i">
-        <h3>Status:</h3>
-      </ion-card-header>
-      <ion-card-content *ngIf="opened === 'status' + i">
-        <table>
-          <tr>
-              <th>Type</th>
-              <th>Created At</th>
-          </tr>
-          <tr>
-              <td>{{status.type}}</td>
-              <td>{{status.createdAt}}</td>
-          </tr>
-      </table>
-      </ion-card-content>
-    </ion-card>
-  </div>    
+            <ion-toolbar style="padding:10px;">
+              <ion-button fill="outline">bearbeiten</ion-button>
+              <ion-button fill="solid">Action 2</ion-button>
+            </ion-toolbar>
+          </ion-card>
+        </ion-col>
+        <ion-col>
+          <ion-row>
 
-  <div *ngFor="let received of data.Received; let i = index" style="background-color: #FF8C00; padding: 20px;">
-    <ion-card>
-      <ion-card-header (click)="opened = opened === 'received' + i ? '' : 'received' + i">
-        <h3>Received:</h3>
-      </ion-card-header>
-      <ion-card-content *ngIf="opened === 'received' + i">
-        <table>
-          <tr>
-              <th>Order ID</th>
-              <th>orderstatusType</th>
-              <th>requestId</th>
-              <th>setOn</th>
-          </tr>
-          <tr>
-              <td>{{received.orderId}}</td>
-              <td>{{received.orderstatusType}}</td>
-              <td>{{received.requestId}}</td>
-              <td>{{received.setOn}}</td>
-          </tr>
-      </table>
-      </ion-card-content>
-    </ion-card>
-  </div>    
+          </ion-row>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Aktueller Status</ion-card-title>
+              <ion-card-subtitle color="primary">{{order.actualStatus}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-row>
+              <ion-card color="primary">
+                <ion-button>STATUS ändern</ion-button>
+              </ion-card>
+            </ion-row>
 
-  <div *ngIf="data.customerContacts.length" style="background-color: #00008B; padding: 20px;">
-      <h3 data-toggle="collapse" [attr.data-target]="'#contacts' + i">Customer Contacts:</h3>
-      <div id="{{'contacts' + i}}" class="collapse">
-          <div *ngFor="let contact of data.customerContacts">
-              <table>
-                  <tr>
-                      <th>Contact Person</th>
-                      <th>Agent</th>
-                  </tr>
-                  <tr>
-                      <td>{{contact.contactPersonCustomer}}</td>
-                      <td>{{contact.agentCP}}</td>
-                  </tr>
-              </table>
-          </div>
-      </div>
-  </div>
-</div> -->
+            <ion-card-content>
+            </ion-card-content>
 
+          </ion-card>
+        </ion-col>
+      </ion-row>
 
-<ion-item button detail="true" detail-icon="caret-forward-outline" *ngFor="let data of orders; let i = index">
-  <ion-label>
-    <h2>Bestellung {{data.id}}</h2>
-    <p><strong>Number:</strong> {{data.number}} | 
-       <strong>Remark:</strong> {{data.remarkExternal}} | 
-       <strong>Created:</strong> {{data.createdAt}}</p>
+      <ion-row>
+        <ion-card style="width:100%;">
+          <ion-card-header>
+            <ion-card-title>Status</ion-card-title>
+          </ion-card-header>
+          <ng-container *ngIf="order.status.length > 0">
+            <ion-card-header *ngFor="let status of order.status">
+              <ion-card-subtitle color="primary">{{status.id}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-row style="background-color: #808080;">
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">createdAt:</ion-label>
+                <ion-input value="{{status?.createdAt}}"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">updatedAt:</ion-label>
+                <ion-input value="{{status?.updatedAt}}"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">type:</ion-label>
+                <ion-input value="{{status?.type}}"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">setOn:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">executionOnSiteDone:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-toolbar style="padding:10px;">
+                <ion-button fill="outline">Action 1</ion-button>
+                <ion-button fill="solid">Action 2</ion-button>
+              </ion-toolbar>
+            </ion-row>
+          </ng-container>
+          <ng-container *ngIf="order.status.length == 0">
+            <ion-card>
+              Keine Einträge vorhanden!
+            </ion-card>
+          </ng-container>
+        </ion-card>
+      </ion-row>
 
-    <div *ngIf="data.status.length > 0" style="background-color: #00008B; padding:10px;">
-      <h3>Status</h3>
-      <div *ngFor="let status of data.status; let i = index">
-        <p><strong>Type:</strong> {{status.type}} | 
-           <strong>Created:</strong> {{status.createdAt}}</p>
-      </div>
-    </div>
-      
-    <div *ngIf="data.Received.length > 0" style="background-color: green; padding:10px;">
-      <h2>Received</h2>
-      <div *ngFor="let received of data.Received; let i = index">
-        <p><strong>Order ID:</strong> {{received.orderId}} | 
-           <strong>Status Type:</strong> {{received.orderstatusType}} | 
-           <strong>Request ID:</strong> {{received.requestId}} | 
-           <strong>Set On:</strong> {{received.setOn}}</p>
-      </div>        
-    </div> 
+      <ion-row color="primary">
+        <ion-card style="width:100%;" *ngFor="let contact of order.customerContacts">
+          <ion-card-header>
+            <ion-card-title>Kundenkontakt</ion-card-title>
+          </ion-card-header>
+          <ion-card-header>
+            <ion-card-subtitle color="primary">#{{contact.id}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-row style="background-color: #808080;">
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">contactAttemptOn:</ion-label>
+              <ion-input value="{{contact.contactAttemptOn}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">contactPersonCustomer:</ion-label>
+              <ion-input value="{{contact.contactPersonCustomer}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">agentCP:</ion-label>
+              <ion-input value="{{contact.contactPersonCustomer}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">result:</ion-label>
+              <ion-input value="{{contact.result}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">remark:</ion-label>
+              <ion-input value="{{contact.remark}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">orderId:</ion-label>
+              <ion-input value="{{contact.orderId}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">plannedId:</ion-label>
+              <ion-input value="{{contact.plannedId}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">receivedId:</ion-label>
+              <ion-input value="{{contact.receivedId}}"></ion-input>
+            </ion-item>
+            <ion-toolbar style="padding:10px;">
+              <ion-button fill="outline">Action 1</ion-button>
+              <ion-button fill="solid">Action 2</ion-button>
+            </ion-toolbar>
+          </ion-row>
+        </ion-card>
+      </ion-row>
 
-    <div *ngIf="data.Planned.length > 0" style="background-color: red; padding:10px;">
-      <h2>Planned</h2>
-      <div *ngFor="let planned of data.Planned; let i = index">
-        <p><strong>Order ID:</strong> {{planned.orderId}} | 
-           <strong>Status Type:</strong> {{planned.orderstatusType}} | 
-           <strong>Request ID:</strong> {{planned.requestId}} | 
-           <strong>Set On:</strong> {{planned.setOn}}</p>
-      </div>        
-    </div>
-  </ion-label>
-</ion-item>
+      <ion-row>
+        <ion-card style="width:100%;">
+          <ion-card-header>
+            <ion-card-title>Aktivitätenprotokoll</ion-card-title>
+          </ion-card-header>
+          <ion-card-header>
+            <ion-card-subtitle color="primary">#{{order.id}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-row style="background-color: #808080;">
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">number:</ion-label>
+              <ion-input value="{{order.number}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">requestId:</ion-label>
+              <ion-input value="{{order.requestId}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">orderId:</ion-label>
+              <ion-input value="{{order.orderId}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">statusType:</ion-label>
+              <ion-input value="{{order.statusType}}"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">setOn:</ion-label>
+              <ion-input value="{{order.setOn}}"></ion-input>
+            </ion-item>
+          </ion-row>
+          <ion-toolbar>
+            <ion-title>Kontakt</ion-title>
+          </ion-toolbar>
+            <ng-container *ngFor="let contact of order.Received.CustomerContact">
+              <ion-row>
+                <ion-card-header>
+                  <ion-card-subtitle color="primary">#{{contact.id}}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-row>
+                  <ion-item fill="outline" shape="round" readonly disabled>
+                    <ion-label position="floating">Contact.id:</ion-label>
+                    <ion-input value="true"></ion-input>
+                  </ion-item>
+                  <ion-item fill="outline" shape="round" readonly disabled>
+                    <ion-label position="floating">orderId</ion-label>
+                    <ion-input value="{{contact.orderId}}"></ion-input>
+                  </ion-item>
+                  <ion-item fill="outline" shape="round" readonly disabled>
+                    <ion-label position="floating">plannedId:</ion-label>
+                    <ion-input value="{{contact.plannedId}}"></ion-input>
+                  </ion-item>
+                  <ion-item fill="outline" shape="round" readonly disabled>
+                    <ion-label position="floating">receivedId:</ion-label>
+                    <ion-input value="{{contact.receivedId}}"></ion-input>
+                  </ion-item>
+                </ion-row>
+                <ion-toolbar style="padding:10px;">
+                  <ion-button fill="outline">Action 1</ion-button>
+                  <ion-button fill="solid">Action 2</ion-button>
+                </ion-toolbar>
+              </ion-row>
+            </ng-container>
+          <ng-container *ngIf="order.CustomerContact.length == 0">
+            <ion-card>
+              <ion-title>Keine Kontakte gefunden!</ion-title>
+            </ion-card>
+          </ng-container>
+          <ion-row>
+            <ion-title>Request</ion-title>
+            <ion-card-header>
+              <ion-card-subtitle color="primary">#S1234516</ion-card-subtitle>
+            </ion-card-header>
+            <ion-row>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">id:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">environment:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">language:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">consumer:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">consumer:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">rejectedId:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">notPossibleId:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">postponedId:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">cancelledId:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+              <ion-item fill="outline" shape="round" readonly disabled>
+                <ion-label position="floating">plannedId:</ion-label>
+                <ion-input value="true"></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-toolbar style="padding:10px;">
+              <ion-button fill="outline">Action 1</ion-button>
+              <ion-button fill="solid">Action 2</ion-button>
+            </ion-toolbar>
+          </ion-row>
+          <ion-row>
+            <ion-title color="primary">Special Fields</ion-title>
+          </ion-row>
+          <ion-card-header>
+            <ion-card-subtitle color="primary">#S1234516</ion-card-subtitle>
+          </ion-card-header>
 
+          <ion-row>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">id:</ion-label>
+              <ion-input value="true"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">id:</ion-label>
+              <ion-input value="true"></ion-input>
+            </ion-item>
+            <ion-item fill="outline" shape="round" readonly disabled>
+              <ion-label position="floating">id:</ion-label>
+              <ion-input value="true"></ion-input>
+            </ion-item>
+            <ion-toolbar style="padding:10px;">
+              <ion-button fill="outline">Action 1</ion-button>
+              <ion-button fill="solid">Action 2</ion-button>
+            </ion-toolbar>
+            <!-- PLANNED -->
+            <!-- detailedScheduleDate, detailedScheduleTimeFrom, detailedScheduleTimeTo, detailedScheduleDelayReason -->
+          </ion-row>
+
+        </ion-card>
+      </ion-row>
+    </ion-list>
+  </ng-container>
 </ion-content>
 
 
-
-
-
-
-
-
-
+<!-- <ion-content>
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <ion-item>
+        <ion-label>Name:</ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Email:</ion-label>
+        <ion-input type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-button expand="full" type="submit" [disabled]="!myForm.valid">Submit</ion-button>
+    </form>
+  </ion-content> -->

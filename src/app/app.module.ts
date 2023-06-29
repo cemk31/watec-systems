@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -15,6 +15,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
 import { AuthService } from './auth/auth.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   imports: [
@@ -31,7 +32,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     }),
   ],
   declarations: [AppComponent, CustomerPipe],
-  providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

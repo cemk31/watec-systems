@@ -16,11 +16,33 @@ export class HomePage implements OnInit {
   exceptionMessage = null;
   constructor(private router : Router, private customerService : CustomerService, private http : HttpClient) { } //inject the service
 
+  user: any;
+  notifications: string[];
+  activities: string[];
+
   ngOnInit() {
     if(!sessionStorage.getItem("access_token")) {
       this.router.navigateByUrl('/login');
     }
     this.loadCustomers();
+
+    //test
+        // You would typically fetch this data from your backend
+        this.user = {
+          firstName: 'John ',
+          lastName: 'Doe',  
+          email: 'john.doe@example.com'
+        };
+        this.notifications = [
+          'Notification 1',
+          'Notification 2',
+          'Notification 3'
+        ];
+        this.activities = [
+          'Cem Ka änderte den Status von WP-276 - Order Status Integration, update, create, change auf In Arbeit',
+          'Activity 2',
+          'Activity 3'
+        ];
   }
 
   loadCustomers() {
