@@ -11,7 +11,8 @@ import { map, catchError } from 'rxjs/operators';
   styleUrls: ['./ista.page.scss'],
 })
 export class IstaPage implements OnInit {
-  filterTerm: string = '';
+  filterTerm: string;
+
   orders: any[];  // change this according to your data type
   filteredOrders: any[];
 
@@ -22,6 +23,14 @@ export class IstaPage implements OnInit {
 
   opened = '';
 
+  showList = {};
+  allStatuses = [];
+
+
+  toggleList(id) {
+    this.showList[id] = !this.showList[id];
+  }
+
 
   constructor(private router : Router, private http: HttpClient) {
     this.orders = []; // Initialize with your orders data
@@ -30,6 +39,7 @@ export class IstaPage implements OnInit {
 
   ngOnInit() {
     this.getIstaOrders();
+    
   }
 
   ngOnChanges() {

@@ -7,12 +7,14 @@ import { IonicModule } from '@ionic/angular';
 import { IstaPageRoutingModule } from './ista-routing.module';
 
 import { IstaPage } from './ista.page';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
+    Ng2SearchPipeModule,
     IstaPageRoutingModule
   ],
   declarations: [IstaPage]
