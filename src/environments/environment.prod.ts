@@ -11,6 +11,7 @@ export const environment = {
     autraggeber: '/auftraggeber',
     ista: {
       url: '/ista',
+      received: '/ista/received',
     }
   }
 };

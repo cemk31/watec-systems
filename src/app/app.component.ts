@@ -96,9 +96,9 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
-      title: 'Ista Bestellung anlegen',
+      title: 'ISTA Kundenkontakt erstellen',
       url: '/app/tabs/create-ista-order',
-      icon: 'person'
+      icon: 'water'
     }
   ];
   personalPages = [

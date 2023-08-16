@@ -17,11 +17,14 @@ export class CreateIstaOrderPage implements OnInit {
   orderForm: FormGroup;
   exceptionMessage: string = null;
   customers: any; 
-  
+  isSubmitted = false;
+
   constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController) {
     this.orderForm = this.fb.group({
+      number: [''],
       remarkExternal: [''],
       actualStatus: [''],
+      // Änderung hier: von 'received' zu 'Received'
       Received: this.fb.array([
         this.createReceivedFormGroup()
       ])
@@ -35,8 +38,8 @@ export class CreateIstaOrderPage implements OnInit {
     const toast = await this.toastController.create({
       message: 'Order created successfully.',
       duration: 2000,
-      color: 'success',  // change the color of the toast
-      position: 'top'   // position the toast at the top of the screen
+      color: 'success',
+      position: 'top'
     });
     toast.present();
   }
@@ -44,7 +47,7 @@ export class CreateIstaOrderPage implements OnInit {
   createReceivedFormGroup(): FormGroup {
     return this.fb.group({
       orderstatusType: [''],
-      CustomerContact: this.fb.array([
+      CustomerContacts: this.fb.array([
         this.createCustomerContactFormGroup()
       ])
     });
@@ -58,9 +61,10 @@ export class CreateIstaOrderPage implements OnInit {
       result: [''],
       remark: ['']
     });
-  }
+  } 
 
-  get receivedArray(): FormArray {
+  getReceivedArray(): FormArray {
+    // Änderung hier: von 'received' zu 'Received'
     return this.orderForm.get('Received') as FormArray;
   }
 
@@ -69,7 +73,8 @@ export class CreateIstaOrderPage implements OnInit {
   }
 
   getCustomerContactArray(receivedIndex: number): FormArray {
-    return this.receivedArray.at(receivedIndex).get('CustomerContact') as FormArray;
+    // Änderung hier: von 'customerContacts' zu 'CustomerContacts'
+    return this.receivedArray.at(receivedIndex).get('CustomerContacts') as FormArray;
   }
 
   addCustomerContact(receivedIndex: number) {
@@ -84,7 +89,7 @@ export class CreateIstaOrderPage implements OnInit {
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
-    this.http.post<any[]>(environment.backend + environment.url.customers , this.orderForm.value, { headers })
+    this.http.post<any[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
     .pipe(
       catchError((error) => {
         this.exceptionMessage = error.error.message;
@@ -96,7 +101,13 @@ export class CreateIstaOrderPage implements OnInit {
       this.customers = response;
       this.presentToast(); // Present the toast
       this.orderForm.disable(); // Disable all fields in the form
+      this.isSubmitted = true;
     });
+  }
+
+  transferToIsta() {
+    console.log("Data transferred to Ista");
+    // Your logic to transfer data to Ista goes here
   }
 }
 

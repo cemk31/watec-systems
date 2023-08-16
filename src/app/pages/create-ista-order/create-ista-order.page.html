@@ -1,27 +1,31 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Bestellung anlegen</ion-title>
+    <ion-title>ISTA Kundenkontakt erstellen</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-  
-    <ion-item>
-      <ion-label position="floating">Remark External</ion-label>
-      <ion-input type="text" formControlName="remarkExternal"></ion-input>
-    </ion-item>
-
     <ion-toolbar color="success">
       <ion-title>Status</ion-title>
     </ion-toolbar>
-
+    
+    <ion-item>
+      <ion-label position="floating">Number</ion-label>
+      <ion-input type="text" formControlName="number"></ion-input>
+    </ion-item>
+    
     <ion-list>
       <ion-select formControlName="actualStatus" placeholder="Status selektieren">
         <ion-select-option value="RECEIVED">RECEIVED</ion-select-option>
       </ion-select>
     </ion-list>
     
+    <ion-item>
+      <ion-label position="floating">Remark External</ion-label>
+      <ion-input type="text" formControlName="remarkExternal"></ion-input>
+    </ion-item>
+
     <div formArrayName="Received">
       <div *ngFor="let receivedCtrl of orderForm.get('Received').controls; let i = index" [formGroupName]="i">
         <ion-item>
@@ -29,9 +33,11 @@
           <ion-input type="text" formControlName="orderstatusType"></ion-input>
         </ion-item>
 
-        <h3>Kundenkontakt</h3>
-        <div formArrayName="CustomerContact">
-          <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContact').controls; let j = index" [formGroupName]="j">
+        <ion-toolbar>
+          <ion-title color="primary">Kundenkontakt</ion-title>
+        </ion-toolbar>
+        <div formArrayName="CustomerContacts">
+          <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContacts').controls; let j = index" [formGroupName]="j">
             <ion-item>
               <ion-label position="stacked"><strong>contactAttemptOn:</strong></ion-label>
               <ion-datetime displayFormat="D MMM YYYY" formControlName="contactAttemptOn"></ion-datetime>
@@ -52,12 +58,22 @@
               <ion-label position="stacked"><strong>remark:</strong></ion-label>
               <ion-input type="text" formControlName="remark"></ion-input>
             </ion-item>
-            <!-- Similar for other fields within 'CustomerContact' array -->
           </div>
-        </div>      
+        </div>
       </div>
     </div>
-
-    <ion-button expand="full" type="submit">Submit</ion-button>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Submit</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button 
+          expand="full" 
+          [disabled]="!isSubmitted" 
+          type="button" 
+          (click)="transferToIsta()">An Ista übertragen
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </form>
 </ion-content>
