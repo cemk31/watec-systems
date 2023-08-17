@@ -1,0 +1,47 @@
+<ion-header class="header-cover">
+  <ion-toolbar>
+    <ion-title>Kunde anlegen</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <form #customerForm="ngForm" (ngSubmit)="onSubmit(customerForm)">
+        <ion-item>
+          <ion-label>Vorname:</ion-label>
+          <ion-input name="firstName" type="text" [(ngModel)]="customerForm.firstName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Nachname:</ion-label>
+          <ion-input name="lastName" type="text" [(ngModel)]="customerForm.lastName"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Email:</ion-label>
+          <ion-input name="email" type="email" [(ngModel)]="customerForm.email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Phone:</ion-label>
+          <ion-input name="phoneNumber" type="text" [(ngModel)]="customerForm.phoneNumber"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Straße:</ion-label>
+          <ion-input name="street" type="text" [(ngModel)]="customerForm.street"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>PLZ:</ion-label>
+          <ion-input name="zipCode" type="text" [(ngModel)]="customerForm.zipCode"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Ort:</ion-label>
+          <ion-input name="place" type="text" [(ngModel)]="customerForm.place"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Land:</ion-label>
+          <ion-input name="country" type="text" [(ngModel)]="customerForm.country"></ion-input>
+        </ion-item>
+        <ion-button expand="full" type="submit" [disabled]="!customerForm.valid">Create Customer</ion-button>
+      </form>
+    </ion-col>
+  </ion-row>
+  
+</ion-content>

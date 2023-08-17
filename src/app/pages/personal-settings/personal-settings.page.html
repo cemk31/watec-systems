@@ -1,8 +1,16 @@
 <ion-content>
-  <div class="content">
-    <h2>Einstellungen</h2>
-    <p>Auf dieser Seite können Sie Ihre persönlichen Daten wie Ihre E-Mail-Adresse, Ihren Vor- und Nachnamen und Ihr Passwort verwalten und aktualisieren. </p>
-  </div>
+  <ion-card color="primary" >
+    
+    <ion-card-content >
+      <ion-card-title>
+        Einstellungen
+      </ion-card-title>
+        <p>
+            Auf dieser Seite können Sie Ihre persönlichen Daten wie Ihre E-Mail-Adresse, Ihren Vor- und Nachnamen und Ihr Passwort verwalten und aktualisieren.
+        </p>
+    </ion-card-content>
+</ion-card>
+
 
   <ion-row>
     <ion-col>
@@ -17,22 +25,26 @@
             <p style="padding: 10px;">Änderungen erfolgreich gesichert!</p>
         </ion-toolbar>
       </div>
-      <ion-card>
         <form (ngSubmit)="editUser(firstName, lastName)">
           <ion-item>
-            <ion-label position="floating">Erstellt am</ion-label>
-            <ion-input disabled [value]="user.createdAt"></ion-input>
+            <ion-label position="floating">ID</ion-label>
+            <ion-textarea name="id" [(ngModel)]="id" disabled placeholder="{{user.id}}" value="{{user.id}}"></ion-textarea>
           </ion-item>
+        <ion-item>
+          <ion-label position="floating">Erstellt am</ion-label>
+          <ion-datetime displayFormat="DD.MM.YYYY" disabled [value]="user.createdAt"></ion-datetime>
+      </ion-item>   
+          <ion-item>
+            <ion-label position="floating">Erstellt am</ion-label>
+            <ion-datetime displayFormat="DD.MM.YYYY" disabled [value]="user.createdAt"></ion-datetime>
+        </ion-item>        
           <ion-item>
             <ion-label position="floating">Zuletzt aktualisiert am</ion-label>
-            <ion-input disabled [value]="user.updatedAt"></ion-input>
+            <ion-datetime displayFormat="DD.MM.YYYY" disabled [value]="user.updatedAt"></ion-datetime>
           </ion-item>
           <ion-item>
-            <ion-label position="floating">
-              <ion-icon name="mail"></ion-icon>
-              {{user.email}}
-            </ion-label>
-            <ion-input disabled></ion-input>
+            <ion-label position="floating">E-Mail</ion-label>
+            <ion-textarea name="mail" [(ngModel)]="mail" [disabled]="true" placeholder="{{user.email}}" value="{{user.email}}"></ion-textarea>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Vorname</ion-label>
@@ -47,11 +59,10 @@
             <ion-button expand="block" color="secondary" (click)="onCancelClick()">abbrechen</ion-button>
           </div>
         </form>
-      </ion-card>
     </ion-col>
     <ion-col>
-      <!-- <div>
-        <h3>Passwort zurücksetzen</h3>
+      <div>
+        <h3 color="primary" >Passwort zurücksetzen</h3>
         <span class="reset-password-button">
             <form onsubmit="resetPassword()">
               <ion-item>
@@ -69,7 +80,7 @@
             </form>
             <ion-button expand="block" color="primary">Passwort zurücksetzen</ion-button>
           </span>
-      </div> -->
+      </div>
     </ion-col>
   </ion-row>
 </ion-content>

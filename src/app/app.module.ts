@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
@@ -14,6 +14,8 @@ import { environment } from '../environments/environment';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerPipe } from './pages/customer.pipe';
 import { AuthService } from './auth/auth.service';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   imports: [
@@ -21,16 +23,16 @@ import { AuthService } from './auth/auth.service';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
+    Ng2SearchPipeModule,
     IonicModule.forRoot(),
     IonicStorageModule.forRoot(),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
-    ReactiveFormsModule
   ],
   declarations: [AppComponent, CustomerPipe],
-  providers: [InAppBrowser, SplashScreen, StatusBar, AuthService],
+  providers: [InAppBrowser, SplashScreen, StatusBar, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],
-  exports: [ReactiveFormsModule]
 })
 export class AppModule {}

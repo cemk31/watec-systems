@@ -1,5 +1,8 @@
 {
   "compilerOptions": {
+    "strictPropertyInitialization": false,
+    "skipLibCheck": true,
+
     "downlevelIteration": true,
     "importHelpers": true,
     "module": "esnext",
@@ -15,5 +18,9 @@
       "es2017",
       "dom"
     ]
+  },
+  "angularCompilerOptions": {
+    "strictTemplates": false,
+    
   }
 }

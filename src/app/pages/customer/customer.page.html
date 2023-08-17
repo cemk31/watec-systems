@@ -1,15 +1,72 @@
+<!-- dashboard.page.html -->
+<ion-header>
+  <ion-toolbar color="tertiary" class="ion-padding">
+    <ion-title class="ion-text-center">
+      Kunden
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <ion-header>
   <ion-toolbar>
     <ion-title>Kunden</ion-title>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-button (click)="createNewCustomer()">Kunde anlegen +</ion-button>
+    <ion-button (click)="removeCustomer()">Löschen</ion-button>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar (ionChange)="search($event)"></ion-searchbar>
+  </ion-toolbar>
 </ion-header>
+
 <ion-content>
+  <ion-row >
+    <ion-col >
+      <ion-row>
+        <ion-col>
+          <p>KDNR</p>
+        </ion-col>
+        <ion-col>
+          <p>EMAIL</p>
+        </ion-col>
+        <ion-col>
+          <p>Vor / Nachname</p>
+        </ion-col>
+        <ion-col>
+          <p>RUFNUMMER</p>
+        </ion-col>
+        <ion-col>
+          <p>Anschrift</p>
+        </ion-col>
+        <ion-col>
+          <p>mehr</p>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
   <ion-row>
     <ion-col>
-      <ion-title>Zuletzt geänderte Kunden</ion-title>
-    </ion-col>
-    <ion-col>
-      <ion-title>Neue Kunden</ion-title>
+      <ion-row *ngFor="let c of customers">
+        <ion-col>
+          <p>{{c.id}}</p>
+        </ion-col>
+        <ion-col>
+          <p>{{c.email}}</p>
+        </ion-col>
+        <ion-col>
+          <p>{{c.firstName}} {{c.lastName}}</p>
+        </ion-col>
+        <ion-col>
+          <p>{{c.phoneNumber}}</p>
+        </ion-col>
+        <ion-col>
+          <p>{{c.street}} {{c.zipCode}} {{c.place}} {{c.country}}</p>
+        </ion-col>
+        <ion-col>
+          <ion-icon name="add-outline" size="large"></ion-icon>
+        </ion-col>
+      </ion-row>
     </ion-col>
   </ion-row>
 </ion-content>

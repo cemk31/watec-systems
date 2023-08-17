@@ -8,6 +8,15 @@ export const environment = {
   url: {
     login: '/auth/signin',
     register: '/auth/signup',
+    logout: '/auth/logout',
+    customers: '/customers',
+    trinkwasseruntersuchungen: '/trinkwasseruntersuchung',
+    auftrag: '/auftrag',
+    autraggeber: '/auftraggeber',
+    ista: {
+      url: '/ista',
+      received: '/ista/received',
+    }
   }
 };
 

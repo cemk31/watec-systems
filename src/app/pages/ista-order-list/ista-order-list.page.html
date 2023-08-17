@@ -1,0 +1,357 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Bestellungen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>
+<ion-searchbar placeholder="Suche..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+<ion-grid>
+  <ion-row style="background-color:green;">
+    <ion-col *ngFor="let key of keysToDisplay" style="padding:10px;">
+      <strong>{{key}}</strong>
+    </ion-col>
+
+  </ion-row>  
+  <div>
+    <div *ngFor="let item of orders | filter:filterTerm; let i = index">
+      <ion-row>
+        <ion-col *ngFor="let key of keysToDisplay " style="padding:10px;">
+          <ng-container *ngIf="key != 'actualStatus'">
+            {{item[key]}}
+          </ng-container>
+          <ng-container *ngIf="key == 'actualStatus'">
+            <ion-chip color="success" [outline]="true">{{item[key]}}</ion-chip>
+          </ng-container>
+        </ion-col>
+        <ion-col>
+          <ion-button *ngIf="item.status.length > 0 || item.Planned.length > 0 || item.Received.length > 0 || item.Postponed.length > 0
+            || item.Cancelled.length > 0 || item.NotPossible.length > 0 || item.ClosedContractPartner.length > 0" (click)="item.showDetails = !item.showDetails">mehr</ion-button>  
+        </ion-col>
+      </ion-row>
+      <div *ngIf="item.showDetails">
+        <div *ngIf="item.status.length > 0" style="#background-color: #00008B; padding:10px;">
+          <h3>Status</h3>
+          <ion-list *ngFor="let status of item.status; let i = index" color="primary">
+            <ion-item>
+              <ion-label>Statustype:</ion-label>
+              <ion-input type="text" value="{{status.type}}"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label>Statustype:</ion-label>
+              <ion-input type="date" value="{{status.createdAt}}"></ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+
+        <h3>Aktivitätenprotokoll</h3>
+        <ion-segment [(ngModel)]="selectedSegment" (ionChange)="segmentChanged($event)">
+          <ion-segment-button *ngFor="let segment of segments" [value]="segment.value">
+            <ion-label>{{segment.label}}</ion-label>
+          </ion-segment-button>
+        </ion-segment>        
+        <ion-grid color="primary">
+          <ng-container *ngIf="selectedContent == 'entry'" >
+            <ion-row style="padding:10px;">
+              <ion-col>
+                Select</ion-col>
+              <ion-col>ID</ion-col>
+              <ion-col>Status</ion-col>
+              <ion-col>contactAttemptOn</ion-col>
+              <ion-col>contactPersonCustomer</ion-col>
+              <ion-col>agentCP</ion-col>
+              <ion-col>result</ion-col>
+              <ion-col>remark</ion-col>
+            </ion-row>
+
+
+            <ion-row>
+              <!-- dropdown menu for here -->
+              <ion-col>
+                <ion-checkbox></ion-checkbox></ion-col>
+              <!-- getId -->
+              <ion-col>{{item.id}}</ion-col>
+              <ion-col><ion-chip color="success" [outline]="true">{{item.actualStatus}}</ion-chip></ion-col>
+
+              <!-- getDescription -->
+              <!-- get actual Status, this could be Received, Planned and the contact fields -->
+                <ng-container *ngFor="let status of statuses; let i = index">
+                  <ng-container *ngFor="let statusItem of item[status]; let j = index">
+                    <ng-container *ngFor="let customerContact of statusItem.customerContact; let k = index">
+                      <ion-col>
+                        {{customerContact.contactAttemptOn}}
+                      </ion-col>
+                      <ion-col>
+                        {{customerContact.contactPersonCustomer}}
+                      </ion-col>
+                      <ion-col>
+                        {{customerContact.agentCP}}
+                      </ion-col>
+                      <ion-col>
+                        {{customerContact.result}}
+                      </ion-col>
+                      <ion-col>
+                        {{customerContact.remark}}
+                      </ion-col>
+                    </ng-container>
+                  </ng-container>
+                </ng-container>
+              
+            </ion-row>
+
+          </ng-container>
+          <!-- for display -->
+          <ng-container *ngIf="selectedContent == 'new'">
+            <form #statusForm="ngForm" ngForm="statusForm" (ngSubmit)="onSubmit(statusForm)" >
+              <ion-row>
+                <!-- <ion-col></ion-col> -->
+                <!-- <ion-col></ion-col> -->
+                <ion-col> 
+                  <ion-item>
+                    <ion-label position="stacked"><strong>ID:</strong></ion-label>
+                    <ion-input readonly type="number" [(ngModel)]="item.id" placeholder="{{item.id}}" value="{{item.id}}" name="id" appearance="outline"></ion-input>
+                  </ion-item>                    
+                <ion-item>
+                  <ion-label position="stacked"><strong>Beschreibung:</strong></ion-label>
+                  <ion-input type="text" [(ngModel)]="description" name="description" appearance="outline"></ion-input>
+                </ion-item>
+              </ion-col>
+                <ion-col>
+                  <!-- lightgreen - 90EE90
+                  modern white - #FAFAFA -->
+                  <ion-item [ngStyle]="{'--background': item.ac === 'Received' ? '#90EE90' : '#FAFAFA'}">
+                    <ion-label position="stacked"><strong>Aktueller Status:</strong></ion-label>
+                    <ion-select [(ngModel)]="actualStatus" name="actualStatus" (ionChange)="onSelectChange($event)">
+                      <ion-select-option value="Received">Received</ion-select-option>
+                      <!-- add more options as needed -->
+                      <ion-select-option value="Planned">Planned</ion-select-option>
+                      <ion-select-option value="Execution">Execution</ion-select-option>
+                      <ion-select-option value="Closed">Closed</ion-select-option>
+                    </ion-select>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+                    <ion-row>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="stacked"><strong>contactAttemptOn:</strong></ion-label>
+                          <ion-input type="text" [(ngModel)]="contactAttemptOn" name="contactAttemptOn" appearance="outline"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="stacked"><strong>contactPersonCustomer:</strong></ion-label>
+                          <ion-input type="text" [(ngModel)]="contactPersonCustomer" name="contactPersonCustomer" appearance="outline"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="stacked"><strong>agentCP:</strong></ion-label>
+                          <ion-input type="text" [(ngModel)]="agentCP" name="agentCP" appearance="outline"></ion-input>
+                        </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="stacked"><strong>result:</strong></ion-label>
+                          <ion-input type="text" [(ngModel)]="result" name="result" appearance="outline"></ion-input>
+                      </ion-item>
+                      </ion-col>
+                      <ion-col>
+                        <ion-item>
+                          <ion-label position="stacked"><strong>remark:</strong></ion-label>
+                          <ion-input type="text" [(ngModel)]="remark" name="remark" appearance="outline"></ion-input>
+                      </ion-item>  
+                      </ion-col>
+                    </ion-row>
+            <ion-button type="submit" >Speichern</ion-button>
+            <ion-button fill="outline">RESET</ion-button>
+          </form>
+          </ng-container>
+         
+        </ion-grid>
+        
+        <ion-button *ngIf="showForm" (click)="addActivity()">Submit</ion-button>
+
+        
+        <ion-row *ngFor="let s of statusTypes" style="padding:10px;">
+          <div *ngIf="s.items.length > 0">
+            <h2>{{s.title}}</h2>
+            <div *ngFor="let item of s.items; let i = index">
+              <p *ngFor="let key of getItemKeys(item)"><strong>{{key}}:</strong> {{item[key]}}</p>
+            </div>
+          </div>
+        </ion-row>
+
+        <ion-content>
+    <ion-grid>
+        <ion-row>
+            <ion-col><strong>ID</strong></ion-col>
+            <ion-col><strong>Request ID</strong></ion-col>
+            <ion-col><strong>Order ID</strong></ion-col>
+            <ion-col><strong>Status Type</strong></ion-col>
+            <ion-col><strong>Set On</strong></ion-col>
+            <!-- Add more headers as needed -->
+        </ion-row>
+
+        <!-- Repeat this for each category (Postponed, Cancelled, etc.) -->
+        <ion-row *ngFor="let item of items.Postponed">
+            <ion-col>{{item.id}}</ion-col>
+            <ion-col>{{item.requestId}}</ion-col>
+            <ion-col>{{item.orderId}}</ion-col>
+            <ion-col>{{item.statusType}}</ion-col>
+            <ion-col>{{item.setOn}}</ion-col>
+            <!-- Add more columns as needed -->
+        </ion-row>
+        <!-- End repeat -->
+
+    </ion-grid>
+</ion-content>
+
+        <ion-row *ngIf="item.Received.length > 0" style="padding:10px;">
+          <div>
+            <ion-toolbar color="primary">
+              <ion-title>Received</ion-title>
+            </ion-toolbar>
+            <ion-list *ngFor="let received of item.Received; let i = index">
+              <ion-item>
+                <ion-label><strong>Order ID:</strong></ion-label> 
+                <ion-note slot="end">{{received.orderId}}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Status Type:</strong></ion-label>
+                <ion-note slot="end">{{received.orderstatusType}}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Request ID:</strong></ion-label>
+                <ion-note slot="end">{{received.requestId}}</ion-note>
+              </ion-item>
+              <ion-item>
+                <ion-label><strong>Set On:</strong></ion-label>
+                <ion-note slot="end">{{received.setOn}}</ion-note>
+              </ion-item>
+            </ion-list>
+          </div> 
+        </ion-row>   
+
+  <ion-row *ngIf="item.Planned.length > 0" style="padding:10px;">
+    <div>
+      <ion-toolbar color="primary">
+        <ion-title>Planned</ion-title>
+      </ion-toolbar>
+      <ion-list *ngFor="let planned of item.Planned; let i = index">
+        <ion-item>
+          <ion-label><strong>Order ID:</strong></ion-label> 
+          <ion-note slot="end">{{planned.orderId}}</ion-note>
+        </ion-item> 
+        <ion-item>
+          <ion-label><strong>Status Type:</strong></ion-label>
+          <ion-note slot="end">{{planned.orderstatusType}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Set On:</strong></ion-label>
+          <ion-note slot="end">{{planned.setOn}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Date:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleDate}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Time From:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleTimeFrom}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Time To:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleTimeTo}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Detailed Schedule Delay Reason:</strong></ion-label>
+          <ion-note slot="end">{{planned.detailedScheduleDelayReason}}</ion-note>
+        </ion-item>
+        <ion-item>
+          <ion-label><strong>Request ID:</strong></ion-label>
+          <ion-note slot="end">{{planned.requestId}}</ion-note>
+        </ion-item>
+      </ion-list>        
+    </div> 
+  </ion-row>
+
+      
+          <ion-row *ngIf="item.Postponed.length > 0" style="padding:10px;">
+            <div>
+              <h2>Postponed</h2>
+              <div *ngFor="let postponed of item.Postponed; let i = index">
+                <p><strong>Order ID:</strong> {{postponed.orderId}}</p> 
+                <p><strong>Status Type:</strong> {{postponed.orderstatusType}}</p> 
+                <p><strong>setOn:</strong> {{postponed.setOn}}</p>
+                <p><strong>detailedScheduleDate:</strong> {{postponed.detailedScheduleDate}}</p>
+                <p><strong>detailedScheduleTimeFrom:</strong> {{postponed.detailedScheduleTimeFrom}}</p>
+                <p><strong>detailedScheduleTimeTo:</strong> {{postponed.detailedScheduleTimeTo}}</p>
+                <p><strong>detailedScheduleDelayReason:</strong> {{postponed.detailedScheduleDelayReason}}</p>
+                <p><strong>requestId:</strong> {{postponed.requestId}}</p>
+              </div>        
+            </div> 
+          </ion-row>
+          
+          <ion-row *ngIf="item.Cancelled.length > 0" style="padding:10px;">
+            <div>
+              <h2>Cancelled</h2>
+              <div *ngFor="let cancelled of item.Cancelled; let i = index">
+                <p><strong>id:</strong> {{cancelled.id}}</p> 
+                <p><strong>requestId:</strong> {{cancelled.requestId}}</p> 
+                <p><strong>orderId:</strong> {{cancelled.orderId}}</p>
+                <p><strong>statusType:</strong> {{cancelled.statusType}}</p>
+                <p><strong>setOn:</strong> {{cancelled.setOn}}</p>
+                <p><strong>cancellationReason:</strong> {{cancelled.cancellationReason}}</p>
+              </div>        
+            </div> 
+          </ion-row>
+      
+          <ion-row *ngIf="item.Rejected.length > 0" style="padding:10px;">
+            <div>
+              <h2>Rejected</h2>
+              <ion-button>Neu Hinzufügen</ion-button>
+              <div *ngFor="let rejected of item.Rejected; let i = index">
+                <p><strong>id:</strong> {{rejected.id}}</p> 
+                <p><strong>requestId:</strong> {{rejected.requestId}}</p> 
+                <p><strong>orderId:</strong> {{rejected.orderId}}</p>
+                <p><strong>statusType:</strong> {{rejected.statusType}}</p>
+                <p><strong>reason:</strong> {{rejected.reason}}</p>
+                <p><strong>reasonText:</strong> {{rejected.reasonText}}</p>
+              </div>        
+            </div> 
+          </ion-row>
+      
+          <ion-row *ngIf="item.ClosedContractPartner.length > 0" style="padding:10px;">
+            <div>
+              <h2>ClosedContractPartner</h2>
+              <div *ngFor="let closedContractPartner of item.ClosedContractPartner; let i = index">
+                <p><strong>id:</strong> {{closedContractPartner.id}}</p> 
+                <p><strong>requestId:</strong> {{closedContractPartner.requestId}}</p> 
+                <p><strong>orderId:</strong> {{closedContractPartner.orderId}}</p>
+                <p><strong>orderstatusType:</strong> {{closedContractPartner.orderstatusType}}</p>
+                <p><strong>setOn:</strong> {{closedContractPartner.setOn}}</p>
+                <p><strong>deficiencyDescription:</strong> {{closedContractPartner.deficiencyDescription}}</p>
+                <p><strong>registrationHealthAuthoritiesOn:</strong> {{closedContractPartner.registrationHealthAuthoritiesOn}}</p>
+                <p><strong>extraordinaryExpenditureReason:</strong> {{closedContractPartner.extraordinaryExpenditureReason}}</p>
+              </div>        
+            </div> 
+          </ion-row>
+      
+          <ion-row *ngIf="item.NotPossible.length > 0" style="padding:10px;">
+            <div>
+              <h2>NotPossible</h2>
+              <div *ngFor="let notPossible of item.NotPossible; let i = index">
+                <p><strong>id:</strong> {{notPossible.id}}</p> 
+                <p><strong>requestId:</strong> {{notPossible.requestId}}</p> 
+                <p><strong>orderId:</strong> {{notPossible.orderId}}</p>
+                <p><strong>statusType:</strong> {{notPossible.orderstatusType}}</p>
+                <p><strong>setOn:</strong> {{notPossible.setOn}}</p>
+              </div>        
+            </div> 
+          </ion-row>
+      </div>
+      </div>
+  </div>  
+  </ion-grid>
+</ion-content>

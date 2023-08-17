@@ -1,0 +1,13 @@
+<ion-row style="padding:10px;">
+  <div>
+      <ion-toolbar color="primary">
+          <ion-title>{{ title }}</ion-title>
+      </ion-toolbar>
+      <ion-list *ngFor="let item of items; let i = index">
+          <ion-item *ngFor="let key of Object.keys(item)">
+              <ion-label><strong>{{ key }}:</strong></ion-label> 
+              <ion-note slot="end">{{ item[key] }}</ion-note>
+          </ion-item> 
+      </ion-list>        
+  </div> 
+</ion-row>   

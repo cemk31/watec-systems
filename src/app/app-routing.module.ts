@@ -65,6 +65,34 @@ const routes: Routes = [
     path: 'auftrag-detail',
     loadChildren: () => import('./pages/auftrag-detail/auftrag-detail.module').then(m => m.AuftragDetailPageModule)
   },
+  {
+    path: 'create-customer',
+    loadChildren: () => import('./pages/create-customer/create-customer.module').then( m => m.CreateCustomerPageModule)
+  },
+  {
+    path: 'ista',
+    loadChildren: () => import('./pages/ista/ista.module').then( m => m.IstaPageModule)
+  },
+  {
+    path: 'ista-order-list',
+    loadChildren: () => import('./pages/ista-order-list/ista-order-list.module').then( m => m.IstaOrderListPageModule)
+  },
+  {
+    path: 'ista-order-detail',
+    loadChildren: () => import('./pages/ista-order-detail/ista-order-detail.module').then( m => m.IstaOrderDetailPageModule)
+  },
+  {
+    path: 'list',
+    loadChildren: () => import('./pages/list/list.module').then( m => m.ListPageModule)
+  },
+  {
+    path: 'test',
+    loadChildren: () => import('./pages/test/test.module').then( m => m.TestPageModule)
+  },
+  {
+    path: 'create-ista-order',
+    loadChildren: () => import('./pages/create-ista-order/create-ista-order.module').then( m => m.CreateIstaOrderPageModule)
+  },
 ];
 
 @NgModule({

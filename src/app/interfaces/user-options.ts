@@ -5,4 +5,5 @@ export interface UserOptions {
   token: string
   firstName: string;
   lastName: string;
+  userRole: string;
 }

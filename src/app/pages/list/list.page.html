@@ -1,0 +1,17 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Ionic Search Filter Demo
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  <ion-searchbar placeholder="Suche..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  <ion-list>  
+    <ion-item *ngFor="let data of userRecords | filter:filterTerm">
+      <ion-label>{{data.id}}</ion-label>
+      <ion-label>{{data.name}}</ion-label>
+      <ion-label>{{data.email}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>

@@ -117,6 +117,69 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'create-customer',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../create-customer/create-customer.module').then(m => m.CreateCustomerPageModule)
+          }
+        ]
+      },
+      {
+        path: 'ista',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista/ista.module').then(m => m.IstaPageModule)
+          }
+        ]
+      },
+      {
+        path: 'ista-order-list',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-list/ista-order-list.module').then(m => m.IstaOrderListPageModule)
+          }
+        ]
+      },
+      {
+        path: 'ista-order-detail',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-detail/ista-order-detail.module').then(m => m.IstaOrderDetailPageModule)
+          }
+        ]
+      },
+      {
+        path: 'test',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../test/test.module').then(m => m.TestPageModule)
+          }
+        ]
+      },
+      {
+        path: 'create-ista-order',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../create-ista-order/create-ista-order.module').then(m => m.CreateIstaOrderPageModule)
+          }
+        ]
+      },
+      {
+        path: 'list',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../list/list.module').then(m => m.ListPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'

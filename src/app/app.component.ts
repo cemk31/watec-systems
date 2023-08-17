@@ -19,6 +19,7 @@ import { LoginPage } from './pages/login/login';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+  isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
   appPages = [
     {
       title: 'Home',
@@ -46,6 +47,11 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
+      title: 'Kunde anlegen',
+      url: '/app/tabs/create-customer',
+      icon: 'person'
+    },
+    {
       title: 'Auftrag anlegen',
       url: '/app/tabs/auftrag',
       icon: 'person'
@@ -60,6 +66,40 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/auftrag-detail',
       icon: 'person'
     },
+    {
+      title: 'ISTA',
+      url: '/app/tabs/ista',
+      icon: 'person'
+    }
+    ,
+    {
+      title: 'ISTA LIST',
+      url: '/app/tabs/ista-order-list',
+      icon: 'person'
+    }
+    ,
+    {
+      title: 'ISTA DETAIL',
+      url: '/app/tabs/ista-order-detail',
+      icon: 'person'
+    }
+    ,
+    {
+      title: 'Test Liste',
+      url: '/app/tabs/list',
+      icon: 'person'
+    }
+    ,
+    {
+      title: 'Test 2',
+      url: '/app/tabs/test',
+      icon: 'person'
+    },
+    {
+      title: 'ISTA Kundenkontakt erstellen',
+      url: '/app/tabs/create-ista-order',
+      icon: 'water'
+    }
   ];
   personalPages = [
     {
@@ -68,7 +108,18 @@ export class AppComponent implements OnInit {
       icon: 'settings'
     },
   ];
-  loggedIn = false;
+  otherPages = [
+    {
+      title: 'Login',
+      url: '/login',
+      icon: 'person'
+    },
+    {
+      title: 'Registrieren',
+      url: '/signup',
+      icon: 'person'
+    },
+  ];
   dark = true;
 
   constructor(
@@ -88,8 +139,6 @@ export class AppComponent implements OnInit {
   async ngOnInit() {
     if (!sessionStorage.getItem("access_token")) {
       this.router.navigateByUrl("login");
-    } else {
-      this.loggedIn = true;
     }
     this.checkLoginStatus();
     this.listenForLoginEvents();
@@ -130,7 +179,7 @@ export class AppComponent implements OnInit {
 
   updateLoggedInStatus(loggedIn: boolean) {
     setTimeout(() => {
-      this.loggedIn = loggedIn;
+      // this.loggedIn = loggedIn;
     }, 300);
   }
 
@@ -153,6 +202,7 @@ export class AppComponent implements OnInit {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("loggedIn");
     sessionStorage.setItem("loggedOut", "true");
+    localStorage.removeItem('isUserLoggedIn'); 
     this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
