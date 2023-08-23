@@ -1,108 +1,126 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgForm } from '@angular/forms';
-import { throwError } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormControl, Validators, NgForm } from "@angular/forms";
+import { throwError } from "rxjs";
+import { map, catchError } from "rxjs/operators";
+import { environment } from "../../../environments/environment";
 
 @Component({
-  selector: 'app-ista-order-detail',
-  templateUrl: './ista-order-detail.page.html',
-  styleUrls: ['./ista-order-detail.page.scss'],
+  selector: "app-ista-order-detail",
+  templateUrl: "./ista-order-detail.page.html",
+  styleUrls: ["./ista-order-detail.page.scss"],
 })
 export class IstaOrderDetailPage implements OnInit {
+  closedContractPartner = {
+    order: {
+      number: "B2023-0001",
+      remarkExternal: "Bemerkung zur Bestellung.",
+    },
+    orderstatusType: "In Bearbeitung",
+    setOn: new Date().toISOString(),
+    customerContacts: [
+      {
+        customerContactAttemptOn: new Date().toISOString(),
+        contactPersonCustomer: "Max Mustermann",
+        agentCP: "Agent 001",
+        result: "Erfolgreich",
+        remark: "Keine Bemerkungen.",
+      },
+      // ... Sie können mehr Einträge hier hinzufügen
+    ],
+    deficiencyDescription: "Beschreibung des Mangels...",
+    extraordinaryExpenditureReason: "Grund für außergewöhnlichen Aufwand...",
+    suppliedDocuments: [
+      {
+        type: "Rechnung",
+        content: "Rechnung für März 2023.",
+      },
+      {
+        type: "Vertrag",
+        content: "Vertrag mit Lieferant X.",
+      },
+      // ... Sie können mehr Einträge hier hinzufügen
+    ],
+    recordedSystem: [
+      {
+        drinkingWaterFacility: {
+          consecutiveNumber: 1,
+          usageType: "Gewerblich",
+          heatExchangerSystem_central: true,
+          heatExchangerSystem_districtheating: false,
+          heatExchangerSystem_continuousflowprinciple: true,
+          drinkingWaterHeaters: [
+            {
+              consecutiveNumber: 1,
+              // ... Andere Eigenschaften ...
+              unit: {
+                floor: "EG",
+                storey: "1. OG",
+                building: {
+                  address: {
+                    street: "Musterstraße 123",
+                  },
+                },
+              },
+            },
+          ],
+        },
+      },
+    ],
+  };
 
-  orderForm: FormGroup;
-  order: any[];  // change this according to your data type
-  exceptionMessage = null;
-  showButtons = false;
-  editModes: {[key: number]: boolean} = {}; // Track the edit mode of each order by id
-  editingIndex: number | null = null; // Track the index of the item being edited
-  selectedOrderIdForEdit: number = null; // Add this line
+  constructor(private http: HttpClient) {}
 
-                    showPlanned: boolean = false;
-  showReceived: boolean = false;
-  showRejected: boolean = false;
+  ngOnInit() {}
 
-
-  // order = {
-  //   number: '',
-  //   remarkExternal: ''
-  //   // add other fields as needed
-  // };
-  
-  constructor(private http: HttpClient) { }
-
-  ngOnInit() {
-    this.initForm();
-    this.mockupOrderData();
-    this.getStatusColor('Received');
-  }
-
-  initForm() {
-    this.orderForm = new FormGroup({
-      'number': new FormControl(null, Validators.required),
-      'remarkExternal': new FormControl(null)
-      // add other fields as needed
+    // Methode zum Hinzufügen von Dokumenten
+  addDocument() {
+    this.closedContractPartner.suppliedDocuments.push({
+      type: '',
+      content: ''
     });
   }
 
-
-  onSubmit(form: NgForm) {
-    if (!form.valid) {
-      return;
-    }
-    console.log(form.value);
-    // Here, you would typically send the form data to your backend to update the order
+  addDrinkingWaterHeater() {
+    // Nehmen wir an, Sie möchten einen Erhitzer zum ersten `drinkingWaterFacility` im `recordedSystem` Array hinzufügen.
+    // Wenn Sie es zu einem anderen Element hinzufügen möchten, ändern Sie den Index entsprechend.
+    this.closedContractPartner.recordedSystem[0].drinkingWaterFacility.drinkingWaterHeaters.push({
+      consecutiveNumber: null,
+      inletTemperatureDisplayPresent: false,
+      inletTemperature: null,
+      outletTemperatureDisplayPresent: false,
+      outletTemperature: null,
+      volumeLitre: null,
+      roomType: '',
+      roomPosition: null,
+      positionDetail: '',
+      pipeDiameterOutlet: '',
+      pipeMaterialtypeOutlet: '',
+      unit: {
+        floor: '',
+        storey: '',
+        building: {
+          address: {
+            street: ''
+            // ... Andere Adressfelder hier ...
+          }
+        }
+      }
+    });
   }
-
-  enableEditMode(index: number) {
-    // Toggle the edit mode of the selected order
-    this.editModes[index] = !this.editModes[index];
+  
+  addRecordedSystem() {
+    this.closedContractPartner.recordedSystem.push({
+      drinkingWaterFacility: {
+        consecutiveNumber: null,
+        usageType: '',
+        heatExchangerSystem_central: false,
+        heatExchangerSystem_districtheating: false,
+        heatExchangerSystem_continuousflowprinciple: false,
+        drinkingWaterHeaters: [],
+      },
+    });
   }
+  
 
-  mockupOrderData(){
-    const accessToken = sessionStorage.getItem("access_token");
-    let headers = new HttpHeaders();
-    if (accessToken) {
-      headers = headers.append('Authorization', `Bearer ${accessToken}`);
-    }
-    this.http.get<any[]>(environment.backend + environment.url.ista.url + "/1", { headers })
-    .pipe(
-      map(response => {
-        this.order = response;
-        return response;
-      }),
-      catchError((error) => {
-        this.exceptionMessage = error.error.message;
-        return throwError(error);
-      })
-    )
-    .subscribe();
-  }
-
-  getStatusColor(status: string): string {
-    if (status === 'Received') {
-      return 'green';
-    } else if (status === 'Planned') {
-      return 'yellow';
-    } else {
-      return 'white';  // Default color
-    }
-  }
-
-  toggleButtons() {
-    this.showButtons = !this.showButtons;
-  }
-
-  toggleEditMode(id: number) {
-    // Check if this id is already being edited
-    if (this.selectedOrderIdForEdit === id) {
-      // If yes, then on click it will close the editing mode
-      this.selectedOrderIdForEdit = null;
-    } else {
-      // Otherwise, it will set the selectedOrderIdForEdit to this id
-      this.selectedOrderIdForEdit = id;
-    }
-  }
 }

@@ -1,321 +1,555 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>Order</ion-title>
+    <ion-title>Info Auftrag</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary">
+        <ion-icon name="create"></ion-icon>
+        Bearbeiten
+      </ion-button>
+      <ion-button color="danger">
+        <ion-icon name="trash"></ion-icon>
+        Löschen
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form (ngSubmit)="onSubmit(orderForm)" #orderForm="ngForm">
-    <ion-row>
-      <ion-col>
-        <ion-toolbar>
-          Status
-        </ion-toolbar>
+<ion-content padding>
+
+  <details>
+    <summary>Details</summary>
+    Here is a sample text
+  </details>
+
+  <ion-card color="light"> <!-- farbliche Box -->
+    <ion-card-content>
+      <ion-grid>
+        <h2 style="padding:10px;">Allgemeine Informationen</h2>
+        <h3 style="padding:10px;">Erstellt am: </h3>
         <ion-row>
-          <ion-button color="secondary" *ngIf="order.actualStatus === 'RECEIVED' || showButtons" expand="block">RECEIVED</ion-button>
-          <ion-button color="success" *ngIf="order.actualStatus === 'PLANNED' || showButtons" expand="block">PLANNED</ion-button>
-          <ion-button color="warning" *ngIf="order.actualStatus === 'NOT POSSIBLE' || showButtons" expand="block">NOT POSSIBLE</ion-button>
-          <ion-button color="dark" *ngIf="order.actualStatus === 'POSTPONED' || showButtons" expand="block">POSTPONED</ion-button>
-          <ion-button color="danger" *ngIf="order.actualStatus === 'REJECTED' || showButtons" expand="block">REJECTED</ion-button>
-          <ion-button color="medium" *ngIf="order.actualStatus === 'CLOSED' || showButtons" expand="block">CLOSED</ion-button>
-        
-          <ion-button (click)="toggleButtons()"><ion-icon name="create-outline"></ion-icon></ion-button>
+          <!-- Linke Spalte -->
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label position="floating">Auftrag</ion-label>
+              <ion-input value="123456789" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label position="floating">Vertrag</ion-label>
+              <ion-input value="123456789" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label position="floating">Liegenschaft</ion-label>
+              <ion-input value="123456789" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input value="Mustermann" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Anschrift</ion-label>
+              <ion-input value="Musterstrasse 1" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">PLZ</ion-label>
+              <ion-input value="12345" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">ORT</ion-label>
+              <ion-input value="Musterstadt" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Land</ion-label>
+              <ion-input value="DE" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+          <!-- Rechte Spalte -->
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label position="floating">Kunde</ion-label>
+              <ion-input value="123456789" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input value="Mustermann" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Anschrift</ion-label>
+              <ion-input value="Musterstrasse 1" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">PLZ</ion-label>
+              <ion-input value="12345" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">ORT</ion-label>
+              <ion-input value="Musterstadt" readonly></ion-input>
+            </ion-item>
+            <ion-item lines="none">
+              <ion-label position="floating">Land</ion-label>
+              <ion-input value="DE" readonly></ion-input>
+            </ion-item>
+          </ion-col>
+
+          <ion-col>
+            <ion-item lines="none">
+              <ion-label position="floating">Rahmenvertrag</ion-label>
+              <ion-input value="123456789" readonly></ion-input>
+            </ion-item>
+          </ion-col>
         </ion-row>
-      </ion-col>
+      </ion-grid>
 
-      <ion-col>
-        <ion-row>
-          <ion-button disabled expand="block">Synchronization</ion-button>
-        </ion-row>
-        <ion-row>
-          <ion-button color="secondary" expand="block">STATUS</ion-button>
-          <ion-button color="success" expand="block"><ion-icon name="refresh-outline"></ion-icon></ion-button>
-        </ion-row>
-      </ion-col>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Ausführung vor Ort nicht möglich</ion-card-title>
+      <!-- Die Buttons oben in der Card -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" size="small">bearbeiten</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="success" size="small">An ISTA übermitteln</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
 
-      <ion-col></ion-col>
+      <ion-item>
+        <ion-label position="floating">Nichtausführgrund</ion-label>
+        <ion-select placeholder="Grund auswählen">
+          <ion-select-option value="grund1">Grund 1</ion-select-option>
+          <ion-select-option value="grund2">Grund 2</ion-select-option>
+          <!-- Weitere Optionen können hinzugefügt werden -->
+        </ion-select>
+      </ion-item>
 
-      <ion-col></ion-col>
-      <ion-col></ion-col>
-    </ion-row>
-    <ion-item>
-      <ion-label>Number:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.number" name="number" required></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">Nichtausführgrund Text</ion-label>
+        <ion-input type="text" readonly></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Remark External:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.remarkExternal" name="remarkExternal"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label position="floating">An ISTA Übertragen</ion-label>
+        <ion-input type="text" value="ja / nein" readonly></ion-input>
+      </ion-item>
 
-    <ion-item>
-      <ion-label>Erstellt am:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.createdAt" name="createdAt"></ion-input>
-    </ion-item>
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Geplant</ion-card-title>
+      <!-- Die Buttons oben in der Card -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" size="small">bearbeiten</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="success" size="small">An ISTA übermitteln</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
 
-    <ion-toolbar color="primary">
-      <ion-title>Aktivitäten</ion-title>
-      <ion-buttons slot="primary">
-        <ion-button> Erstellen 
-          <ion-icon slot="end" name="create"></ion-icon>
-        </ion-button>
-        <ion-button fill="outline">
-          mehr
-          <ion-icon name="arrow-down-outline"></ion-icon>
-        </ion-button>
+      <ion-item>
+        <ion-label position="floating">Vereinbarter Detailtermin</ion-label>
+        <ion-input type="text" value="12.04.2023" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Uhrzeit von - bis</ion-label>
+        <ion-input type="text" value="11.00 - 13.00" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Grund Terminverschiebung</ion-label>
+        <ion-input type="text" value="Kundenwunsch" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Grund Terminierverschiebung</ion-label>
+        <ion-input type="text" value="test" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">An ISTA Übertragen</ion-label>
+        <ion-input type="text" value="ja / nein" readonly></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Terminierung begonnen</ion-card-title>
+      <!-- Die Buttons oben in der Card -->
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full" size="small">bearbeiten</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="success" size="small">An Ista übermitteln</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label position="floating">begonnen am</ion-label>
+        <ion-input type="text" value="01.11.2023" readonly></ion-input>
+      </ion-item>
+
+    </ion-card-content>
+  </ion-card>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Kundenkontakt erfolgt</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+
+      <ion-item>
+        <ion-label position="floating">Kundenkontakt am</ion-label>
+        <ion-input type="text" value="10.10.2023" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Geplanter Grobtermin</ion-label>
+        <ion-input type="text" value="12.10.2023" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Labor</ion-label>
+        <ion-input type="text" value="Dr. Max Mustermann" readonly></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">An Ista übertragen</ion-label>
+        <ion-select>
+          <ion-select-option value="yes">ja</ion-select-option>
+          <ion-select-option value="no">nein</ion-select-option>
+        </ion-select>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button expand="full">bearbeiten</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="danger">löschen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button expand="full" color="success">An Ista übermitteln</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- <ion-card>
+    <ion-card-header>
+      <ion-card-title>Übernahme TWA</ion-card-title>
+      <ion-buttons slot="end">
+        <ion-button color="primary" (click)="editItem()">Bearbeiten</ion-button>
+        <ion-button color="danger" (click)="deleteItem()">Löschen</ion-button>
       </ion-buttons>
-    </ion-toolbar>
-    <div *ngIf="order.Received.length > 0">
-      <ng-container *ngFor="let received of order.Received; let i = index">
-        <ion-toolbar  color="danger">
-            <ion-title>Received - (ID: {{received.id}})</ion-title>
-        </ion-toolbar>
-        <ion-toolbar color="danger">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline" (click)="showReceived = !showReceived">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.orderId" name="orderId" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.orderstatusType" name="orderstatusType" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.requestId" name="requestId" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="received.setOn" name="setOn" [disabled]="!editModes[received.id]"></ion-datetime>
-        </ion-item>
-      </ng-container>
-    </div>
-
-    <div *ngIf="order.Planned.length > 0">
-      <ng-container *ngFor="let planned of order.Planned; let i = index">
-        <ion-toolbar color="success">
-          <ion-title>Planned - (ID: {{planned.id}})</ion-title>
-        </ion-toolbar> 
-        <ion-toolbar color="success">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.orderId" name="orderId" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="planned.setOn" name="setOn"></ion-datetime>
-        </ion-item>
-        <!-- add other fields similarly -->
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.requestId" name="requestId" appearance="outline"></ion-input>
-        </ion-item>
-      </ng-container>
-    </div>
-
-    <div *ngIf="order.Postponed.length > 0">
-      <ng-container *ngFor="let postponed of order.Postponed; let i = index">
-        <ion-toolbar color="success">
-          <ion-title>Postponed - (ID: {{postponed.id}})</ion-title>
-        </ion-toolbar> 
-        <ion-toolbar color="success">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.orderId" name="orderId" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="postponed.setOn" name="setOn"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.requestId" name="requestId" appearance="outline"></ion-input>
-        </ion-item>
-      </ng-container>
-    </div>
-
-        <div *ngIf="order.Cancelled.length > 0">
-          <ng-container *ngFor="let cancelled of order.Cancelled; let i = index">
-            <ion-toolbar color="warning">
-              <ion-title>Cancelled - (ID: {{cancelled.id}})</ion-title>
-            </ion-toolbar>
-            <ion-toolbar color="warning">
-              <ion-buttons slot="primary">
-                <ion-button fill="outline">
-                  Bearbeiten
-                  <ion-icon slot="end" name="create"></ion-icon>
-                </ion-button>
-                <ion-button fill="outline">
-                  mehr
-                  <ion-icon name="arrow-down-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-            <ion-item>
-              <ion-label position="stacked"><strong>Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.id" name="id" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.requestId" name="requestId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.orderId" name="orderId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.statusType" name="statusType" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-              <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="cancelled.setOn" name="setOn"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Cancellation Reason:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.cancellationReason" name="cancellationReason" appearance="outline"></ion-input>
-            </ion-item>
-          </ng-container>
-        </div>
-
-        <div *ngIf="order.Rejected.length > 0">
-          <ng-container *ngFor="let rejected of order.Rejected; let i = index">
-            <ion-toolbar color="warning">
-              <ion-title>Rejected - (ID: {{rejected.id}})</ion-title>
-            </ion-toolbar>
-            <ion-toolbar color="warning">
-              <ion-buttons slot="primary">
-                <ion-button fill="outline">
-                  Bearbeiten
-                  <ion-icon slot="end" name="create"></ion-icon>
-                </ion-button>
-                <ion-button fill="outline">
-                  mehr
-                  <ion-icon name="arrow-down-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-            <ion-item>
-              <ion-label position="stacked"><strong>Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.id" name="id" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.requestId" name="requestId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.orderId" name="orderId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.statusType" name="statusType" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Reason:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.reason" name="reason" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Reason Text:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.reasonText" name="reasonText" appearance="outline"></ion-input>
-            </ion-item>
-          </ng-container>
-        </div>
-
-      <div *ngIf="order.ClosedContractPartner.length > 0" style="padding:10px;">
-        <ion-toolbar color="warning">
-          <ion-title>ClosedContractPartner</ion-title>
-        </ion-toolbar>
-        <ion-toolbar color="warning">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ng-container *ngFor="let closedContractPartner of order.ClosedContractPartner; let i = index">
-          <ion-item>
-            <ion-label color="primary"><strong>Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.id}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Request Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.requestId}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Order Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.orderId}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Orderstatus Type:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.orderstatusType}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Set On:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.setOn}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Deficiency Description:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.deficiencyDescription}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Registration Health Authorities On:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.registrationHealthAuthoritiesOn}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Extraordinary Expenditure Reason:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.extraordinaryExpenditureReason}}</ion-note>
-          </ion-item>
-        </ng-container>
-      </div>
+    </ion-card-header>
   
+    <ion-card-content>
+  
+      <ion-list>
+        <ion-list-header>
+          <ion-card-title>Kundenkontakte</ion-card-title>
+          <ion-button>See All</ion-button>
+        </ion-list-header>
+        <ion-item *ngFor="let contact of customerContacts">
+          <ion-label position="stacked">Kontakt am:</ion-label>
+          <ion-input type="datetime" [(ngModel)]="contact.customerContactAttemptOn"></ion-input>
+  
+          <ion-label position="stacked">Agent:</ion-label>
+          <ion-input type="text" [(ngModel)]="contact.agentCP"></ion-input>
+  
+          <ion-label position="stacked">Ergebnis:</ion-label>
+          <ion-input type="text" [(ngModel)]="contact.result"></ion-input>
+  
+          <ion-label position="stacked">Bemerkung:</ion-label>
+          <ion-textarea [(ngModel)]="contact.remark"></ion-textarea>
+        </ion-item>
+      </ion-list>
+  
+      <ion-list>
+        <ion-list-header>
+          <ion-card-title>Trinkwasseruntersuchung</ion-card-title>
+          <ion-button>See All</ion-button>
+        </ion-list-header>
+        <ion-label position="stacked">Facility fortlaufende Nummer:</ion-label>
+        <ion-input type="number" [(ngModel)]="drinkingWaterFacility.consecutiveNumber"></ion-input>
+  
+        <ion-label position="stacked">Gebrauchstyp:</ion-label>
+        <ion-input type="text" [(ngModel)]="drinkingWaterFacility.usageType"></ion-input>
+  
+        <ion-label position="stacked">Gesamtvolumentyp:</ion-label>
+        <ion-input type="number" [(ngModel)]="drinkingWaterFacility.totalVolumeLitres"></ion-input>
+  
+        <ion-label position="stacked">Erklärung:</ion-label>
+        <ion-textarea [(ngModel)]="drinkingWaterFacility.explanation"></ion-textarea>
+      </ion-list>
+  
+      <ion-list>
+        <ion-list-header>
+          <ion-title>Services</ion-title>
+          <ion-button slot="end">See All</ion-button>
+        </ion-list-header>
+        <ion-item *ngFor="let service of services">
+          <ion-label position="stacked">Artikelnummer:</ion-label>
+          <ion-input type="text" [(ngModel)]="service.articleNumber_ista"></ion-input>
+  
+          <ion-label position="stacked">Menge:</ion-label>
+          <ion-input type="number" [(ngModel)]="service.quantity"></ion-input>
+  
+          <ion-label position="stacked">Einheit:</ion-label>
+          <ion-input type="text" [(ngModel)]="service.unit"></ion-input>
+  
+          <ion-label position="stacked">Kaufpreis:</ion-label>
+          <ion-input type="number" [(ngModel)]="service.purchasePrice_ista"></ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card> -->
 
-    <ion-button expand="full" type="submit">Submit</ion-button>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Bestellstatusbericht</ion-card-title>
+      <ion-buttons slot="end">
+        <ion-button color="primary">Speichern</ion-button>
+        <ion-button color="danger">Löschen</ion-button>
+      </ion-buttons>
+    </ion-card-header>
 
-  </form>
+    <ion-card-content>
+      <!-- ClosedContractPartner -->
+      <ion-item-divider><strong>Geschlossener Vertragspartner</strong></ion-item-divider>
+
+      <!-- Order -->
+      <ion-item>
+        <ion-label position="stacked">Bestellnummer</ion-label>
+        <ion-input type="text" [(ngModel)]="closedContractPartner.order.number" placeholder="{{order_no}}"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Externe Bemerkung</ion-label>
+        <ion-textarea [(ngModel)]="closedContractPartner.order.remarkExternal" placeholder="remark"></ion-textarea>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Order Status Typ</ion-label>
+        <ion-input type="text" [(ngModel)]="closedContractPartner.orderstatusType"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Gesetzt am</ion-label>
+        <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="closedContractPartner.setOn"></ion-datetime>
+      </ion-item>
+
+      <!-- Customer Contacts -->
+      <ion-item-divider><strong>Kundenkontakte</strong></ion-item-divider>
+
+      <div *ngFor="let contact of closedContractPartner.customerContacts">
+        <ion-item>
+          <ion-label position="stacked">Kontaktversuch am</ion-label>
+          <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="contact.customerContactAttemptOn"></ion-datetime>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Ansprechpartner Kunde</ion-label>
+          <ion-input type="text" [(ngModel)]="contact.contactPersonCustomer"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Agent CP</ion-label>
+          <ion-input type="text" [(ngModel)]="contact.agentCP"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Ergebnis</ion-label>
+          <ion-input type="text" [(ngModel)]="contact.result"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Bemerkung</ion-label>
+          <ion-textarea [(ngModel)]="contact.remark"></ion-textarea>
+        </ion-item>
+      </div>
+
+      <!-- Additional Fields for ClosedContractPartner -->
+      <ion-item-divider><strong>Deficiency Description</strong></ion-item-divider>
+      <ion-item>
+        <ion-label position="stacked">Deficiency Description</ion-label>
+        <ion-input type="text" [(ngModel)]="closedContractPartner.deficiencyDescription"></ion-input>
+      </ion-item>
+
+      <ion-item-divider><strong>Extraordinary Expenditure Reason</strong></ion-item-divider>
+      <ion-item>
+        <ion-label position="stacked">Extraordinary Expenditure Reason</ion-label>
+        <ion-input type="text" [(ngModel)]="closedContractPartner.extraordinaryExpenditureReason"></ion-input>
+      </ion-item>
+
+      <!-- Supplied Documents -->
+      <ion-item-divider><strong>Gelieferte Dokumente</strong></ion-item-divider>
+      <div *ngFor="let doc of closedContractPartner.suppliedDocuments; let i = index">
+        <ion-item>
+          <ion-label position="stacked">Dokumenttyp (Index: {{i+1}})</ion-label>
+          <ion-input type="text" [(ngModel)]="doc.type"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="stacked">Inhalt (Index: {{i+1}})</ion-label>
+          <ion-input type="text" [(ngModel)]="doc.content"></ion-input>
+        </ion-item>
+      </div>
+      <ion-button (click)="addDocument()">Dokument hinzufügen</ion-button>
+
+      <ion-item-divider><strong>Aufgezeichnetes System</strong></ion-item-divider>
+      <div *ngFor="let system of closedContractPartner.recordedSystem; let i = index">
+        <ion-item-divider><strong>Trinkwassereinrichtung (Index: {{i+1}})</strong></ion-item-divider>
+
+        <ion-item>
+          <ion-label position="stacked">Lfd. Nr.</ion-label>
+          <ion-input type="number" [(ngModel)]="system.drinkingWaterFacility.consecutiveNumber"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Verwendungstyp</ion-label>
+          <ion-input type="text" [(ngModel)]="system.drinkingWaterFacility.usageType"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Wärmetauschersystem (zentral)</ion-label>
+          <ion-checkbox [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_central"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Wärmetauschersystem (Fernheizung)</ion-label>
+          <ion-checkbox [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_districtheating"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Wärmetauschersystem (Durchflussprinzip)</ion-label>
+          <ion-checkbox
+            [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_continuousflowprinciple"></ion-checkbox>
+        </ion-item>
+
+        <ion-item-divider><strong>Trinkwassererhitzer</strong></ion-item-divider>
+        <div *ngFor="let heater of system.drinkingWaterFacility.drinkingWaterHeaters; let h = index">
+          <ion-item-divider><strong>Trinkwassererhitzer (Index: {{h+1}})</strong></ion-item-divider>
+  
+          <ion-item>
+            <ion-label position="stacked">Lfd. Nr.</ion-label>
+            <ion-input type="number" [(ngModel)]="heater.consecutiveNumber"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Einlauftemperaturanzeige vorhanden</ion-label>
+            <ion-checkbox [(ngModel)]="heater.inletTemperatureDisplayPresent"></ion-checkbox>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Einlauftemperatur</ion-label>
+            <ion-input type="number" [(ngModel)]="heater.inletTemperature"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Auslauftemperaturanzeige vorhanden</ion-label>
+            <ion-checkbox [(ngModel)]="heater.outletTemperatureDisplayPresent"></ion-checkbox>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Auslauftemperatur</ion-label>
+            <ion-input type="number" [(ngModel)]="heater.outletTemperature"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Volumen (Liter)</ion-label>
+            <ion-input type="number" [(ngModel)]="heater.volumeLitre"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Raumtyp</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.roomType"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Raumposition</ion-label>
+            <ion-input type="number" [(ngModel)]="heater.roomPosition"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Positionsbeschreibung</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.positionDetail"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Rohrdurchmesser (Auslauf)</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.pipeDiameterOutlet"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Rohrmaterial (Auslauf)</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.pipeMaterialtypeOutlet"></ion-input>
+          </ion-item>
+
+          <!-- Gebäudeeinheit -->
+          <ion-item-divider><strong>Einheit</strong></ion-item-divider>
+          <ion-item>
+            <ion-label position="stacked">Etage</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.unit.floor"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label position="stacked">Geschoss</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.unit.storey"></ion-input>
+          </ion-item>
+  
+          <!-- ... und so weiter für alle Felder innerhalb der Gebäudeeinheit ... -->
+  
+          <!-- Adresse des Gebäudes -->
+          <ion-item-divider><strong>Gebäudeadresse</strong></ion-item-divider>
+          <ion-item>
+            <ion-label position="stacked">Straße</ion-label>
+            <ion-input type="text" [(ngModel)]="heater.unit.building.address.street"></ion-input>
+          </ion-item>
+  
+          <!-- ... und so weiter für alle Felder innerhalb der Gebäudeadresse ... -->
+        </div>
+      </div>
+
+
+
+      <ion-button (click)="addDrinkingWaterHeater()">Erhitzer hinzufügen</ion-button>
+
+
+      <ion-button (click)="addRecordedSystem()">System hinzufügen</ion-button>
+
+
+      <!-- <ion-item-divider><strong>Eigenschaft</strong></ion-item-divider>
+
+      <ion-item>
+        <ion-label position="stacked">Warmwasserversorgung (zentral)</ion-label>
+        <ion-checkbox [(ngModel)]="property.hotwatersupplyType_central"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Warmwasserversorgung (dezentral)</ion-label>
+        <ion-checkbox [(ngModel)]="property.hotwatersupplyType_decentral"></ion-checkbox>
+      </ion-item> -->
+
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>

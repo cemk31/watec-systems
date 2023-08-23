@@ -67,24 +67,6 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
-      title: 'ISTA',
-      url: '/app/tabs/ista',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA LIST',
-      url: '/app/tabs/ista-order-list',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA DETAIL',
-      url: '/app/tabs/ista-order-detail',
-      icon: 'person'
-    }
-    ,
-    {
       title: 'Test Liste',
       url: '/app/tabs/list',
       icon: 'person'
@@ -95,6 +77,24 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/test',
       icon: 'person'
     },
+    {
+      title: 'ISTA',
+      url: '/app/tabs/ista',
+      icon: 'person'
+    }
+    ,
+    {
+      title: 'ISTA Übersicht',
+      url: '/app/tabs/ista-order-list',
+      icon: 'water'
+    }
+    ,
+    {
+      title: 'ISTA INFO AUFTRAG',
+      url: '/app/tabs/ista-order-detail',
+      icon: 'water'
+    }
+    ,
     {
       title: 'ISTA Kundenkontakt erstellen',
       url: '/app/tabs/create-ista-order',
