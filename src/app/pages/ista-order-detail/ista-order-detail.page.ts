@@ -86,12 +86,10 @@ export class IstaOrderDetailPage implements OnInit {
     // Wenn Sie es zu einem anderen Element hinzufügen möchten, ändern Sie den Index entsprechend.
     this.closedContractPartner.recordedSystem[0].drinkingWaterFacility.drinkingWaterHeaters.push({
       consecutiveNumber: null,
-      inletTemperatureDisplayPresent: false,
-      inletTemperature: null,
-      outletTemperatureDisplayPresent: false,
-      outletTemperature: null,
-      volumeLitre: null,
-      roomType: '',
+      // outletTemperatureDisplayPresent: false,
+      // outletTemperature: null,
+      // volumeLitre: null,
+      // roomType: '',
       roomPosition: null,
       positionDetail: '',
       pipeDiameterOutlet: '',

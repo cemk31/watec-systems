@@ -28,6 +28,13 @@ export class IstaOrderListPage implements OnInit {
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
 
+  userRecords = [
+    { propertyNumber: '12345', company: 'Firma A', customerContact: 'Herr Müller', address: 'Musterstraße 12', zipCode: '10115', city: 'Berlin', phone: '030 12345678', mobile: '0170 1234567', fax: '030 9876543', email: 'info@firma-a.de' },
+    { propertyNumber: '67890', company: 'Firma B', customerContact: 'Frau Schmidt', address: 'Bahnhofstraße 34', zipCode: '20257', city: 'Hamburg', phone: '040 12345678', mobile: '0171 1234567', fax: '040 9876543', email: 'info@firma-b.de' },
+    // ...weitere Datensätze
+  ];
+  
+
   statusForm: FormGroup;
   
   showForm = false; // variable to toggle form

@@ -62,7 +62,7 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
-      title: 'Auftrag Detail',
+      title: 'Auftrag Erstellen (Testkomponente)',
       url: '/app/tabs/auftrag-detail',
       icon: 'person'
     },

@@ -1,16 +1,65 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { ToastController } from '@ionic/angular';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
 
 @Component({
-  selector: 'app-auftrag-detail',
-  templateUrl: './auftrag-detail.page.html',
-  styleUrls: ['./auftrag-detail.page.scss'],
+  selector: 'app-ista-order-received-form',
+  templateUrl: './ista-order-received-form.component.html',
+  styleUrls: ['./ista-order-received-form.component.scss'],
 })
-export class AuftragDetailPage implements OnInit {
+export class IstaOrderReceivedFormComponent implements OnInit {
+  [x: string]: any;
 
-  constructor(private fb: FormBuilder) { }
+  orderForm: FormGroup;
+  isSubmitted = false;
+  exceptionMessage: any;
+  customers: any; 
+
+  getReceivedFormArray(): FormArray {
+    return this.orderForm.get('Received') as FormArray;
+  }
+
+  transferToIsta() {
+    // Logik zum Übertragen an Ista
+  }
+
+  constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController) { }
 
   ngOnInit() {
+    this.orderForm = this.fb.group({
+      propertyNumber: [''], // Liegenschaftsnummer
+      company: [''], // Firma
+      customerContact: [''], // Ansprechpartner Kunde
+      address: [''], // Adresse
+      zipCode: [''], // PLZ
+      city: [''], // Ort
+      phone: [''], // Telefon
+      mobile: [''], // Mobil
+      fax: [''], // Fax
+      email: [''], // E-Mail
+      number: [''],
+      actualStatus: [''],
+      remarkExternal: [''],
+      Received: this.fb.array([
+        this.fb.group({
+          orderstatusType: [''],
+          CustomerContacts: this.fb.array([
+            this.fb.group({
+              contactAttemptOn: [''],
+              contactPersonCustomer: [''],
+              agentCP: [''],
+              result: [''],
+              remark: [''],
+            })
+          ])
+        })
+      ])
+    });
+    
   }
 
   async presentToast() {
@@ -43,8 +92,13 @@ export class AuftragDetailPage implements OnInit {
   } 
 
   getReceivedArray(): FormArray {
-    // Änderung hier: von 'received' zu 'Received'
     return this.orderForm.get('Received') as FormArray;
+  }
+
+  // Der Rest des Codes bleibt unverändert
+
+  get receivedArray(): FormArray { // Definition als Getter-Methode
+    return this.getReceivedArray();
   }
 
   addReceived() {
@@ -52,7 +106,6 @@ export class AuftragDetailPage implements OnInit {
   }
 
   getCustomerContactArray(receivedIndex: number): FormArray {
-    // Änderung hier: von 'customerContacts' zu 'CustomerContacts'
     return this.receivedArray.at(receivedIndex).get('CustomerContacts') as FormArray;
   }
 
@@ -83,10 +136,4 @@ export class AuftragDetailPage implements OnInit {
       this.isSubmitted = true;
     });
   }
-
-  transferToIsta() {
-    console.log("Data transferred to Ista");
-    // Your logic to transfer data to Ista goes here
-  }
-
 }
