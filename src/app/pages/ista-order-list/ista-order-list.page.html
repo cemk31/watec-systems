@@ -10,30 +10,32 @@
   <table>
     <thead>
       <tr>
+        <th>ID</th>
         <th>Liegenschaftsnummer</th>
         <th>Firma</th>
         <th>Ansprechpartner Kunde</th>
-        <th>Adresse</th>
-        <th>PLZ</th>
+        <!-- <th>Strasse</th>
+        <th>PLZ</th> -->
         <th>Ort</th>
         <th>Telefon</th>
         <th>Mobil</th>
-        <th>Fax</th>
         <th>E-Mail</th>
+        <th> </th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let data of userRecords | filter:filterTerm">
-        <td>{{data.propertyNumber}}</td>
-        <td>{{data.company}}</td>
-        <td>{{data.customerContact}}</td>
-        <td>{{data.address}}</td>
-        <td>{{data.zipCode}}</td>
-        <td>{{data.city}}</td>
-        <td>{{data.phone}}</td>
-        <td>{{data.mobile}}</td>
-        <td>{{data.fax}}</td>
-        <td>{{data.email}}</td>
+        <td><ion-input type="text" [(ngModel)]="data.id" placeholder="ID"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.propertyNumber" placeholder="Liegenschaftsnummer"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.company" placeholder="Firma"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.customerContact" placeholder="Ansprechpartner Kunde"></ion-input></td>
+        <!-- <td><ion-input type="text" [(ngModel)]="data.address" placeholder="Adresse"></ion-input></td> -->
+        <!-- <td><ion-input type="text" [(ngModel)]="data.zipCode" placeholder="PLZ"></ion-input></td> -->
+        <td><ion-input type="text" [(ngModel)]="data.city" placeholder="Ort"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.phone" placeholder="Telefon"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.mobile" placeholder="Mobil"></ion-input></td>
+        <td><ion-input type="email" [(ngModel)]="data.email" placeholder="E-Mail"></ion-input></td>
+        <td><ion-button (click)="openDetails(data)">mehr</ion-button></td>
       </tr>
     </tbody>
   </table>

@@ -73,18 +73,18 @@ export class AppComponent implements OnInit {
     }
     ,
     {
-      title: 'Test 2',
+      title: 'Bestelldetail',
       url: '/app/tabs/test',
       icon: 'person'
     },
     {
-      title: 'ISTA',
+      title: 'ISTA Bestellungen',
       url: '/app/tabs/ista',
-      icon: 'person'
+      icon: 'document'
     }
     ,
     {
-      title: 'ISTA Übersicht',
+      title: 'ISTA Übersicht TEST',
       url: '/app/tabs/ista-order-list',
       icon: 'water'
     }

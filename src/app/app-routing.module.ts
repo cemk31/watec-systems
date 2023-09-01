@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
+import { IstaOrderDetailComponent } from './components/ista-order-detail/ista-order-detail.component';
 
 const routes: Routes = [
   {
@@ -78,7 +79,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ista-order-list/ista-order-list.module').then( m => m.IstaOrderListPageModule)
   },
   {
-    path: 'ista-order-detail',
+    path: 'ista-order-detail/:id',
     loadChildren: () => import('./pages/ista-order-detail/ista-order-detail.module').then( m => m.IstaOrderDetailPageModule)
   },
   {
@@ -93,10 +94,14 @@ const routes: Routes = [
     path: 'create-ista-order',
     loadChildren: () => import('./pages/create-ista-order/create-ista-order.module').then( m => m.CreateIstaOrderPageModule)
   },
+  { 
+    path: 'order/:id', 
+    loadChildren: () => import('./components/ista-order-detail/ista-order-detail.component').then(m => m.IstaOrderDetailComponent) 
+  },  
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

@@ -7,27 +7,52 @@
 <ion-content>
   <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
 
-    <div formGroupName="Customer">
-        <ion-col>
-          <ion-item lines="none">
-            <ion-label position="floating">Liegenschaftsnummer</ion-label>
-            <ion-input formControlName="propertyNumber"></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label position="floating">Firma</ion-label>
-            <ion-input formControlName="companyName"></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label position="floating">Vorname (Kunde)</ion-label>
-            <ion-input formControlName="firstName"></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label position="floating">Nachname (Kunde)</ion-label>
-            <ion-input formControlName="lastName"></ion-input>
-          </ion-item>
-          <!-- Weitere Formularelemente für den Kundenbereich -->
-        </ion-col>
-    </div>
+    <ion-col>
+      <ion-item lines="none">
+        <ion-label position="floating">Liegenschaftsnummer</ion-label>
+        <ion-input formControlName="propertyNumber"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Firma</ion-label>
+        <ion-input formControlName="company"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Vorname (Kunde)</ion-label>
+        <ion-input formControlName="firstName"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Nachname (Kunde)</ion-label>
+        <ion-input formControlName="lastName"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Adresse</ion-label>
+        <ion-input formControlName="address"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">PLZ</ion-label>
+        <ion-input formControlName="zipCode"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Ort</ion-label>
+        <ion-input formControlName="city"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Telefon</ion-label>
+        <ion-input formControlName="phone"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Mobil</ion-label>
+        <ion-input formControlName="mobile"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">Fax</ion-label>
+        <ion-input formControlName="fax"></ion-input>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-label position="floating">E-Mail</ion-label>
+        <ion-input formControlName="email" type="email"></ion-input>
+      </ion-item>
+    </ion-col>
     
     <ion-item>
       <ion-label position="floating">Number</ion-label>

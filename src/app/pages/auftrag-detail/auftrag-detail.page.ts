@@ -1,5 +1,10 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { environment } from '../../../environments/environment';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-auftrag-detail',
@@ -8,7 +13,16 @@ import { FormBuilder } from '@angular/forms';
 })
 export class AuftragDetailPage implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
+
+  orderForm: FormGroup; // Definieren Sie das FormGroup-Objekt
+  exceptionMessage: string;
+  customers: any[];
+  isSubmitted: boolean = false;
+  receivedArray: FormArray;
+
+    constructor(private fb: FormBuilder, private http: HttpClient, private toastController: ToastController) {
+    this.orderForm = this.createReceivedFormGroup(); // Initialisieren des FormGroup-Objekts
+  }
 
   ngOnInit() {
   }

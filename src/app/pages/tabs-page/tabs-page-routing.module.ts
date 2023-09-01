@@ -153,7 +153,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'test',
+        path: 'test/:id',
         children: [
           {
             path: '',

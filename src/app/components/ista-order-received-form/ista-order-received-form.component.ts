@@ -31,16 +31,20 @@ export class IstaOrderReceivedFormComponent implements OnInit {
 
   ngOnInit() {
     this.orderForm = this.fb.group({
-      propertyNumber: [''], // Liegenschaftsnummer
-      company: [''], // Firma
-      customerContact: [''], // Ansprechpartner Kunde
-      address: [''], // Adresse
-      zipCode: [''], // PLZ
-      city: [''], // Ort
-      phone: [''], // Telefon
-      mobile: [''], // Mobil
-      fax: [''], // Fax
-      email: [''], // E-Mail
+      Customer: this.fb.group({
+          propertyNumber: [''], // Liegenschaftsnummer
+          companyName: [''], // Firma
+          firstName: [''], // Vorname
+          lastName: [''], // Nachname
+          customerContact: [''], // Ansprechpartner Kunde
+          street: [''], // Adresse
+          zipCode: [''], // PLZ
+          city: [''], // Ort
+          phone: [''], // Telefon
+          mobile: [''], // Mobil
+          fax: [''], // Fax
+          email: [''], // E-Mail
+        }),
       number: [''],
       actualStatus: [''],
       remarkExternal: [''],
@@ -121,6 +125,7 @@ export class IstaOrderReceivedFormComponent implements OnInit {
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
+    console.log(this.orderForm.value);
     this.http.post<any[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
     .pipe(
       catchError((error) => {
