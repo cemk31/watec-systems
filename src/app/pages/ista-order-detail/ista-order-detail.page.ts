@@ -4,6 +4,7 @@ import { FormGroup, FormControl, Validators, NgForm } from "@angular/forms";
 import { throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
+import { Route } from "@angular/router";
 
 @Component({
   selector: "app-ista-order-detail",
@@ -11,6 +12,8 @@ import { environment } from "../../../environments/environment";
   styleUrls: ["./ista-order-detail.page.scss"],
 })
 export class IstaOrderDetailPage implements OnInit {
+  id: string;
+  
   closedContractPartner = {
     order: {
       number: "B2023-0001",
@@ -71,7 +74,8 @@ export class IstaOrderDetailPage implements OnInit {
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
     // Methode zum Hinzufügen von Dokumenten
   addDocument() {
@@ -90,10 +94,10 @@ export class IstaOrderDetailPage implements OnInit {
       // outletTemperature: null,
       // volumeLitre: null,
       // roomType: '',
-      roomPosition: null,
-      positionDetail: '',
-      pipeDiameterOutlet: '',
-      pipeMaterialtypeOutlet: '',
+      // roomPosition: null,
+      // positionDetail: '',
+      // pipeDiameterOutlet: '',
+      // pipeMaterialtypeOutlet: '',
       unit: {
         floor: '',
         storey: '',
