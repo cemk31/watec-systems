@@ -1,0 +1,51 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Empfangene Bestellung Details  </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label position="floating">Id</ion-label>
+      <ion-input [value]="response?.id || 'Laden...'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Bestellnummer</ion-label>
+      <ion-input value="22" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Status Typ</ion-label>
+      <ion-input value="asd" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Set On</ion-label>
+      <ion-input [value]="response?.setOn || 'Laden...'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Anfrage ID</ion-label>
+      <ion-input value="" placeholder="Kein Wert" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Kundekontakt</ion-label>
+      <ion-input value="" placeholder="Keine Daten" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Anfrage</ion-label>
+      <ion-input value="" placeholder="Kein Wert" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Erstellt Am</ion-label>
+      <ion-input [value]="response?.createdAt || 'Laden...'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Aktualisiert Am</ion-label>
+      <ion-input [value]="response?.updatedAt || 'Laden...'" readonly></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

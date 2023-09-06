@@ -8,6 +8,9 @@ import { TestPageRoutingModule } from './test-routing.module';
 
 import { TestPage } from './test.page';
 import { IstaOrderDetailComponent } from '../../components/ista-order-detail/ista-order-detail.component';
+import { GeneralComponent } from '../../components/order/general/general.component';
+import { CancelledComponent } from '../../components/order/cancelled/cancelled.component';
+import { ReceivedComponent } from '../../components/order/received/received.component';
 
 @NgModule({
   imports: [
@@ -17,6 +20,6 @@ import { IstaOrderDetailComponent } from '../../components/ista-order-detail/ist
     TestPageRoutingModule,
     ReactiveFormsModule
  ],
-  declarations: [TestPage, IstaOrderDetailComponent]
+  declarations: [TestPage, ReceivedComponent, GeneralComponent]
 })
 export class TestPageModule {}

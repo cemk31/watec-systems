@@ -1,0 +1,53 @@
+<ion-content *ngIf="response">
+  <ion-list>
+    <ng-container *ngFor="let item of response.Postponed">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>Verschobene Bestellung ID: {{ item.id }}</ion-card-title>
+        </ion-card-header>
+        
+        <ion-card-content>
+          <ion-item>
+            <ion-label position="floating">Status Typ</ion-label>
+            <ion-input [value]="item.statusType || 'Kein Wert'" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Set On</ion-label>
+            <ion-input [value]="item.setOn" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Nächster Kontaktversuch Am</ion-label>
+            <ion-input [value]="item.nextContactAttemptOn" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Verschobener Grund</ion-label>
+            <ion-input [value]="item.postponedReason || 'Kein Wert'" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Bestellnummer</ion-label>
+            <ion-input [value]="item.orderId" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Anfrage ID</ion-label>
+            <ion-input [value]="item.requestId || 'Kein Wert'" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Erstellt Am</ion-label>
+            <ion-input [value]="item.createdAt" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label position="floating">Aktualisiert Am</ion-label>
+            <ion-input [value]="item.updatedAt" readonly="true"></ion-input>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,86 @@
+<ion-card color="light"> <!-- farbliche Box -->
+  <ion-card-content>
+    <ion-grid>
+      <h1>{{response.id}}</h1>
+      <h2 class="padded">Allgemeine Informationen</h2>
+      <h3 class="padded">Erstellt am: {{response.createdAt}} </h3>
+      <ion-row>
+        <!-- Linke Spalte -->
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Auftrag (intern)</ion-label>
+            <ion-input [(ngModel)]="response?.id" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Vertrag</ion-label>
+            <ion-input [(ngModel)]="response.number" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Liegenschaft</ion-label>
+            <!-- <ion-input [(ngModel)]="response.Customer?.propertyNumber" readonly></ion-input> -->
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Name</ion-label>
+            <!-- <ion-input [(ngModel)]="response.Customer.lastName" readonly></ion-input> -->
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Anschrift</ion-label>
+            <ion-input value="Musterstrasse 1" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">PLZ</ion-label>
+            <ion-input value="12345" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">ORT</ion-label>
+            <ion-input value="Musterstadt" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Land</ion-label>
+            <ion-input value="DE" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <!-- Rechte Spalte -->
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Kunde</ion-label>
+            <ion-input value="123456789" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input value="Mustermann" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Anschrift</ion-label>
+            <ion-input value="Musterstrasse 1" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">PLZ</ion-label>
+            <ion-input value="12345" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">ORT</ion-label>
+            <ion-input value="Musterstadt" readonly></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Land</ion-label>
+            <ion-input value="DE" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Rahmenvertrag</ion-label>
+            <ion-input value="123456789" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+  </ion-card-content>
+</ion-card>

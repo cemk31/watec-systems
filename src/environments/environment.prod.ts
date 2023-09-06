@@ -13,6 +13,7 @@ export const environment = {
       url: '/ista',
       received: '/ista/received',
       customerOrder: '/ista/customerOrder',
+      order: '/ista/order',
     }
   }
 };

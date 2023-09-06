@@ -1,0 +1,61 @@
+<ion-card *ngFor="let item of response.Planned">
+  <ion-card-header>
+    <ion-card-title>Geplante Bestellung Details</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Id</ion-label>
+      <ion-input [value]="item.id" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Bestellnummer</ion-label>
+      <ion-input [value]="item.orderId" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Status Typ</ion-label>
+      <ion-input [value]="item.orderstatusType || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Set On</ion-label>
+      <ion-input [value]="item.setOn" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Detailliertes Planungsdatum</ion-label>
+      <ion-input [value]="item.detailedScheduleDate || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Detaillierte Planungszeit Von</ion-label>
+      <ion-input [value]="item.detailedScheduleTimeFrom || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Detaillierte Planungszeit Bis</ion-label>
+      <ion-input [value]="item.detailedScheduleTimeTo || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Grund für die detaillierte Planungsverzögerung</ion-label>
+      <ion-input [value]="item.detailedScheduleDelayReason || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Anfrage ID</ion-label>
+      <ion-input [value]="item.requestId || 'Kein Wert'" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Erstellt Am</ion-label>
+      <ion-input [value]="item.createdAt" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Aktualisiert Am</ion-label>
+      <ion-input [value]="item.updatedAt" readonly></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>

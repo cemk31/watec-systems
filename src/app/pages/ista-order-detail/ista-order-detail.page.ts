@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Component, OnInit } from "@angular/core";
-import { FormGroup, FormControl, Validators, NgForm } from "@angular/forms";
 import { throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
-import { Route } from "@angular/router";
+import { ActivatedRoute, Route } from "@angular/router";
+import { OrderService } from "../../services/order/order.service";
 
 @Component({
   selector: "app-ista-order-detail",
@@ -13,7 +13,10 @@ import { Route } from "@angular/router";
 })
 export class IstaOrderDetailPage implements OnInit {
   id: string;
-  
+  exceptionMessage = null;
+  opened = "";
+  // public response = { id: null, createdAt: null }; // oder ein initialer Wert
+  response = null;
   closedContractPartner = {
     order: {
       number: "B2023-0001",
@@ -72,50 +75,57 @@ export class IstaOrderDetailPage implements OnInit {
     ],
   };
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private route: ActivatedRoute, private orderService: OrderService) {}
 
   ngOnInit() {
+    this.id = this.route.snapshot.paramMap.get("id");
+    this.id = "22";
+    console.log(this.id);
+    this.getIstaOrderDetail();
+    this.orderService.signalInit();
   }
 
-    // Methode zum Hinzufügen von Dokumenten
+  // Methode zum Hinzufügen von Dokumenten
   addDocument() {
     this.closedContractPartner.suppliedDocuments.push({
-      type: '',
-      content: ''
+      type: "",
+      content: "",
     });
   }
 
   addDrinkingWaterHeater() {
     // Nehmen wir an, Sie möchten einen Erhitzer zum ersten `drinkingWaterFacility` im `recordedSystem` Array hinzufügen.
     // Wenn Sie es zu einem anderen Element hinzufügen möchten, ändern Sie den Index entsprechend.
-    this.closedContractPartner.recordedSystem[0].drinkingWaterFacility.drinkingWaterHeaters.push({
-      consecutiveNumber: null,
-      // outletTemperatureDisplayPresent: false,
-      // outletTemperature: null,
-      // volumeLitre: null,
-      // roomType: '',
-      // roomPosition: null,
-      // positionDetail: '',
-      // pipeDiameterOutlet: '',
-      // pipeMaterialtypeOutlet: '',
-      unit: {
-        floor: '',
-        storey: '',
-        building: {
-          address: {
-            street: ''
-            // ... Andere Adressfelder hier ...
-          }
-        }
+    this.closedContractPartner.recordedSystem[0].drinkingWaterFacility.drinkingWaterHeaters.push(
+      {
+        consecutiveNumber: null,
+        // outletTemperatureDisplayPresent: false,
+        // outletTemperature: null,
+        // volumeLitre: null,
+        // roomType: '',
+        // roomPosition: null,
+        // positionDetail: '',
+        // pipeDiameterOutlet: '',
+        // pipeMaterialtypeOutlet: '',
+        unit: {
+          floor: "",
+          storey: "",
+          building: {
+            address: {
+              street: "",
+              // ... Andere Adressfelder hier ...
+            },
+          },
+        },
       }
-    });
+    );
   }
-  
+
   addRecordedSystem() {
     this.closedContractPartner.recordedSystem.push({
       drinkingWaterFacility: {
         consecutiveNumber: null,
-        usageType: '',
+        usageType: "",
         heatExchangerSystem_central: false,
         heatExchangerSystem_districtheating: false,
         heatExchangerSystem_continuousflowprinciple: false,
@@ -123,6 +133,38 @@ export class IstaOrderDetailPage implements OnInit {
       },
     });
   }
-  
 
+  getIstaOrderDetail() {
+    // Abrufen der ID aus dem Route-Parameter
+    this.id = this.route.snapshot.paramMap.get("id");
+    console.log(this.id);
+
+    // Abrufen der Daten vom Server
+    const url = `${environment.backend + environment.url.ista.order}/${
+      this.id
+    }`;
+    console.log(url);
+
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append("Authorization", `Bearer ${accessToken}`);
+    }
+    this.http
+      .get<any[]>(url, { headers })
+      .pipe(
+        map((response) => {
+          console.log(response);
+          return response;
+        }),
+        catchError((error) => {
+          this.exceptionMessage = error.error.message;
+          return throwError(error);
+        })
+      )
+      .subscribe((data) => {
+        this.response = data; // Hier setzen Sie den Wert für 'response'
+        this.orderService.setData(data);
+      });
+  }
 }

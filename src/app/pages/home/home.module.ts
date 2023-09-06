@@ -8,6 +8,7 @@ import { HomePageRoutingModule } from './home-routing.module';
 
 import { HomePage } from './home.page';
 import { CustomerService } from '../../services/customer.service';
+import { ReceivedComponent } from '../../components/order/received/received.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { CustomerService } from '../../services/customer.service';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage]
+  declarations: [HomePage, ReceivedComponent]
 })
 export class HomePageModule {}

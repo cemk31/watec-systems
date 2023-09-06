@@ -10,7 +10,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
-import { LoginPage } from './pages/login/login';
 
 @Component({
   selector: 'app-root',
@@ -73,9 +72,9 @@ export class AppComponent implements OnInit {
     }
     ,
     {
-      title: 'Bestelldetail',
-      url: '/app/tabs/test',
-      icon: 'person'
+      title: 'Bestelldetail (ISTA)',
+      url: '/test',
+      icon: 'document'
     },
     {
       title: 'ISTA Bestellungen',
@@ -91,7 +90,7 @@ export class AppComponent implements OnInit {
     ,
     {
       title: 'ISTA INFO AUFTRAG',
-      url: '/app/tabs/ista-order-detail',
+      url: '/ista-order-detail/:id',
       icon: 'water'
     }
     ,

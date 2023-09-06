@@ -17,6 +17,7 @@ export const environment = {
       url: '/ista',
       received: '/ista/received',
       customerOrder: '/ista/customerOrder',
+      order: '/ista/order',
     }
   }
 };
@@ -27,4 +28,4 @@ export const environment = {
  * import the following file, but please comment it out in production mode
  * because it will have performance impact when throw error
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+

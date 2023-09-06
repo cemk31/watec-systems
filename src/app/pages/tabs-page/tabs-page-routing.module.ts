@@ -143,15 +143,15 @@ const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'ista-order-detail',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../ista-order-detail/ista-order-detail.module').then(m => m.IstaOrderDetailPageModule)
-          }
-        ]
-      },
+      // {
+      //   path: 'ista-order-detail/:id',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('../ista-order-detail/ista-order-detail.module').then(m => m.IstaOrderDetailPageModule)
+      //     }
+      //   ]
+      // },
       {
         path: 'test/:id',
         children: [

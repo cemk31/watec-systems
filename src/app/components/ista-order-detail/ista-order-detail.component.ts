@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-ista-order-detail',
+  selector: 'app-ista-order-detail-component',
   templateUrl: './ista-order-detail.component.html',
   styleUrls: ['./ista-order-detail.component.scss'],
 })
@@ -14,6 +14,10 @@ export class IstaOrderDetailComponent implements OnInit {
   ngOnInit() {
     // Abrufen der ID aus dem Route-Parameter
     this.id = this.route.snapshot.paramMap.get('id');
+    console.log(this.id);
   }
 
+  // getIstaOrderDetail() {
+    
+  // }
 }
