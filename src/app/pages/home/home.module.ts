@@ -17,6 +17,6 @@ import { ReceivedComponent } from '../../components/order/received/received.comp
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, ReceivedComponent]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

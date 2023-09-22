@@ -25,21 +25,21 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/home',
       icon: 'home'
     },
-    {
-      title: 'Informationen',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    },
+    // {
+    //   title: 'Informationen',
+    //   url: '/app/tabs/about',
+    //   icon: 'information-circle'
+    // },
     {
       title: 'Trinkwasseruntersuchung anlegen',
       url: '/app/tabs/trinkwasseruntersuchung',
       icon: 'water'
     },
-    {
-      title: 'Untersuchungen',
-      url: '/app/tabs/untersuchung-list',
-      icon: 'map'
-    },
+    // {
+    //   title: 'Untersuchungen',
+    //   url: '/app/tabs/untersuchung-list',
+    //   icon: 'map'
+    // },
     {
       title: 'Kunden',
       url: '/app/tabs/customer',
@@ -50,16 +50,16 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/create-customer',
       icon: 'person'
     },
-    {
-      title: 'Auftrag anlegen',
-      url: '/app/tabs/auftrag',
-      icon: 'person'
-    },
-    {
-      title: 'Aufträge',
-      url: '/app/tabs/auftrage',
-      icon: 'person'
-    },
+    // {
+    //   title: 'Auftrag anlegen',
+    //   url: '/app/tabs/auftrag',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Aufträge',
+    //   url: '/app/tabs/auftrage',
+    //   icon: 'person'
+    // },
     {
       title: 'Auftrag Erstellen (Testkomponente)',
       url: '/app/tabs/auftrag-detail',
@@ -82,15 +82,15 @@ export class AppComponent implements OnInit {
       icon: 'document'
     }
     ,
-    {
-      title: 'ISTA Übersicht TEST',
-      url: '/app/tabs/ista-order-list',
-      icon: 'water'
-    }
-    ,
+    // {
+    //   title: 'ISTA Übersicht TEST',
+    //   url: '/app/tabs/ista-order-list',
+    //   icon: 'water'
+    // }
+    // ,
     {
       title: 'ISTA INFO AUFTRAG',
-      url: '/ista-order-detail/:id',
+      url: 'app/tabs/ista-order-detail/:id',
       icon: 'water'
     }
     ,

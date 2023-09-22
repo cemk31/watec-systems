@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { throwError } from "rxjs";
 import { map, catchError } from "rxjs/operators";
 import { environment } from "../../../environments/environment";
-import { ActivatedRoute, Route } from "@angular/router";
+import { ActivatedRoute, Route, Router } from "@angular/router";
 import { OrderService } from "../../services/order/order.service";
+import { Location } from '@angular/common';
 
 @Component({
   selector: "app-ista-order-detail",
@@ -12,6 +13,20 @@ import { OrderService } from "../../services/order/order.service";
   styleUrls: ["./ista-order-detail.page.scss"],
 })
 export class IstaOrderDetailPage implements OnInit {
+
+  orderNumber: string;
+  currentStatus: string | null = null;
+  currentStatusColor: string;
+  statusType: string;
+  setOn: string;
+  createdAt: string;
+  updatedAt: string;
+  currentStatusIndex: number = 0;
+  statuses: string[] = ['RECEIVED', 'PLANNED', 'POSTPONED', 'CANCELLED'];
+  showStatusMenu = false;
+  segmentVisible: boolean = false;
+
+
   id: string;
   exceptionMessage = null;
   opened = "";
@@ -75,11 +90,37 @@ export class IstaOrderDetailPage implements OnInit {
     ],
   };
 
-  constructor(private http: HttpClient, private route: ActivatedRoute, private orderService: OrderService) {}
+  toggleStatusMenu() {
+    this.showStatusMenu = !this.showStatusMenu;
+  }
+
+  changeStatus(newStatus: string) {
+    this.currentStatusIndex = this.statuses.indexOf(newStatus);
+    this.createComponent(newStatus);  // Methode zum Erstellen einer leeren Komponente
+    this.showStatusMenu = false;
+  }
+
+  createComponent(status: string) {
+    if (status === 'RECEIVED' || status === 'PLANNED' || status === 'CANCELLED' || status === 'POSTPONED') {
+      this.segmentVisible = true;
+    }
+    // Implementiere die Logik zur Erstellung einer leeren Komponente mit dem gegebenen Status
+  }
+
+  refreshData() {
+    // Implementiere die Aktualisieren-Funktionalität
+  }
+
+  setStatus(status: string) {
+    this.currentStatus = status;
+    this.segmentVisible = true;
+  }
+
+  constructor(private http: HttpClient, private route: ActivatedRoute, private orderService: OrderService, private router: Router, private location: Location) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.paramMap.get("id");
-    this.id = "22";
+    this.orderNumber = this.id;
     console.log(this.id);
     this.getIstaOrderDetail();
     this.orderService.signalInit();
@@ -167,4 +208,29 @@ export class IstaOrderDetailPage implements OnInit {
         this.orderService.setData(data);
       });
   }
+
+  toggleSegmentVisibility() {
+    this.segmentVisible = !this.segmentVisible;
+  }
+
+  goBack() {
+    this.location.back();
+  }
+
+
+  @Input() orderId: number;
+  @Output() formSubmit = new EventEmitter<string>();
+
+  details: string;
+
+  onSubmit() {
+    this.formSubmit.emit(this.details);
+  }
+
+  onFormSubmit(details: string) {
+    console.log('Formular Details: ', details);
+    // Hier können Sie weitere Aktionen mit den Formulardetails durchführen
+  }
+  
+
 }

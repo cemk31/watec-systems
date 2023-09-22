@@ -1,17 +1,65 @@
-<ion-grid>
-  <ion-row>
-    <ion-col>
-      <app-general></app-general>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <app-received></app-received>
-    </ion-col>
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <!-- <app-cancelled></app-cancelled> -->
-    </ion-col>
-  </ion-row>
-</ion-grid>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        Zurück
+      </ion-button>
+    </ion-buttons>
+  
+    <ion-title >
+      Bestellnummer: {{orderNumber}}
+    </ion-title>
+  
+    <ion-buttons slot="end">
+      <ion-button (click)="refreshData()">
+        <ion-icon name="refresh-outline"></ion-icon>
+        Aktualisieren
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-row>
+      <ion-col size="6">
+        <div class="status-box" [ngStyle]="{'background-color': currentStatusColor}">
+          Aktueller Status: RECEIVED
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button (click)="toggleSegmentVisibility()">Status hinzufügen</ion-button>
+        
+        <ion-segment *ngIf="segmentVisible">
+          <ion-segment-button value="received" (click)="setStatus('RECEIVED')">
+            RECEIVED
+          </ion-segment-button>
+          <ion-segment-button value="planned" (click)="setStatus('PLANNED')">
+            Planned
+          </ion-segment-button>
+          <ion-segment-button value="postponed" (click)="setStatus('POSTPONED')">
+            Postponed
+          </ion-segment-button>
+          <ion-segment-button value="cancelled" (click)="setStatus('CANCELLED')">
+            Cancelled
+          </ion-segment-button>
+        </ion-segment>
+      </ion-col>        
+    </ion-row>
+  </ion-toolbar>
+
+</ion-header>
+<ion-content>
+  <app-create-received *ngIf="currentStatus === 'RECEIVED'" (formSubmit)="onSubmitReceived()" [orderId]="[orderNumber]"></app-create-received>
+  <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()" [orderId]="[orderNumber]"></app-create-planned>
+  <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()" [orderId]="[orderNumber]"></app-create-postponed>
+  <app-create-cancelled *ngIf="currentStatus === 'CANCELLED'" (formSubmit)="onSubmitCancelled()" [orderId]="[orderNumber]"></app-create-cancelled>
+  
+  <!-- <app-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="addPos($event)"></app-postponed> -->
+
+  <app-general></app-general>
+  <app-received></app-received>
+  <app-planned></app-planned>
+  <app-cancelled></app-cancelled>
+  <!-- <app-postponed></app-postponed> -->
+</ion-content>

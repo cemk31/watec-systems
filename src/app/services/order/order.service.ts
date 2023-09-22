@@ -5,13 +5,12 @@ import { Subject } from 'rxjs/internal/Subject';
   providedIn: 'root'
 })
 export class OrderService {
-  getDataObservable() {
-    throw new Error('Method not implemented.');
-  }
-
   private data: any;
   private dataLoadedSubject = new Subject<void>();
   dataLoaded$ = this.dataLoadedSubject.asObservable();
+
+  private initSource = new Subject<void>();
+  public initObservable = this.initSource.asObservable();
 
   setData(data: any): void {
     this.data = data;
@@ -21,9 +20,6 @@ export class OrderService {
   getData(): any {
     return this.data;
   }
-
-private initSource = new Subject<void>();
-public initObservable = this.initSource.asObservable();
 
   signalInit() {
     this.initSource.next();

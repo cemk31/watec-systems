@@ -20,6 +20,6 @@ import { ReceivedComponent } from '../../components/order/received/received.comp
     TestPageRoutingModule,
     ReactiveFormsModule
  ],
-  declarations: [TestPage, ReceivedComponent, GeneralComponent]
+  declarations: [TestPage]
 })
 export class TestPageModule {}

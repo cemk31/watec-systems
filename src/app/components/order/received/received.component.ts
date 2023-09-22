@@ -10,6 +10,11 @@ export class ReceivedComponent implements OnInit {
   response: any = {};
   retrievedData: any;
   constructor(private orderService: OrderService, private cd: ChangeDetectorRef) { }
+  showDetails = true;
+
+  toggleDetails() {
+    this.showDetails = !this.showDetails;
+  }
 
   ngOnInit() {
     this.orderService.dataLoaded$.subscribe(() => {
@@ -21,6 +26,18 @@ export class ReceivedComponent implements OnInit {
         console.error('No data retrieved');
       }
     });
+  }
+
+  onEdit() {
+    // Ihre Bearbeiten-Logik hier
+  }
+
+  onDelete() {
+    // Ihre Löschen-Logik hier
+  }
+
+  addStatus() {
+    console.log('Add status');
   }
 
 }

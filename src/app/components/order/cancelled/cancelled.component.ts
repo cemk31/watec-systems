@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { OrderService } from '../../../services/order/order.service';
+import { format } from 'date-fns';
 
 @Component({
   selector: 'app-cancelled',
@@ -20,7 +21,11 @@ export class CancelledComponent implements OnInit {
       } else {
         console.error('No data retrieved');
       }
-    });
+    });    
   }
 
+  formatDate(dateString: string): string {
+    const date = new Date(dateString);
+    return format(date, 'dd.MM.yyyy');
+  }
 }
