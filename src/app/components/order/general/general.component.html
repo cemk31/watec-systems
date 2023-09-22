@@ -1,38 +1,67 @@
 <ion-card color="light"> <!-- farbliche Box -->
-  <ion-card-content>
-    <ion-grid>
-      <h1>Bestellung {{response.id}}</h1>
-      <h2 class="padded">Allgemeine Informationen</h2>
-      <h3 class="padded">Erstellt am: {{response?.createdAt}} </h3>
+  <ion-card-header>
+    <ion-toolbar>
+      <ion-title color="primary">Allgemeine Informationen (ID:{{response?.id}})</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="onEdit()">Bearbeiten</ion-button>
+        <ion-button (click)="onDelete()">Löschen</ion-button>
+      </ion-buttons>
+      <ion-row>
+        <ion-item>
+          <ion-label position="floating">Erstellt Am</ion-label>
+          <ion-input [value]="response?.createdAt" readonly></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="floating">Geändert</ion-label>
+          <ion-input [value]="response?.createdAt" readonly></ion-input>
+        </ion-item>
+      </ion-row>
       <ion-row>
         <ion-col>
           <ion-item lines="none">
             <ion-label position="floating">Auftrag (intern)</ion-label>
-            <!-- <ion-input [(ngModel)]="response.id" readonly></ion-input> -->
+            <ion-input [value]="response?.id" readonly></ion-input>
           </ion-item>
-
+        </ion-col>
+      </ion-row>  
+    </ion-toolbar>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+            <ion-toolbar>
+              <ion-title color="primary">Vertrag (ID:{{response?.id}})</ion-title>
+              <ion-buttons slot="end">
+                <ion-button (click)="onEdit()">Bearbeiten</ion-button>
+                <ion-button (click)="onDelete()">Löschen</ion-button>
+              </ion-buttons>
+            </ion-toolbar>
           <ion-item lines="none">
             <ion-label position="floating">Vertrag</ion-label>
-            <ion-input [value]="response?.number || 'Laden...'" readonly></ion-input>
+            <ion-input [value]="response?.number || 'null'" readonly></ion-input>
           </ion-item>
-
           <ion-item lines="none">
-            <ion-label position="floating">Liegenschaft</ion-label>
-            <ion-input [value]="response.Customer?.propertyNumber || 'Laden...'" readonly></ion-input>
-
-            <!-- <ion-input [(ngModel)]="response.Customer?.propertyNumber" readonly></ion-input> -->
+            <ion-label position="floating">Rahmenvertrag</ion-label>
+            <ion-input [value]="response?.number || 'null'" readonly></ion-input>
           </ion-item>
 
+          <ion-toolbar>
+            <ion-title color="primary">Liegenschaft  </ion-title>
+          </ion-toolbar>
+          <ion-item lines="none">
+            <ion-label position="floating">Liegenschaftsnummer</ion-label>
+            <ion-input [value]="response?.Customer?.propertyNumber || 'Laden...'" readonly></ion-input>
+          </ion-item>
           <ion-item lines="none">
             <ion-label position="floating">Name</ion-label>
-            <!-- <ion-input [(ngModel)]="response.Customer.lastName" readonly></ion-input> -->
+            <ion-input [value]="response?.Customer?.lastName || 'Laden...'" readonly></ion-input>
           </ion-item>
-
           <ion-item lines="none">
             <ion-label position="floating">Anschrift</ion-label>
             <ion-input value="Musterstrasse 1" readonly></ion-input>
           </ion-item>
-
           <ion-item lines="none">
             <ion-label position="floating">PLZ</ion-label>
             <ion-input value="12345" readonly></ion-input>
@@ -47,41 +76,54 @@
             <ion-label position="floating">Land</ion-label>
             <ion-input value="DE" readonly></ion-input>
           </ion-item>
-
+        </ion-col>
+        <ion-col>
+         
+          
+          <ion-toolbar>
+            <ion-title color="primary">Kunde</ion-title>
+          </ion-toolbar>
           <ion-item lines="none">
-            <ion-label position="floating">Kunde</ion-label>
+            <ion-label position="floating">Kunden_Nr:</ion-label>
             <ion-input value="123456789" readonly></ion-input>
           </ion-item>
-
           <ion-item lines="none">
             <ion-label position="floating">Name</ion-label>
             <ion-input value="Mustermann" readonly></ion-input>
           </ion-item>
-
           <ion-item lines="none">
             <ion-label position="floating">Anschrift</ion-label>
             <ion-input value="Musterstrasse 1" readonly></ion-input>
           </ion-item>
+          <!-- <ion-row>
+            <ion-col>
 
-          <ion-item lines="none">
-            <ion-label position="floating">PLZ</ion-label>
-            <ion-input value="12345" readonly></ion-input>
-          </ion-item>
+            </ion-col>
+            <ion-col>
 
-          <ion-item lines="none">
-            <ion-label position="floating">ORT</ion-label>
-            <ion-input value="Musterstadt" readonly></ion-input>
-          </ion-item>
+            </ion-col>
+          </ion-row> -->
 
-          <ion-item lines="none">
-            <ion-label position="floating">Land</ion-label>
-            <ion-input value="DE" readonly></ion-input>
-          </ion-item>
+          <ion-row>
+            <ion-col>
+              <ion-item lines="none">
+                <ion-label position="floating">PLZ</ion-label>
+                <ion-input value="12345" readonly></ion-input>
+              </ion-item>
 
-          <ion-item lines="none">
-            <ion-label position="floating">Rahmenvertrag</ion-label>
-            <ion-input value="123456789" readonly></ion-input>
-          </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">ORT</ion-label>
+                <ion-input value="Musterstadt" readonly></ion-input>
+              </ion-item>
+            </ion-col>
+
+            <ion-col>
+              <ion-item lines="none">
+                <ion-label position="floating">Land</ion-label>
+                <ion-input value="DE" readonly></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>          
         </ion-col>
       </ion-row>
     </ion-grid>
