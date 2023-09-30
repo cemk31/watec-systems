@@ -1,15 +1,158 @@
+body {
+  font-size: 22px;
+  background-color: #F9F9FA;
+}
+ion-content {
+  background-color: #F9F9FA;
+}
 details,
 summary {
-    padding: 10px;
+  padding: 10px;
 }
 
 details {
-    font-size: 18px;
+  font-size: 18px;
 }
 
 summary {
-    font-weight: 600;
+  font-weight: 600;
 }
 ion-title {
-    color: --ion-color-primary;
+  color: --ion-color-primary;
+  font-size: 24px!important;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+/* in Ihrer global.scss oder einer anderen globalen SCSS-Datei */
+/* in Ihrer global.scss oder einer anderen globalen SCSS-Datei */
+/* in Ihrer global.scss oder einer anderen globalen SCSS-Datei */
+ion-input {
+  --ion-font-size: 16px; /* Schriftgröße des Labels */
+
+  /* Schriftgröße des eingegebenen Texts */
+  & input {
+    font-size: 19px !important; /* Wichtig, um sicherzustellen, dass der Style angewendet wird */
+  }
+}
+
+// Mobile CSS
+@media (max-width: 767px) {
+  .ion-padding {
+    padding: 0 !important;
+  }
+
+  .ion-padding-vertical {
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .ion-padding-horizontal {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .ion-padding-top {
+    padding-top: 0 !important;
+  }
+
+  .ion-padding-bottom {
+    padding-bottom: 0 !important;
+  }
+
+  .ion-padding-start {
+    padding-left: 0 !important;
+  }
+
+  .ion-padding-end {
+    padding-right: 0 !important;
+  }
+
+  .ion-margin {
+    margin: 0 !important;
+  }
+
+  .ion-margin-vertical {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .ion-margin-horizontal {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  .ion-margin-top {
+    margin-top: 0 !important;
+  }
+
+  .ion-margin-bottom {
+    margin-bottom: 0 !important;
+  }
+
+  .ion-margin-start {
+    margin-left: 0 !important;
+  }
+
+  .ion-margin-end {
+    margin-right: 0 !important;
+  }
+
+  .ion-text-center {
+    text-align: center !important;
+  }
+
+  .ion-text-justify {
+    text-align: justify !important;
+  }
+
+  .ion-text-left {
+    text-align: left !important;
+  }
+
+  .ion-text-right {
+    text-align: right !important;
+  }
+
+  .ion-text-wrap {
+    white-space: normal !important;
+  }
+
+  .ion-text-nowrap {
+    white-space: nowrap !important;
+  }
+
+  .ion-text-uppercase {
+    text-transform: uppercase !important;
+  }
+
+  .ion-text-lowercase {
+    text-transform: lowercase !important;
+  }
+
+  .ion-text-capitalize {
+    text-transform: capitalize !important;
+  }
+
+  .ion-float-left {
+    float: left !important;
+  }
+
+  .ion-float-right {
+    float: right !important;
+  }
+
+  .ion-clearfix::after {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
+
+  .ion-clearfix::before {
+    content: "" !important;
+    display: block !important;
+    clear: both !important;
+  }
 }

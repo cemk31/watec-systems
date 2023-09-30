@@ -1,131 +1,183 @@
-<ion-card color="light"> <!-- farbliche Box -->
+<ion-card class="custom-card"> <!-- farbliche Box -->
   <ion-card-header>
-    <ion-toolbar>
-      <ion-title color="primary">Allgemeine Informationen (ID:{{response?.id}})</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="onEdit()">Bearbeiten</ion-button>
-        <ion-button (click)="onDelete()">Löschen</ion-button>
-      </ion-buttons>
-      <ion-row>
-        <ion-item>
-          <ion-label position="floating">Erstellt Am</ion-label>
-          <ion-input [value]="response?.createdAt" readonly></ion-input>
-        </ion-item>
+    <ion-toolbar color="light" class="custom-toolbar">
+      <ion-title color="primary" style="padding:20px">Allgemeine Informationen (ID:{{response?.id}})</ion-title>
 
-        <ion-item>
-          <ion-label position="floating">Geändert</ion-label>
-          <ion-input [value]="response?.createdAt" readonly></ion-input>
-        </ion-item>
-      </ion-row>
+      <ion-buttons>
+        <ion-button (click)="onEdit()"><ion-icon name="create-outline"></ion-icon> Bearbeiten</ion-button>
+        <ion-button (click)="onDelete()"><ion-icon name="trash-outline"></ion-icon> Löschen</ion-button>
+        <ion-button (click)="onSyncWithIsta()"><ion-icon name="sync"></ion-icon>Synchronisieren mit Ista</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+
       <ion-row>
         <ion-col>
-          <ion-item lines="none">
-            <ion-label position="floating">Auftrag (intern)</ion-label>
+          <ion-item class="custom-input">
+            <ion-label position="floating">Erstellt Am</ion-label>
+            <ion-input [value]="formatDate(response?.createdAt)" readonly></ion-input>
+          </ion-item>
+          <ion-item class="custom-input" lines="none">
+            <ion-label position="floating">Auftragsnummer (intern)</ion-label>
             <ion-input [value]="response?.id" readonly></ion-input>
           </ion-item>
         </ion-col>
+        <ion-col>
+          <ion-item class="custom-input">
+            <ion-label position="floating">Geändert</ion-label>
+            <ion-input [value]="formatDate(response?.updatedAt)" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-card>
+            <ion-toolbar color="light">
+              <ion-row>
+                <img style="padding:20px;" width="120px" height="60px" src="../../../../assets/img/ista_icon.png " alt="ISTA Icon">
+                <ion-title color="primary">Schnittstellenprotokoll</ion-title>
+              </ion-row>
+            </ion-toolbar>
+            <ion-textarea [value]="syncLog" readonly></ion-textarea>
+        
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input value="Mustermann" readonly></ion-input>
+            </ion-item>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Telefon</ion-label>
+              <ion-input value="0123456789" readonly></ion-input>
+            </ion-item>
+          </ion-card>
+        </ion-col>
       </ion-row>  
-    </ion-toolbar>
   </ion-card-header>
-  <ion-card-content>
+  <ion-card-content class="custom-card-content">
     <ion-grid>
       <ion-row>
         <ion-col>
-            <ion-toolbar>
-              <ion-title color="primary">Vertrag (ID:{{response?.id}})</ion-title>
-              <ion-buttons slot="end">
+          <ion-card>
+            <ion-toolbar color="light">
+              <ion-title color="primary" >Vertrag (ID:{{response?.id}})</ion-title>
+              <!-- <ion-buttons slot="end">
                 <ion-button (click)="onEdit()">Bearbeiten</ion-button>
                 <ion-button (click)="onDelete()">Löschen</ion-button>
-              </ion-buttons>
+              </ion-buttons> -->
             </ion-toolbar>
-          <ion-item lines="none">
-            <ion-label position="floating">Vertrag</ion-label>
-            <ion-input [value]="response?.number || 'null'" readonly></ion-input>
-          </ion-item>
-          <ion-item lines="none">
-            <ion-label position="floating">Rahmenvertrag</ion-label>
-            <ion-input [value]="response?.number || 'null'" readonly></ion-input>
-          </ion-item>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Vertrag</ion-label>
+              <ion-input [value]="response?.number || 'null'" readonly></ion-input>
+            </ion-item>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Rahmenvertrag</ion-label>
+              <ion-input [value]="response?.number || 'null'" readonly></ion-input>
+            </ion-item>
+          </ion-card>
 
-          <ion-toolbar>
-            <ion-title color="primary">Liegenschaft  </ion-title>
+
+        <ion-card>
+          <ion-toolbar color="light">
+            <ion-title color="primary">Liegenschaft</ion-title>
           </ion-toolbar>
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">Liegenschaftsnummer</ion-label>
             <ion-input [value]="response?.Customer?.propertyNumber || 'Laden...'" readonly></ion-input>
           </ion-item>
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">Name</ion-label>
-            <ion-input [value]="response?.Customer?.lastName || 'Laden...'" readonly></ion-input>
+            <ion-input [value]="response?.Customer?.lastName || 'kein Wert...'" readonly></ion-input>
           </ion-item>
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">Anschrift</ion-label>
-            <ion-input value="Musterstrasse 1" readonly></ion-input>
+            <ion-input [value]="response?.street || 'null'" readonly></ion-input>
           </ion-item>
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">PLZ</ion-label>
-            <ion-input value="12345" readonly></ion-input>
+            <ion-input [value]="response?.zipCode || 'null'" readonly></ion-input>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">ORT</ion-label>
-            <ion-input value="Musterstadt" readonly></ion-input>
+            <ion-input [value]="response?.place || 'null'" readonly></ion-input>
           </ion-item>
 
-          <ion-item lines="none">
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">Land</ion-label>
-            <ion-input value="DE" readonly></ion-input>
+            <ion-input [value]="response?.country || 'null'" readonly></ion-input>
           </ion-item>
+        </ion-card>
+          
         </ion-col>
         <ion-col>
-         
-          
-          <ion-toolbar>
-            <ion-title color="primary">Kunde</ion-title>
+          <ion-card>
+            <ion-toolbar color="light">
+              <ion-title color="primary" class="ion-padding"><ion-icon name="person-outline"></ion-icon> Kunde</ion-title>
+            </ion-toolbar>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Kunden_Nr:</ion-label>
+              <ion-input [value]="response?.Customer?.id|| 'null'" readonly></ion-input>
+            </ion-item>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Name</ion-label>
+              <ion-input [value]="(response?.Customer?.lastName + ' / ' + response?.Customer?.name) || 'null'" readonly></ion-input>
+            </ion-item>
+            <ion-item class="custom-input" lines="none">
+              <ion-label position="floating">Anschrift</ion-label>
+              <ion-input [value]="response?.Customer?.street|| 'null'" readonly></ion-input>
+            </ion-item>
+            <!-- <ion-row>
+              <ion-col>
+  
+              </ion-col>
+              <ion-col>
+  
+              </ion-col>
+            </ion-row> -->
+  
+            <ion-row>
+                <ion-item class="custom-input" lines="none">
+                  <ion-label position="floating">PLZ</ion-label>
+                  <ion-input [value]="response?.Customer?.zipCode || 'null'" readonly></ion-input>
+                </ion-item>
+  
+                <ion-item class="custom-input" lines="none">
+                  <ion-label position="floating">ORT</ion-label>
+                  <ion-input [value]="response?.Customer?.place || 'null'" readonly></ion-input>
+                </ion-item>
+  
+                <ion-item class="custom-input" lines="none">
+                  <ion-label position="floating">Land</ion-label>
+                  <ion-input [value]="response?.Customer?.country|| 'null'" readonly></ion-input>
+                </ion-item>
+            </ion-row>      
+            
+          </ion-card>
+    
+        </ion-col>
+      </ion-row>
+
+      <ion-card class="custom-card"> <!-- Umhüllende Karte -->
+
+        <ion-card-header>
+          <ion-toolbar color="light">
+            <ion-title>Kontakt</ion-title>
           </ion-toolbar>
-          <ion-item lines="none">
-            <ion-label position="floating">Kunden_Nr:</ion-label>
-            <ion-input value="123456789" readonly></ion-input>
-          </ion-item>
-          <ion-item lines="none">
+        </ion-card-header>
+        
+        <ion-card-content>
+          <!-- Ihr bestehender Content hier -->
+          <ion-item class="custom-input" lines="none">
             <ion-label position="floating">Name</ion-label>
             <ion-input value="Mustermann" readonly></ion-input>
           </ion-item>
-          <ion-item lines="none">
-            <ion-label position="floating">Anschrift</ion-label>
-            <ion-input value="Musterstrasse 1" readonly></ion-input>
+          <ion-item class="custom-input" lines="none">
+            <ion-label position="floating">Telefon</ion-label>
+            <ion-input value="0123456789" readonly></ion-input>
           </ion-item>
-          <!-- <ion-row>
-            <ion-col>
+        </ion-card-content>      
+      </ion-card>
+      Dies sollte die Informationen in einer Karte darstellen. Sie können den Stil der Karte mit der Klasse custom-card und anderen benutzerdefinierten CSS-Klassen weiter anpassen.
+      
 
-            </ion-col>
-            <ion-col>
-
-            </ion-col>
-          </ion-row> -->
-
-          <ion-row>
-            <ion-col>
-              <ion-item lines="none">
-                <ion-label position="floating">PLZ</ion-label>
-                <ion-input value="12345" readonly></ion-input>
-              </ion-item>
-
-              <ion-item lines="none">
-                <ion-label position="floating">ORT</ion-label>
-                <ion-input value="Musterstadt" readonly></ion-input>
-              </ion-item>
-            </ion-col>
-
-            <ion-col>
-              <ion-item lines="none">
-                <ion-label position="floating">Land</ion-label>
-                <ion-input value="DE" readonly></ion-input>
-              </ion-item>
-            </ion-col>
-          </ion-row>          
-        </ion-col>
-      </ion-row>
     </ion-grid>
   </ion-card-content>
 </ion-card>

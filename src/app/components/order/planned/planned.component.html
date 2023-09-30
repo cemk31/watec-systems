@@ -1,6 +1,6 @@
 <ion-card *ngFor="let item of response?.Planned">
   <ion-card-header>
-    <ion-card-title>Geplante Bestellung Details</ion-card-title>
+    <ion-card-title>In Planung #{{item.id}}</ion-card-title>
   </ion-card-header>
   <ion-button (click)="createOrder()">Neue Bestellung erstellen</ion-button>
   <ion-card-content>

@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="primary" class="ion-padding">
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -7,8 +7,8 @@
       </ion-button>
     </ion-buttons>
   
-    <ion-title >
-      Bestellnummer: {{orderNumber}}
+    <ion-title class="custom-title">
+      Auftrag: #{{orderNumber}}
     </ion-title>
   
     <ion-buttons slot="end">
@@ -22,28 +22,54 @@
     <ion-row>
       <ion-col size="6">
         <div class="status-box" [ngStyle]="{'background-color': currentStatusColor}">
-          Aktueller Status: RECEIVED
+          Aktueller Status: {{currentStatus || 'Laden...'}}
         </div>
       </ion-col>
     </ion-row>
     <ion-row>
       <ion-col size="6">
-        <ion-button (click)="toggleSegmentVisibility()">Status hinzufügen</ion-button>
-        
-        <ion-segment *ngIf="segmentVisible">
-          <ion-segment-button value="received" (click)="setStatus('RECEIVED')">
-            RECEIVED
-          </ion-segment-button>
-          <ion-segment-button value="planned" (click)="setStatus('PLANNED')">
-            Planned
-          </ion-segment-button>
-          <ion-segment-button value="postponed" (click)="setStatus('POSTPONED')">
-            Postponed
-          </ion-segment-button>
-          <ion-segment-button value="cancelled" (click)="setStatus('CANCELLED')">
-            Cancelled
-          </ion-segment-button>
-        </ion-segment>
+<!-- Toggle-Button mit einer kleinen Animation -->
+<ion-button (click)="toggleSegmentVisibility()" [class.active]="segmentVisible">
+  <ion-icon name="add-outline"></ion-icon>
+  Status hinzufügen
+</ion-button>
+
+<ion-segment *ngIf="segmentVisible" [ngClass]="{'slide-in': segmentVisible}">
+  <!-- Mit Icons und Farben -->
+  <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')">
+    <ion-icon name="checkmark-outline"></ion-icon>
+    Kundenkontakt 
+    <!-- (RECEIVED) -->
+  </ion-segment-button>
+  <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')">
+    <ion-icon name="calendar-outline"></ion-icon>
+    IN PLANUNG 
+    <!-- (PLANNED) -->
+  </ion-segment-button>
+  <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')">
+    <ion-icon name="pause-outline"></ion-icon>
+    Vershoben 
+    <!-- (POSTPONED) -->
+  </ion-segment-button>
+  <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')">
+    <ion-icon name="close-outline"></ion-icon>
+    Storno 
+    <!-- (CANCELLED) -->
+  </ion-segment-button>
+  <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')">
+    <ion-icon name="close-circle-outline"></ion-icon>
+    Abgelehnt
+  </ion-segment-button>
+  <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')">
+    <ion-icon name="play-circle-outline"></ion-icon>
+    Ausführung <br>erfolgt
+  </ion-segment-button>
+  <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')">
+    <ion-icon name="paper-plane-outline"></ion-icon>
+    TWA
+  </ion-segment-button>
+</ion-segment>
+
       </ion-col>        
     </ion-row>
   </ion-toolbar>
@@ -54,12 +80,19 @@
   <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()" [orderId]="[orderNumber]"></app-create-planned>
   <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()" [orderId]="[orderNumber]"></app-create-postponed>
   <app-create-cancelled *ngIf="currentStatus === 'CANCELLED'" (formSubmit)="onSubmitCancelled()" [orderId]="[orderNumber]"></app-create-cancelled>
-  
-  <!-- <app-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="addPos($event)"></app-postponed> -->
 
+  <!-- <app-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="addPos($event)"></app-postponed> -->
+  <!-- <ng-container *ngFor="let item of response">
+    <app-general *ngIf="item?.status === 'RECEIVED'"></app-general>
+    <app-received *ngIf="item?.status === 'PLANNED'"></app-received>
+    <app-planned *ngIf="item?.status === 'POSTPONED'"></app-planned>
+    <app-cancelled *ngIf="item?.status === 'CANCELLED'"></app-cancelled>
+  </ng-container> -->
+  
   <app-general></app-general>
   <app-received></app-received>
   <app-planned></app-planned>
   <app-cancelled></app-cancelled>
+  <app-closed-contract-partner></app-closed-contract-partner>
   <!-- <app-postponed></app-postponed> -->
 </ion-content>

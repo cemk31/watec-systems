@@ -1,10 +1,18 @@
-<ion-app [class.dark-theme]="dark">
+<ion-app [class.dark-theme]="light">
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content">
       <ion-content>
         <ion-list lines="none">
           <ion-list-header>
-            WATEC ADMIN PANEL
+            <img height="50px" width="50px" src="assets/img/watec/watec_logo.png" alt="Ionic logo">
+            <ion-title>WATEC ADMIN Dashboard</ion-title>
+            <ion-item>
+              <ion-label>
+                <p>Version</p>
+                <h2>1.0.0</h2>
+              </ion-label>
+            </ion-item>
+            <!-- <ion-subtitle>Version 1.0.0</ion-subtitle> -->
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let i = index">
 
@@ -75,7 +83,6 @@
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
-
+    
   </ion-split-pane>
-
 </ion-app>

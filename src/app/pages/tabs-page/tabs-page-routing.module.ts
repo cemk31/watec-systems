@@ -171,6 +171,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'ista-order-table',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-table/ista-order-table.module').then(m => m.IstaOrderTablePageModule)
+          }
+        ]
+      },
+      {
         path: 'list',
         children: [
           {

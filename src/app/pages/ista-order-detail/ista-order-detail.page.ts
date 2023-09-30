@@ -205,9 +205,17 @@ export class IstaOrderDetailPage implements OnInit {
       )
       .subscribe((data) => {
         this.response = data; // Hier setzen Sie den Wert für 'response'
+        this.sortComponentsByDate();  // Sortierung nach dem Erhalten der Daten
         this.orderService.setData(data);
       });
   }
+
+  sortComponentsByDate() {
+    // Nehmen wir an, die Antwort enthält einen Array von Objekten, und jedes Objekt hat ein `updatedAt` oder `createdAt` Feld.
+    if (this.response && Array.isArray(this.response)) {
+      this.response.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
+    }
+  }  
 
   toggleSegmentVisibility() {
     this.segmentVisible = !this.segmentVisible;
@@ -232,5 +240,4 @@ export class IstaOrderDetailPage implements OnInit {
     // Hier können Sie weitere Aktionen mit den Formulardetails durchführen
   }
   
-
 }

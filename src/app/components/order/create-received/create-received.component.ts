@@ -141,7 +141,7 @@ export class CreateReceivedComponent implements OnInit {
     });
   }
 
-  cancel() {
-    this.isSubmitted = false;
-  }
+  // cancel() {
+  //   this.isVisible = false; // Setzen Sie die Variable auf false, wenn "Abbrechen" geklickt wird
+  // }
 }

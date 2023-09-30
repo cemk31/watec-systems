@@ -1,6 +1,90 @@
-    ion-title {
-        font-size: 1.5rem;
-        font-weight: 500;
-        color: --ion-color-primary;
-        padding: 10px;
+/* Titel Anpassung */
+ion-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    --color: var(--ion-color-primary);
+    padding: 10px;
+  }
+  
+  /* Aktiver Button */
+  ion-button.active {
+    // --color: var(--ion-color-primary); /* oder var(--ion-color-tertiary) */
+  }
+  
+  /* Flex-Container für Titel und Streifen */
+  .title-with-stripe {
+    display: flex;
+    align-items: center;
+  }
+  
+  .title-with-stripe h1 {
+    margin-right: 16px; /* Abstand zum Strich */
+  }
+  
+  /* Streifen neben dem Titel */
+  .title-with-stripe .stripe {
+    flex-grow: 1;
+    height: 2px;
+    background-color: var(--ion-color-medium);
+  }
+  
+  /* Animation für ion-segment */
+  .slide-in {
+    animation: slideIn 0.3s ease-in-out;
+  }
+  
+  /* Keyframes für Animation */
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(-20px);
     }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Text innerhalb des Buttons */
+  .button-text {
+    margin-left: 8px; /* Abstand zum Icon */
+  }
+  
+  /* Styling für ion-segment */
+ion-segment {
+  display: flex;
+  justify-content: space-around;
+  --border-width: 1px;
+  --border-style: solid;
+  border-radius: 5px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  padding: 10px 0;
+}
+
+/* Anpassungen für ion-segment-button */
+ion-segment-button {
+  // flex: 1;
+  --padding: 8px 10px;  /* Verkleinertes Padding */
+  --border-radius: 5px;
+  text-align: center;
+  font-size: 0.8rem;  /* Verkleinerte Schriftgröße */
+  margin-right: 4px;
+}
+
+/* Anpassungen für ion-icon */
+ion-icon {
+  font-size: 1.2rem;
+  margin-right: 8px;  /* Reduzierter Abstand zum Icon */
+}
+
+/* Anpassungen für den Text innerhalb des Buttons */
+.button-text {
+  font-size: 0.8rem;
+}
+
+ion-col {
+  padding: 10px;  /* Padding für ion-col */
+  border-radius: 6px;
+  box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+  border: 1px solid var(--ion-color-step-50);  /* Rahmen für ion-col */
+}

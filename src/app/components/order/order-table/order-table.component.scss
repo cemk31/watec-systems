@@ -1,0 +1,98 @@
+/* Grundlegendes Styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Keine Ränder, padding für Abstände */
+th, td {
+  border: none;
+  padding: 16px;
+  white-space: nowrap;
+}
+
+/* Kopfzeilen-Design */
+th {
+  background-color: #f4f4f4;
+  color: var(--ion-color-primary); /* Verwendung von CSS Variablen für bessere Wartbarkeit */
+  font-weight: 600;
+}
+
+/* Zebrastreifen-Stil für bessere Lesbarkeit */
+tbody tr:nth-of-type(odd) {
+  background-color: #f9f9f9;
+}
+
+/* Hover-Effekt für Zeilen */
+tbody tr:hover {
+  background-color: #f2f2f2;
+  // transform: scale(1.02); /* Leichte Skalierung */
+  transition: transform 0.3s ease;
+}
+
+/* Status-Farbcode */
+.status-red {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: red;
+}
+.status-green {
+  background-color: rgba(0, 255, 0, 0.1);
+  color: green;
+}
+
+/* Filter-Ausklappbutton */
+.filter-collapse {
+  display: none;
+  transition: all 0.3s ease;
+}
+.filter-collapse.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Andere nützliche Styles */
+/* Animation für die Eingabe von Suchtermen */
+.filterTerm-entering,
+.filterTerm-exiting,
+.filterTerm-exited {
+  opacity: 0;
+}
+.filterTerm-entered {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+a {
+  color: var(--ion-color-primary);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+ion-item {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+}
+
+ion-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  padding: 10px;
+  color: var(--ion-color-primary);
+  border-bottom: var(--ion-color-primary) 1px solid;
+}
+
+.edit-link,
+ion-input {
+  color: var(--ion-color-primary);
+  font-size: 1.2rem;
+}
+
+.remove-link {
+  color: var(--ion-color-danger);
+  font-size: 1.2rem;
+}

@@ -2,6 +2,7 @@
   import { OrderService } from '../../../services/order/order.service';
   import { take, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { format } from 'date-fns';
 
   @Component({
     selector: 'app-general',
@@ -43,4 +44,15 @@ import { Subject } from 'rxjs';
     onDelete() {
       // Löschen-Logik hier
     }
+
+    formatDate(dateString: string): string {
+      const date = new Date(dateString);
+      if (dateString === null) {
+        return '';
+      }
+      return format(date, 'dd.MM.yyyy');
+    }
+
+    syncLog: string = 'Eine neue Zeile im Protokoll.\n';  // Protokoll als String
+
   }

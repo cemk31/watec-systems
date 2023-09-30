@@ -83,6 +83,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/ista-order-detail/ista-order-detail.module').then( m => m.IstaOrderDetailPageModule)
   },
   {
+    path: 'ista-order-table',
+    loadChildren: () => import('./pages/ista-order-table/ista-order-table.module').then( m => m.IstaOrderTablePageModule)
+  },
+  {
     path: 'list',
     loadChildren: () => import('./pages/list/list.module').then( m => m.ListPageModule)
   },
@@ -97,7 +101,11 @@ const routes: Routes = [
   { 
     path: 'order/:id', 
     loadChildren: () => import('./components/ista-order-detail/ista-order-detail.component').then(m => m.IstaOrderDetailComponent) 
-  },  
+  },   {
+    path: 'ista-order-table',
+    loadChildren: () => import('./pages/ista-order-table/ista-order-table.module').then( m => m.IstaOrderTablePageModule)
+  },
+ 
 ];
 
 @NgModule({

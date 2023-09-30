@@ -3,16 +3,62 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-
     <ion-title>Login</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
+  <!-- Logo -->
   <div class="login-logo">
-    <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
+    <img src="assets/img/watec/watec_logo.png" alt="Logo">
   </div>
 
+  <ion-grid>
+    <ion-row>
+      <!-- Linke Spalte für Formular -->
+      <ion-col size="6">
+        <div class="left-content">
+          <!-- Titel und Untertitel -->
+          <ng-container *ngIf="!showLoggedInWarning">
+            <h1>Willkommen zurück!</h1>
+            <h2 class="info-text">Bitte einloggen</h2>
+            <p class="info-text">Füllen Sie die Felder unten aus, um sich einzuloggen.</p>
+          </ng-container>
+
+          <!-- Formular -->
+          <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate class="login-form">
+            <ion-list>
+              <ion-item lines="none">
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="login.email" name="email" required></ion-input>
+              </ion-item>
+              <ion-item lines="none">
+                <ion-label position="floating">Passwort</ion-label>
+                <ion-input type="password" [(ngModel)]="login.password" name="password" required></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <!-- Buttons -->
+            <ion-row class="ion-margin-top button-row">
+              <ion-col>
+                <ion-button (click)="onSignup()" fill="outline" expand="block">Passwort vergessen</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
+      </ion-col>
+
+      <!-- Rechte Spalte für Bild -->
+      <ion-col size="6">
+        <div class="image-container">
+          <img src="../../../assets/img/196.png" alt="Platzhalter-Bild" >
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
     <ion-toolbar color="success">
@@ -31,49 +77,9 @@
     </ion-toolbar>
   </div>
 
-  <ion-toolbar color="primary">
-    <ion-title >Test-User</ion-title>
-    <ion-title>cem31@test.de</ion-title>
-    <ion-title>1234</ion-title>
-
+  <ion-toolbar color="danger">
+    <ion-title>Test-User: cem31@test.de / 1234</ion-title>
   </ion-toolbar>
 
-  <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate>
-    <ion-list>
-      <ion-item value="cem31@test.de">
-        <ion-label position="stacked" color="primary">E-Mail</ion-label>
-        <ion-input  [(ngModel)]="login.email" name="email" type="email" #email="ngModel" spellcheck="false" autocapitalize="off" required >
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <!-- <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
-          email is required
-        </p> -->
-      </ion-text>
-
-      <ion-item value="1234">
-        <ion-label position="stacked" color="primary">Passwort</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <!-- <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          Password is required
-        </p> -->
-      </ion-text>
-    </ion-list>
-
-    <ion-row>
-      <ion-col>
-        <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button (click)="onSignup()" color="light" expand="block">Registrieren</ion-button>
-      </ion-col>
-    </ion-row>
-      <ion-button fill="outline" expand="full" color="warning">Passwort vergessen</ion-button>
-  </form>
 
 </ion-content>

@@ -1,42 +1,43 @@
 <!-- <ion-header> -->
-  <ion-toolbar>
-    <ion-title><ion-icon name="add-circle"></ion-icon> Neuen Kundenkontakt erstellen (ISTA)</ion-title>
-  </ion-toolbar>
+
 <!-- </ion-header> -->
 
 <!-- <ion-content> -->
   <form [formGroup]="orderForm" (ngSubmit)="onSubmitReceived()">
+    <ion-toolbar>
+      <ion-title><ion-icon name="checkmark-outline"></ion-icon> Neuen Kundenkontakt erstellen (ISTA)</ion-title>
+    </ion-toolbar>
     <ion-row>
       <ion-col>
         <div formArrayName="Received">
           <div *ngFor="let receivedCtrl of orderForm.get('Received').controls; let i = index" [formGroupName]="i">
             <ion-item>
-              <ion-label position="floating"><strong>Status Type:</strong></ion-label>
+              <ion-label position="floating">Status Type:</ion-label>
               <ion-input type="text" formControlName="orderstatusType"></ion-input>
             </ion-item>
             <ion-toolbar>
               <ion-title color="primary">Kundenkontakt</ion-title>
-            </ion-toolbar>
+              </ion-toolbar>
             <div formArrayName="CustomerContacts">
               <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContacts').controls; let j = index" [formGroupName]="j">
                 <ion-item>
-                  <ion-label position="floating"><strong>kontaktiert am:</strong></ion-label>
+                  <ion-label position="floating">kontaktiert am:</ion-label>
                   <ion-datetime displayFormat="DD.MM.YYYY" formControlName="contactAttemptOn"></ion-datetime>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="floating"><strong>Ansprechpartner / Kontaktperson:</strong></ion-label>
+                  <ion-label position="floating">Ansprechpartner / Kontaktperson:</ion-label>
                   <ion-input type="text" formControlName="contactPersonCustomer"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="floating"><strong>agentCP:</strong></ion-label>
+                  <ion-label position="floating">agentCP:</ion-label>
                   <ion-input type="text" formControlName="agentCP"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="floating"><strong>Ergebnis:</strong></ion-label>
+                  <ion-label position="floating">Ergebnis:</ion-label>
                   <ion-input type="text" formControlName="result"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-label position="floating"><strong>Bemerkungen:</strong></ion-label>
+                  <ion-label position="floating">Bemerkungen:</ion-label>
                   <ion-input type="text" formControlName="remark"></ion-input>
                 </ion-item>
               </div>
@@ -44,57 +45,16 @@
           </div>
         </div>
       </ion-col>
-      <ion-col>
-        
-      </ion-col>
     </ion-row>
-    <!-- <ion-toolbar> <ion-title>Kundeninformationen</ion-title></ion-toolbar>
-    <div formGroupName="Customer">
-      <ion-item lines="none">
-        <ion-label position="floating">Liegenschaftsnummer</ion-label>
-        <ion-input formControlName="propertyNumber"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">Firma</ion-label>
-        <ion-input formControlName="companyName"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">Vorname (Kunde)</ion-label>
-        <ion-input formControlName="firstName"></ion-input>
-      </ion-item>
-      <ion-item lines="none">
-        <ion-label position="floating">Nachname (Kunde)</ion-label>
-        <ion-input formControlName="lastName"></ion-input>
-      </ion-item>
-    </div>
-    
-    <ion-item>
-      <ion-label position="floating">Number</ion-label>
-      <ion-input type="text" formControlName="number"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Remark External</ion-label>
-      <ion-input type="text" formControlName="remarkExternal"></ion-input>
-    </ion-item> -->
-
     <ion-row>
-      <ion-col>
-        <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Submit</ion-button>
+      <ion-col size="12" size-md="4">
+        <ion-button expand="full" color="primary" [disabled]="isSubmitted" type="submit">Submit</ion-button>
       </ion-col>
-      <ion-col>
-        <ion-button 
-          expand="full" 
-          type="button" 
-          (click)="cancel()">Abbrechen
-        </ion-button>
+      <ion-col size="12" size-md="4">
+        <ion-button expand="full" color="medium" type="button" (click)="cancel()">Abbrechen</ion-button>
       </ion-col>
-      <ion-col>
-        <ion-button 
-          expand="full" 
-          type="button" 
-          (click)="cancel()">An Ista senden
-        </ion-button>
+      <ion-col size="12" size-md="4">
+        <ion-button expand="full" color="tertiary" type="button" (click)="sendToIsta()">An Ista senden</ion-button>
       </ion-col>
     </ion-row>
   </form>

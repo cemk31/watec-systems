@@ -23,7 +23,7 @@ export class TutorialPage {
 
   startApp() {
     this.router
-      .navigateByUrl('/app/tabs/schedule', { replaceUrl: true })
+      .navigateByUrl('/app/tabs/login', { replaceUrl: true })
       .then(() => this.storage.set('ion_did_tutorial', true));
   }
 
@@ -33,15 +33,15 @@ export class TutorialPage {
     });
   }
 
-  ionViewWillEnter() {
-    this.storage.get('ion_did_tutorial').then(res => {
-      if (res === true) {
-        this.router.navigateByUrl('/app/tabs/schedule', { replaceUrl: true });
-      }
-    });
+  // ionViewWillEnter() {
+  //   this.storage.get('ion_did_tutorial').then(res => {
+  //     if (res === true) {
+  //       this.router.navigateByUrl('/app/tabs/schedule', { replaceUrl: true });
+  //     }
+  //   });
 
-    this.menu.enable(false);
-  }
+  //   this.menu.enable(false);
+  // }
 
   ionViewDidLeave() {
     // enable the root left menu when leaving the tutorial page
