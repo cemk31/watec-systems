@@ -14,9 +14,14 @@
             </ion-item>
             <!-- <ion-subtitle>Version 1.0.0</ion-subtitle> -->
           </ion-list-header>
+          <ion-list-header>
+            <ion-label>
+              WATEC
+            </ion-label>
+          </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let i = index">
-
             <div *ngIf="isUserLoggedIn">
+
               <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
                 <ion-label>
@@ -24,8 +29,22 @@
                 </ion-label>
               </ion-item>
             </div>
+          </ion-menu-toggle>
+          <ion-list-header>
+            <ion-label>
+              ISTA
+            </ion-label>
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false" *ngFor="let i of istaPages; let i = index">
+            <div *ngIf="isUserLoggedIn">
 
-
+              <ion-item [routerLink]="i.url" routerLinkActive="selected" routerDirection="root" detail="false">
+                <ion-icon slot="start" [name]="i.icon + '-outline'"></ion-icon>
+                <ion-label>
+                  {{i.title}}
+                </ion-label>
+              </ion-item>
+            </div>
           </ion-menu-toggle>
         </ion-list>
 

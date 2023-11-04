@@ -47,7 +47,7 @@ import { format } from 'date-fns';
 
     formatDate(dateString: string): string {
       const date = new Date(dateString);
-      if (dateString === null) {
+      if (dateString === null || dateString === undefined) {
         return '';
       }
       return format(date, 'dd.MM.yyyy');

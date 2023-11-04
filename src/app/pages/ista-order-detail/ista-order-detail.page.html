@@ -36,35 +36,35 @@
 
 <ion-segment *ngIf="segmentVisible" [ngClass]="{'slide-in': segmentVisible}">
   <!-- Mit Icons und Farben -->
-  <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')">
+  <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')" layout="icon-start">
     <ion-icon name="checkmark-outline"></ion-icon>
     Kundenkontakt 
     <!-- (RECEIVED) -->
   </ion-segment-button>
-  <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')">
+  <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')" layout="icon-start">
     <ion-icon name="calendar-outline"></ion-icon>
     IN PLANUNG 
     <!-- (PLANNED) -->
   </ion-segment-button>
-  <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')">
+  <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')" layout="icon-start">
     <ion-icon name="pause-outline"></ion-icon>
     Vershoben 
     <!-- (POSTPONED) -->
   </ion-segment-button>
-  <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')">
+  <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')" layout="icon-start">
     <ion-icon name="close-outline"></ion-icon>
     Storno 
     <!-- (CANCELLED) -->
   </ion-segment-button>
-  <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')">
+  <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')" layout="icon-start">
     <ion-icon name="close-circle-outline"></ion-icon>
     Abgelehnt
   </ion-segment-button>
-  <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')">
+  <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')" layout="icon-start">
     <ion-icon name="play-circle-outline"></ion-icon>
     Ausführung <br>erfolgt
   </ion-segment-button>
-  <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')">
+  <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')" layout="icon-start">
     <ion-icon name="paper-plane-outline"></ion-icon>
     TWA
   </ion-segment-button>
@@ -90,9 +90,38 @@
   </ng-container> -->
   
   <app-general></app-general>
-  <app-received></app-received>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar class="ion-padding" color="light"><ion-title>Aktivitätenprotokoll</ion-title></ion-toolbar>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>Empfangen</h2>
+            <p>{{ response?.createdAt | date: 'dd.MM.yyyy HH:mm' }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngFor="let component of statusList">
+          <p>{{component}}</p>
+          <ng-container *ngIf="component === 'RECEIVED'"> <app-received [data]="component"></app-received> </ng-container>
+          <ng-container *ngIf="component === 'PLANNED'"> <app-planned [data]="component"></app-planned> </ng-container>
+          <ng-container *ngIf="component === 'CANCELLED'"> <app-cancelled [data]="component"></app-cancelled> </ng-container>
+          <ng-container *ngIf="component === 'POSTPONED'"> <app-postponed [data]="component"></app-postponed> </ng-container>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+
+  
+
+  <!-- <app-received></app-received>
   <app-planned></app-planned>
   <app-cancelled></app-cancelled>
-  <app-closed-contract-partner></app-closed-contract-partner>
-  <!-- <app-postponed></app-postponed> -->
+  <app-postponed></app-postponed> -->
+    <!-- <app-closed-contract-partner></app-closed-contract-partner> -->
 </ion-content>

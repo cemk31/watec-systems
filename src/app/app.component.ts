@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     //   icon: 'information-circle'
     // },
     {
-      title: 'Trinkwasseruntersuchung anlegen',
+      title: 'Trinkwasseruntersuchung anlegen (BETA)',
       url: '/app/tabs/trinkwasseruntersuchung',
       icon: 'water'
     },
@@ -50,19 +50,14 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/create-customer',
       icon: 'person'
     },
-    // {
-    //   title: 'Auftrag anlegen',
-    //   url: '/app/tabs/auftrag',
-    //   icon: 'person'
-    // },
-    // {
-    //   title: 'Aufträge',
-    //   url: '/app/tabs/auftrage',
-    //   icon: 'person'
-    // },
     {
-      title: 'Auftrag Erstellen (Testkomponente)',
-      url: '/app/tabs/auftrag-detail',
+      title: 'WATEC Auftrag anlegen (MASTER)',
+      url: '/app/tabs/auftrag',
+      icon: 'person'
+    },
+    {
+      title: 'WATEC Aufträge (MASTERDATENBANK)',
+      url: '/app/tabs/auftrage',
       icon: 'person'
     },
     {
@@ -76,6 +71,9 @@ export class AppComponent implements OnInit {
       url: '/test',
       icon: 'document'
     },
+  ];
+
+  istaPages = [
     {
       title: 'ISTA Bestellungen (Liste)',
       url: '/app/tabs/ista',
@@ -98,8 +96,14 @@ export class AppComponent implements OnInit {
       title: 'ISTA Kundenkontakt erstellen',
       url: '/app/tabs/create-ista-order',
       icon: 'water'
-    }
+    },
+    {
+      title: 'Auftrag Erstellen (Testkomponente)',
+      url: '/app/tabs/auftrag-detail',
+      icon: 'person'
+    },
   ];
+
   personalPages = [
     {
       title: 'Einstellungen',

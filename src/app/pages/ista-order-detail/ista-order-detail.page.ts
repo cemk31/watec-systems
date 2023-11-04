@@ -26,6 +26,7 @@ export class IstaOrderDetailPage implements OnInit {
   showStatusMenu = false;
   segmentVisible: boolean = false;
 
+  statusList = [];
 
   id: string;
   exceptionMessage = null;
@@ -205,17 +206,36 @@ export class IstaOrderDetailPage implements OnInit {
       )
       .subscribe((data) => {
         this.response = data; // Hier setzen Sie den Wert für 'response'
-        this.sortComponentsByDate();  // Sortierung nach dem Erhalten der Daten
+        // this.sortComponentsByDate();  // Sortierung nach dem Erhalten der Daten
         this.orderService.setData(data);
       });
   }
 
   sortComponentsByDate() {
-    // Nehmen wir an, die Antwort enthält einen Array von Objekten, und jedes Objekt hat ein `updatedAt` oder `createdAt` Feld.
-    if (this.response && Array.isArray(this.response)) {
-      this.response.sort((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime());
-    }
-  }  
+    // Statuswerte in der Reihenfolge, wie sie sortiert werden sollen
+    const statusOrder = ['Rejected', 'ClosedContractPartner', 'NotPossible', 'Received', 'Postponed'];
+  
+    // Sortiere den response Array
+    this.response.sort((a, b) => {
+      // Vergleiche Statuswerte
+      const orderA = statusOrder.indexOf(a.status);
+      const orderB = statusOrder.indexOf(b.status);
+  
+      if (orderA < orderB) {
+        return -1;
+      }
+      if (orderA > orderB) {
+        return 1;
+      }
+  
+      // Wenn die Statuswerte gleich sind, sortiere nach Datum
+      const dateA = a.updatedAt || a.createdAt;
+      const dateB = b.updatedAt || b.createdAt;  
+    });
+  
+    // Nach der Sortierung, erstelle die statusList
+    this.statusList = this.response.map(component => component.updatedAt || component.createdAt);
+  }
 
   toggleSegmentVisibility() {
     this.segmentVisible = !this.segmentVisible;
