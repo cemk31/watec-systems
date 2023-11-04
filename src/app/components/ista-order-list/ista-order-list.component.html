@@ -1,0 +1,111 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      ISTA Bestellungen (LIST)
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-searchbar showCancelButton="focus" placeholder="Suche..." [(ngModel)]="filterTerm" animated="true"></ion-searchbar>
+  <ion-list>
+    <ion-item-group *ngFor="let data of orders | filter:filterTerm">
+      <ion-item-sliding>
+        <ion-item (click)="openDetails(data.id)">
+          <ion-icon name="document-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h2>{{ data.id }}</h2>
+            <h3>
+              <span [ngClass]="{'status-ok': data.actualStatus === 'OK', 'status-error': data.actualStatus === 'Error'}">
+                Aktueller Status: {{ data.actualStatus }}
+              </span>
+            </h3>
+            <p>Erstellt: {{ data.createdAt }}</p>
+          </ion-label>
+          <ion-button slot="end" fill="outline" color="primary" shape="round" (click)="openDetails(data.id)">
+            Übersicht <ion-icon name="arrow-forward-outline"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <ion-item-options>
+          <ion-item-option (click)="edit(data.id)">Bearbeiten</ion-item-option>
+          <ion-item-option color="danger" (click)="delete(data.id)">Löschen</ion-item-option>
+        </ion-item-options>
+      </ion-item-sliding>
+
+      <!-- Details Card -->
+      <ion-card *ngIf="selectedId === data.id" class="neon-card">
+        <ion-card-header>
+          <ion-card-title>Bestellung ID: {{ data.id }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="card-content-grid">
+          <ion-col class="card-col">
+            <ion-card class="inner-card">
+              <ion-card-title color="primary">Allgemeine Informationen</ion-card-title>
+              <ion-item>
+                <ion-label position="floating">Aktueller Status</ion-label>
+                <ion-input type="text" [(ngModel)]="data.actualStatus" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Zuletzt geändert</ion-label>
+                <ion-input type="text" [(ngModel)]="data.updatedAt" disabled="true"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Bemerkung (Extern)</ion-label>
+                <ion-input type="text" [(ngModel)]="data.remarkExternal" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt</ion-label>
+                <ion-input type="text" [(ngModel)]="data.createdAt" disabled="true"></ion-input>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+          <ion-col class="card-col">
+            <ion-card class="inner-card">
+              <ion-card-title color="primary">Kontakt</ion-card-title>
+              <ion-item>
+                <ion-label position="floating">Unternehmen</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.companyName" disabled="true"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.name" disabled="true"></ion-input>
+              </ion-item>
+
+              <ion-item>
+                <ion-label position="floating">Telefonnummer</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.phoneNumber" disabled="true"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="data.Customer.email" disabled="true"></ion-input>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label position="floating">Ort</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.place" disabled="true"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Land</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.country" disabled="true"></ion-input>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label position="floating">PLZ</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.zipCode" disabled="true"></ion-input>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label position="floating">Fax</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.fax" disabled="true"></ion-input>
+              </ion-item>
+            </ion-card>
+          </ion-col>
+        </ion-card-content>
+      </ion-card>
+    </ion-item-group>
+  </ion-list>
+</ion-content>

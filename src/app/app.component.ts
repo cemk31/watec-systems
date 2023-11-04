@@ -10,7 +10,6 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Storage } from '@ionic/storage';
 
 import { UserData } from './providers/user-data';
-import { LoginPage } from './pages/login/login';
 
 @Component({
   selector: 'app-root',
@@ -26,21 +25,21 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/home',
       icon: 'home'
     },
+    // {
+    //   title: 'Informationen',
+    //   url: '/app/tabs/about',
+    //   icon: 'information-circle'
+    // },
     {
-      title: 'Informationen',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    },
-    {
-      title: 'Trinkwasseruntersuchung anlegen',
+      title: 'Trinkwasseruntersuchung anlegen (BETA)',
       url: '/app/tabs/trinkwasseruntersuchung',
       icon: 'water'
     },
-    {
-      title: 'Untersuchungen',
-      url: '/app/tabs/untersuchung-list',
-      icon: 'map'
-    },
+    // {
+    //   title: 'Untersuchungen',
+    //   url: '/app/tabs/untersuchung-list',
+    //   icon: 'map'
+    // },
     {
       title: 'Kunden',
       url: '/app/tabs/customer',
@@ -52,38 +51,15 @@ export class AppComponent implements OnInit {
       icon: 'person'
     },
     {
-      title: 'Auftrag anlegen',
+      title: 'WATEC Auftrag anlegen (MASTER)',
       url: '/app/tabs/auftrag',
       icon: 'person'
     },
     {
-      title: 'Aufträge',
+      title: 'WATEC Aufträge (MASTERDATENBANK)',
       url: '/app/tabs/auftrage',
       icon: 'person'
     },
-    {
-      title: 'Auftrag Detail',
-      url: '/app/tabs/auftrag-detail',
-      icon: 'person'
-    },
-    {
-      title: 'ISTA',
-      url: '/app/tabs/ista',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA LIST',
-      url: '/app/tabs/ista-order-list',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA DETAIL',
-      url: '/app/tabs/ista-order-detail',
-      icon: 'person'
-    }
-    ,
     {
       title: 'Test Liste',
       url: '/app/tabs/list',
@@ -91,16 +67,43 @@ export class AppComponent implements OnInit {
     }
     ,
     {
-      title: 'Test 2',
-      url: '/app/tabs/test',
-      icon: 'person'
+      title: 'Bestelldetail (ISTA)',
+      url: '/test',
+      icon: 'document'
     },
+  ];
+
+  istaPages = [
+    {
+      title: 'ISTA Bestellungen (Liste)',
+      url: '/app/tabs/ista',
+      icon: 'document'
+    }
+    ,
+    {
+      title: 'ISTA Bestellungen (Tabelle)',
+      url: '/app/tabs/ista-order-table',
+      icon: 'document'
+    }
+    ,
+    {
+      title: 'ISTA INFO AUFTRAG',
+      url: 'app/tabs/ista-order-detail/:id',
+      icon: 'water'
+    }
+    ,
     {
       title: 'ISTA Kundenkontakt erstellen',
       url: '/app/tabs/create-ista-order',
       icon: 'water'
-    }
+    },
+    {
+      title: 'Auftrag Erstellen (Testkomponente)',
+      url: '/app/tabs/auftrag-detail',
+      icon: 'person'
+    },
   ];
+
   personalPages = [
     {
       title: 'Einstellungen',

@@ -8,6 +8,7 @@ import { IstaPageRoutingModule } from './ista-routing.module';
 
 import { IstaPage } from './ista.page';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { IstaOrderListComponent } from '../../components/ista-order-list/ista-order-list.component';
 
 @NgModule({
   imports: [
@@ -17,6 +18,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     Ng2SearchPipeModule,
     IstaPageRoutingModule
   ],
-  declarations: [IstaPage]
+  declarations: [IstaPage, IstaOrderListComponent]
 })
 export class IstaPageModule {}

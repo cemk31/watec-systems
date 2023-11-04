@@ -144,7 +144,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'ista-order-detail',
+        path: 'ista-order-detail/:id',
         children: [
           {
             path: '',
@@ -153,7 +153,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'test',
+        path: 'test/:id',
         children: [
           {
             path: '',
@@ -167,6 +167,15 @@ const routes: Routes = [
           {
             path: '',
             loadChildren: () => import('../create-ista-order/create-ista-order.module').then(m => m.CreateIstaOrderPageModule)
+          }
+        ]
+      },
+      {
+        path: 'ista-order-table',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-table/ista-order-table.module').then(m => m.IstaOrderTablePageModule)
           }
         ]
       },

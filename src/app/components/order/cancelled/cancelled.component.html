@@ -1,0 +1,70 @@
+<!-- <ion-content *ngIf="response && response.Cancelled && response.Cancelled.length"> -->
+<ion-card>
+  <ion-list>
+    <ng-container *ngFor="let item of response?.Cancelled">
+      <ion-card>
+        <ion-card-header>
+          <ion-row>
+            <ion-icon color="danger" name="remove-circle" size="large"></ion-icon>
+            <ion-card-title style="padding:5px;" color="danger">Stornierte Bestellung: <b>{{ item?.id }}</b></ion-card-title>
+          </ion-row>
+        </ion-card-header>
+        
+        <ion-title color="primary">Allgemeine Infos</ion-title>
+
+        <ion-card-content>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Erstellt Am</ion-label>
+                <ion-input [value]="formatDate(item?.createdAt)" readonly="true"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Aktualisiert Am</ion-label>
+                <ion-input [value]="formatDate(item?.updatedAt)" readonly="true"></ion-input>
+              </ion-item>              
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Status Typ</ion-label>
+                <ion-input [value]="item?.statusType || 'Kein Wert'" readonly="true"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Gesetzt am (setOn)</ion-label>
+                <ion-input [value]="item?.setOn" readonly="true"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+          <ion-title color="primary">Storno</ion-title>
+          <ion-item>
+            <ion-label position="floating">Stornogrund</ion-label>
+            <ion-input [value]="item?.cancellationReason || 'Kein Wert'" readonly="true"></ion-input>
+          </ion-item>
+
+          <ion-row>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Bestellnummer</ion-label>
+                <ion-input [value]="item?.orderId" readonly="true"></ion-input>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-item>
+                <ion-label position="floating">Anfrage ID</ion-label>
+                <ion-input [value]="item?.requestId || 'Kein Wert'" readonly="true"></ion-input>
+              </ion-item>
+            </ion-col>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ng-container>
+  </ion-list>
+</ion-card>
+
+<!-- </ion-content> -->

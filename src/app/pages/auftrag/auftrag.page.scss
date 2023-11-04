@@ -1,0 +1,33 @@
+// Set up variables for colors and font sizes
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+$font-size: 16px;
+
+// Set up media queries for different screen sizes
+@media (max-width: 767px) {
+    // Write CSS code for small screens here
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    // Write CSS code for medium screens here
+}
+
+@media (min-width: 992px) {
+    // Write CSS code for large screens here
+}
+
+// Write CSS code for the page here
+
+// Use CSS Grid or Flexbox to create a responsive layout
+// Use CSS variables to make it easy to change colors and font sizes
+// Use media queries to adjust the layout for different screen sizes
+.custom-checkbox-item {
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    --inner-padding-start: 8px;
+  }
+  
+  .custom-checkbox-item ion-label {
+    margin-left: 8px;
+  }
+  

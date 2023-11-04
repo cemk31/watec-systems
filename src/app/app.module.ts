@@ -1,5 +1,5 @@
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
@@ -16,6 +16,8 @@ import { CustomerPipe } from './pages/customer.pipe';
 import { AuthService } from './auth/auth.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { GeneralComponent } from './components/order/general/general.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   imports: [
@@ -30,6 +32,7 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
+    // SharedModule,
   ],
   declarations: [AppComponent, CustomerPipe],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],

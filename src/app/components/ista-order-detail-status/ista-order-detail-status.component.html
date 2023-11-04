@@ -1,0 +1,209 @@
+<!-- RECEIVED -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Kundenkontakt erfolgt</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+
+    <ion-item>
+      <ion-label position="floating">Kundenkontakt am</ion-label>
+      <ion-input type="text" [(ngModel)]="response?.CustomerContacts.contactAttemptOn" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Geplanter Grobtermin</ion-label>
+      <ion-input type="text" value="12.10.2023" readonly></ion-input>
+    </ion-item> 
+
+    <ion-item>
+      <ion-label position="floating">Labor</ion-label>
+      <ion-input type="text" value="Dr. Max Mustermann" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">An Ista übertragen</ion-label>
+      <ion-select>
+        <ion-select-option value="yes">ja</ion-select-option>
+        <ion-select-option value="no">nein</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full">bearbeiten</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="danger">löschen</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="success">An Ista übermitteln</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-content>
+</ion-card>
+
+<!-- PLANNED -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Geplant (PLANNED)</ion-card-title>
+    <!-- Die Buttons oben in der Card -->
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" size="small">bearbeiten</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="success" size="small">An ISTA übermitteln</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content>
+
+    <ion-item>
+      <ion-label position="floating">Vereinbarter Detailtermin</ion-label>
+      <ion-input type="text" [(ngModel)]="response?.Planned.detailedScheduleDate" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Uhrzeit von</ion-label>
+      <ion-input type="text" [(ngModel)]="response?.Planned.detailedScheduleTimeFrom" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Uhrzeit bis</ion-label>
+      <ion-input type="text" [(ngModel)]="response?.Planned.detailedScheduleTimeTo" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Grund Terminverschiebung</ion-label>
+      <ion-input type="text" [(ngModel)]="response?.Planned.detailedScheduleDelayReason" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">An ISTA Übertragen</ion-label>
+      <ion-input type="text" value="ja / nein" readonly></ion-input>
+    </ion-item>
+
+  </ion-card-content>
+</ion-card>
+
+<!-- EXECUTION ON SITE DONE (ONLY BOOLEAN) -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Auführung erfolgt</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Auf der Baustelle durchgeführt</ion-label>
+      <ion-checkbox slot="start" value="executionOnSiteDone"></ion-checkbox>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<!-- CUSTOMER CONTACT NOT POSSIBLE -->
+
+<!-- REJECTED -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Ablehnungsdetails</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Ablehnungsgrund</ion-label>
+      <ion-select value="SONS">
+        <ion-select-option value="SONS">SONS</ion-select-option>
+        <!-- Fügen Sie hier weitere Optionen hinzu, falls erforderlich -->
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label>Ablehnungsbegründung Text</ion-label>
+      <ion-input value="Ablehnungsbegründung 1"></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+<!-- TERMINIERUNG BEGONNEN -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Terminierung begonnen</ion-card-title>
+    <!-- Die Buttons oben in der Card -->
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" size="small">bearbeiten</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="success" size="small">An Ista übermitteln</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content>
+
+    <ion-item>
+      <ion-label position="floating">begonnen am</ion-label>
+      <ion-input type="text" value="01.11.2023" readonly></ion-input>
+    </ion-item>
+
+  </ion-card-content>
+</ion-card>
+
+<!-- CANCELLED -->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Stornierungsgrund</ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+    <ion-item>
+      <ion-label>Stornierungsgrund Code</ion-label>
+      <ion-input value="cancellationReason" readonly></ion-input>
+    </ion-item>
+  </ion-card-content>
+</ion-card>
+
+
+<!-- AUSFÜHRUNG VOR ORT NICHT MÖGLICH - EXECUTION ON SITE NOT POSSIBLE-->
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Ausführung vor Ort nicht möglich</ion-card-title>
+    <!-- Die Buttons oben in der Card -->
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full" size="small">bearbeiten</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="danger" size="small">löschen</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button expand="full" color="success" size="small">An ISTA übermitteln</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-card-header>
+  <ion-card-content>
+
+    <ion-item>
+      <ion-label position="floating">Nichtausführgrund</ion-label>
+      <ion-select placeholder="Grund auswählen">
+        <ion-select-option value="grund1">Grund 1</ion-select-option>
+        <ion-select-option value="grund2">Grund 2</ion-select-option>
+        <!-- Weitere Optionen können hinzugefügt werden -->
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Nichtausführgrund Text</ion-label>
+      <ion-input type="text" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">An ISTA Übertragen</ion-label>
+      <ion-input type="text" value="ja / nein" readonly></ion-input>
+    </ion-item>
+
+  </ion-card-content>
+</ion-card>
+
+<!-- EXECUTION ON SITE DONE -->
+
