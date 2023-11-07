@@ -14,7 +14,7 @@
   </ion-toolbar> 
 </ion-header>
 <ion-content>
-  <form [formGroup]="auftragForm" (ngSubmit)="onSubmit(auftragForm)">
+  <form [formGroup]="auftragForm" (ngSubmit)="onSubmit()">
     <ion-row>
       <ion-col>
         <ion-card>
@@ -341,10 +341,10 @@
           </ion-row>
           
           <ion-row>
-            <ion-item>
+            <!-- <ion-item>
               <ion-label label="Outline input" fill="outline" label-placement="floating" position="end">Dateien</ion-label>
               <ion-input type="file" formControlName="dateien" (change)="uploadFile($event)" name="dateien"></ion-input>
-            </ion-item>
+            </ion-item> -->
           </ion-row>
           
           <ion-row>

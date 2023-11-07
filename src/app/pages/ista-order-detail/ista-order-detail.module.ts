@@ -21,6 +21,9 @@ import { CreateReceivedComponent } from '../../components/order/create-received/
 import { CreatePlannedComponent } from '../../components/order/create-planned/create-planned.component';
 import { CreatePostponedComponent } from '../../components/order/create-postponed/create-postponed.component';
 import { CreateCancelledComponent } from '../../components/order/create-cancelled/create-cancelled.component';
+import { IstaOrderDetailTwaComponent } from '../../components/ista-order-detail-twa/ista-order-detail-twa.component';
+import { IstaOrderDetailStatusComponent } from '../../components/ista-order-detail-status/ista-order-detail-status.component';
+import { IstaOrderDetailGeneralComponent } from '../../components/ista-order-detail-general/ista-order-detail-general.component';
 
 @NgModule({
   imports: [
@@ -30,12 +33,20 @@ import { CreateCancelledComponent } from '../../components/order/create-cancelle
     IstaOrderDetailPageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [IstaOrderDetailPage, ClosedContractPartnerComponent, ExecutionOnSiteDoneComponent, ExecutionOnSiteNotPossibleComponent,
-  PlannedComponent, PostponedComponent, RejectedComponent, CancelledComponent, ClosedContractPartnerComponent,ReceivedComponent, GeneralComponent, 
-  CreateReceivedComponent, CreatePlannedComponent, CreatePostponedComponent, CreateCancelledComponent
+  declarations: [IstaOrderDetailPage, 
+    ClosedContractPartnerComponent, 
+    ExecutionOnSiteDoneComponent, 
+    ExecutionOnSiteNotPossibleComponent,
+  PlannedComponent, PostponedComponent, RejectedComponent, CancelledComponent, 
+  // ClosedContractPartnerComponent,
+  ReceivedComponent, GeneralComponent, 
+  CreateReceivedComponent, 
+  CreatePlannedComponent, CreatePostponedComponent, CreateCancelledComponent, IstaOrderDetailTwaComponent, IstaOrderDetailStatusComponent, IstaOrderDetailGeneralComponent,
+  IstaOrderDetailStatusComponent
 ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
 })
+
 export class IstaOrderDetailPageModule {}

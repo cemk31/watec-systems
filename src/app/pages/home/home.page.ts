@@ -19,6 +19,7 @@ export class HomePage implements OnInit {
   user: any;
   notifications: string[];
   activities: string[];
+  filterTerm: string; // Definieren Sie die Eigenschaft hier
 
   ngOnInit() {
     if(!sessionStorage.getItem("access_token")) {

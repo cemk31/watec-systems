@@ -1,20 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { CustomerPageRoutingModule } from './customer-routing.module';
 
 import { CustomerPage } from './customer.page';
+import { CustomerComponent } from '../../components/customer/customer.component';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    CustomerPageRoutingModule
+    CustomerPageRoutingModule,
+    ReactiveFormsModule
   ],
-  declarations: [CustomerPage]
+  declarations: [CustomerPage, CustomerComponent]
 })
 export class CustomerPageModule {}

@@ -59,4 +59,8 @@ export class CustomerPage implements OnInit {
         item.name.toLowerCase().includes(val.toLowerCase()));
     }
   }
+
+  createNewCustomer() {}
+
+  removeCustomer() {}
 }

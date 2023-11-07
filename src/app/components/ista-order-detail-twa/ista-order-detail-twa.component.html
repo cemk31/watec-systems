@@ -9,16 +9,18 @@
 
   <ion-card-content>
     <!-- ClosedContractPartner -->
-    <ion-item-divider><strong>Geschlossener Vertragspartner</strong></ion-item-divider>
+    <!-- <ion-item-divider> -->
+      <strong>Geschlossener Vertragspartner</strong>
+    <!-- </ion-item-divider> -->
 
     <!-- Order -->
     <ion-item>
       <ion-label position="stacked">Bestellnummer</ion-label>
-      <ion-input type="text" [(ngModel)]="closedContractPartner.order.number" placeholder="{{order_no}}"></ion-input>
+      <ion-input type="text" [(ngModel)]="closedContractPartner?.order.number" placeholder="{{order_no}}"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="stacked">Externe Bemerkung</ion-label>
-      <ion-textarea [(ngModel)]="closedContractPartner.order.remarkExternal" placeholder="remark"></ion-textarea>
+      <ion-textarea [(ngModel)]="closedContractPartner?.order.remarkExternal" placeholder="remark"></ion-textarea>
     </ion-item>
 
     <ion-item>
@@ -34,7 +36,7 @@
     <!-- Customer Contacts -->
     <ion-item-divider><strong>Kundenkontakte</strong></ion-item-divider>
 
-    <div *ngFor="let contact of closedContractPartner.customerContacts">
+    <div *ngFor="let contact of closedContractPartner?.customerContacts">
       <ion-item>
         <ion-label position="stacked">Kontaktversuch am</ion-label>
         <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="contact.customerContactAttemptOn"></ion-datetime>
@@ -72,7 +74,7 @@
 
     <!-- Supplied Documents -->
     <ion-item-divider><strong>Gelieferte Dokumente</strong></ion-item-divider>
-    <div *ngFor="let doc of closedContractPartner.suppliedDocuments; let i = index">
+    <div *ngFor="let doc of closedContractPartner?.suppliedDocuments; let i = index">
       <ion-item>
         <ion-label position="stacked">Dokumenttyp (Index: {{i+1}})</ion-label>
         <ion-input type="text" [(ngModel)]="doc.type"></ion-input>
@@ -85,7 +87,7 @@
     <ion-button (click)="addDocument()">Dokument hinzufügen</ion-button>
 
     <ion-item-divider><strong>Aufgezeichnetes System</strong></ion-item-divider>
-    <div *ngFor="let system of closedContractPartner.recordedSystem; let i = index">
+    <div *ngFor="let system of closedContractPartner?.recordedSystem; let i = index">
       <ion-item-divider><strong>Trinkwassereinrichtung (Index: {{i+1}})</strong></ion-item-divider>
 
       <ion-item>

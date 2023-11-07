@@ -19,7 +19,7 @@
               WATEC
             </ion-label>
           </ion-list-header>
-          <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let i = index">
+          <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let indexA = index">
             <div *ngIf="isUserLoggedIn">
 
               <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
@@ -35,7 +35,7 @@
               ISTA
             </ion-label>
           </ion-list-header>
-          <ion-menu-toggle autoHide="false" *ngFor="let i of istaPages; let i = index">
+          <ion-menu-toggle autoHide="false" *ngFor="let i of istaPages; let indexI = index">
             <div *ngIf="isUserLoggedIn">
 
               <ion-item [routerLink]="i.url" routerLinkActive="selected" routerDirection="root" detail="false">
@@ -53,7 +53,7 @@
             Account
           </ion-list-header>
           <div *ngIf="isUserLoggedIn">
-            <ion-menu-toggle autoHide="false" *ngFor="let p of personalPages; let i = index">
+            <ion-menu-toggle autoHide="false" *ngFor="let p of personalPages; let indexP = index">
               <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
                 <ion-label>
@@ -63,7 +63,7 @@
             </ion-menu-toggle>
           </div>
 
-          <ion-menu-toggle autoHide="false" *ngFor="let o of otherPages; let i = index">
+          <ion-menu-toggle autoHide="false" *ngFor="let o of otherPages; let indexO = index">
             <ion-item [routerLink]="o.url" routerLinkActive="selected" routerDirection="root" detail="false">
               <ion-icon slot="start" [name]="o.icon + '-outline'"></ion-icon>
               <ion-label>
@@ -87,10 +87,10 @@
             <ion-toggle (ionChange)="onToggleDarkMode()" [(ngModel)]="dark"></ion-toggle>
           </ion-item>
         </ion-list>
-
+<!-- 
         <ion-list lines="none">
           <ion-list-header>
-            Tutorial
+            Tutorial  s
           </ion-list-header>
           <ion-menu-toggle autoHide="false">
             <ion-item button (click)="openTutorial()" detail="false">
@@ -98,7 +98,7 @@
               <ion-label>Show Tutorial</ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>

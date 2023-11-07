@@ -15,63 +15,63 @@ export class AuftragPage implements OnInit {
   showItems = false;
   exceptionMessage = null;
 
-  auftragForm = new FormGroup({
+  auftragForm = this.formBuilder.group({
     done: new FormControl(false),
-    emailEingang: new FormControl(''),
-    bemerkung: new FormControl(''),
-    vorgemerkt: new FormControl(''),
-    hmName: new FormControl(''),
-    hmTel: new FormControl(''),
+    emailEingang: [''],
+    bemerkung: [''],
+    vorgemerkt: [''],
+    hmName: [''],
+    hmTel: [''],
     
-    objekt: new FormGroup({
-      liNr: new FormControl(''),
-      adresseLi: new FormControl(''),
-      plzLi: new FormControl(''),
-      ortLi: new FormControl(''),
+    objekt: this.formBuilder.group({
+      liNr: [''],
+      adresseLi: [''],
+      plzLi: [''],
+      ortLi: [''],
     }),
 
-    vwStatisch: new FormGroup({
-      vwBuro: new FormControl(''),
-      vwMa: new FormControl(''),
-      mailadresseVw: new FormControl(''),
-      telVw: new FormControl(''),
+    vwStatisch: this.formBuilder.group({
+      vwBuro: [''],
+      vwMa: [''],
+      mailadresseVw: [''],
+      telVw: [''],
     }),
 
-    vwDynamisch: new FormGroup({
-      vwBuro: new FormControl(''),
-      vwMa: new FormControl(''),
-      mailadresseVw: new FormControl(''),
-      telVw: new FormControl(''),
+    vwDynamisch: this.formBuilder.group({
+      vwBuro: [''],
+      vwMa: [''],
+      mailadresseVw: [''],
+      telVw: [''],
     }),
 
-    email: new FormGroup({
-      emailBetreff: new FormControl(''),
-      emailAnhang: new FormControl(''),
+    email: this.formBuilder.group({
+      emailBetreff: [''],
+      emailAnhang: [''],
       bestatigungVersendet: new FormControl(false),
-      anfrageThema: new FormControl(''),
+      anfrageThema: [''],
       anfrageBestatigt: new FormControl(false),
       angebotErstellt: new FormControl(false),
-      angebotsnummer: new FormControl(''),
-      angebot: new FormControl(''),
+      angebotsnummer: [''],
+      angebot: [''],
     }),
 
-    auftraggeber: new FormGroup({
-      auftraggeber: new FormControl(''),
-      ap: new FormControl(''),
-      strasse: new FormControl(''),
-      plz: new FormControl(''),
-      ort: new FormControl(''),
-      tel: new FormControl(''),
-      email: new FormControl(''),
+    auftraggeber: this.formBuilder.group({
+      auftraggeber: [''],
+      ap: [''],
+      strasse: [''],
+      plz: [''],
+      ort: [''],
+      tel: [''],
+      email: [''],
     }),
 
-    auftragsBestatigung: new FormGroup({
-      auftragbestatigung: new FormControl(''),
-      vwBestatigung: new FormControl(''),
-      terminiertZum: new FormControl(''),
-      uhrzeit: new FormControl(''),
+    auftragsBestatigung: this.formBuilder.group({
+      auftragbestatigung: [''],
+      vwBestatigung: [''],
+      terminiertZum: [''],
+      uhrzeit: [''],
       aushang: new FormControl(false),
-      datumAushang: new FormControl(''),
+      datumAushang: [''],
       agInformiert: new FormControl(false),
       bgb: new FormControl(false),
       bgbBericht: new FormControl(false),
@@ -79,10 +79,10 @@ export class AuftragPage implements OnInit {
       bericht: new FormControl(false),
       umb: new FormControl(false),
       ber:  new FormControl(false),
-      reNr: new FormControl(''),
+      reNr: [''],
       reBetrag: new FormControl(0),
       reErhalten: new FormControl(false),
-      reNr2: new FormControl(''),
+      reNr2: [''],
       reBetrag2: new FormControl(0),
       reNr2Erhalten: new FormControl(false),
       mahnung: new FormControl(false),
@@ -90,7 +90,7 @@ export class AuftragPage implements OnInit {
       mahnungErhalten: new FormControl(false),
       
       // muss überarbeitet werden
-      dateien: new FormControl(''),
+      dateien: [''],
     }),
   });
 
@@ -165,9 +165,9 @@ export class AuftragPage implements OnInit {
   constructor(private formBuilder: FormBuilder, private http: HttpClient, private authService : AuthService ) {
     // this.createForm();
   }
-  createForm() {
-    this.auftragForm = this.formBuilder.group(this.auftragForm);
-  }
+  // createForm() {
+  //   this.auftragForm = this.formBuilder.group(this.auftragForm);
+  // }
   
   ngOnInit() {
     this.getAuftraggeber().subscribe(auftraggeber => {
@@ -178,8 +178,8 @@ export class AuftragPage implements OnInit {
   }
   
 
-  onSubmit(auftragForm: NgForm) {
-    console.log(auftragForm.value);
+  onSubmit() {
+    console.log(this.auftragForm.value);
     
     // Convert uhrzeit and datumAushang to Date instances
     // const uhrzeit = new Date(this.auftragForm.controls["uhrzeit"].value);
@@ -266,5 +266,12 @@ export class AuftragPage implements OnInit {
     
   }
 
+  onDelete() { 
+  }
+  onEdit() {}
+
+  onSyncWithIsta() {}
+
+  uploadFile() {}
 
 }

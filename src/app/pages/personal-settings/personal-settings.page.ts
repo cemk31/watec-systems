@@ -16,6 +16,7 @@ export interface User {
   id: number,
   createdAt: string,
   updatedAt: string,
+  mail: string,
   email: string,
   firstName: string,
   lastName: string
@@ -102,7 +103,8 @@ export class PersonalSettingsPage implements OnInit {
       updatedAt: "2023-04-23T10:10:45.915Z",
       email: "cem22@test.de",
       firstName: "Test",
-      lastName: "null"
+      lastName: "null",
+      mail: ''
     }
 
 }

@@ -15,7 +15,6 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
     FormsModule,
     IonicModule,
     IstaOrderListPageRoutingModule,
-    Ng2SearchPipeModule,
     ReactiveFormsModule 
   ],
   declarations: [IstaOrderListPage]

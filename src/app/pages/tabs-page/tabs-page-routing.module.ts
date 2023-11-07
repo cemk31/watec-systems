@@ -43,15 +43,15 @@ const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'trinkwasseruntersuchung',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../trinkwasseruntersuchung/trinkwasseruntersuchung.module').then(m => m.TrinkwasseruntersuchungPageModule)
-          }
-        ]
-      },
+      // {
+      //   path: 'trinkwasseruntersuchung',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('../trinkwasseruntersuchung/trinkwasseruntersuchung.module').then(m => m.TrinkwasseruntersuchungPageModule)
+      //     }
+      //   ]
+      // },
       {
         path: 'untersuchung-list',
         children: [

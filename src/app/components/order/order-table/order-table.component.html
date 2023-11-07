@@ -27,7 +27,7 @@
       </tr>
     </thead>
     <tbody>
-      <ng-container *ngFor="let data of orders | filter:filterTerm">
+      <ng-container *ngFor="let data of orders">
         <tr>
           <td>
             <a [href]="'/app/tabs/ista-order-detail/' + data.id">

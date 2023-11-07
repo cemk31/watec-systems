@@ -55,4 +55,9 @@ import { format } from 'date-fns';
 
     syncLog: string = 'Eine neue Zeile im Protokoll.\n';  // Protokoll als String
 
+    onSyncWithIsta() {
+      console.log('Synchronisieren mit ISTA');
+      this.syncLog += 'Synchronisieren mit ISTA\n';
+    }
+
   }
