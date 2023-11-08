@@ -9,6 +9,8 @@ export class IstaOrderDetailGeneralComponent implements OnInit {
 
   constructor() { }
 
+  response: any;
+
   ngOnInit() {}
 
 }

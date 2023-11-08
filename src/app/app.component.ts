@@ -7,9 +7,12 @@ import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 
 import { UserData } from './providers/user-data';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',
@@ -18,6 +21,7 @@ import { UserData } from './providers/user-data';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+  light = false; // Die Eigenschaft muss definiert sein
   isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
   appPages = [
     {
@@ -165,6 +169,7 @@ export class AppComponent implements OnInit {
         .then(() => this.swUpdate.activateUpdate())
         .then(() => window.location.reload());
     });
+    await this.storage.create();
   }
 
   initializeApp() {
@@ -209,9 +214,16 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
-  openTutorial() {
-    // this.menu.enable(false);
-    // this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
+  // openTutorial() {
+  //   // this.menu.enable(false);
+  //   // this.storage.set('ion_did_tutorial', false);
+  //   this.router.navigateByUrl('/tutorial');
+  // }
+
+  onToggleDarkMode() {
+    console.log("onToggleDarkMode");
+    // this.dark = !this.dark;
+    // document.body.classList.toggle('dark', this.dark);
   }
+
 }

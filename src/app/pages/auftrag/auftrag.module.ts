@@ -11,7 +11,7 @@ import { AuftragPage } from './auftrag.page';
 @NgModule({
   imports: [
     CommonModule,
-    // FormsModule,
+    FormsModule,
     IonicModule,
     AuftragPageRoutingModule,
     ReactiveFormsModule 

@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
-import { IstaOrderDetailComponent } from './components/ista-order-detail/ista-order-detail.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    redirectTo: '/tutorial',
-    pathMatch: 'full'
-  },
+  // {
+  //   path: '',
+  //   redirectTo: '/tutorial',
+  //   pathMatch: 'full'
+  // },
   {
     path: 'account',
     loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule)
@@ -29,15 +28,15 @@ const routes: Routes = [
     path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
   },
-  {
-    path: 'tutorial',
-    loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
-    canLoad: [CheckTutorial]
-  },
-  {
-    path: 'trinkwasseruntersuchung',
-    loadChildren: () => import('./pages/trinkwasseruntersuchung/trinkwasseruntersuchung.module').then( m => m.TrinkwasseruntersuchungPageModule)
-  },
+  // {
+  //   path: 'tutorial',
+  //   loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
+  //   canLoad: [CheckTutorial]
+  // },
+  // {
+  //   path: 'trinkwasseruntersuchung',
+  //   loadChildren: () => import('./pages/trinkwasseruntersuchung/trinkwasseruntersuchung.module').then( m => m.TrinkwasseruntersuchungPageModule)
+  // },
   {
     path: 'untersuchung-list',
     loadChildren: () => import('./pages/untersuchung-list/untersuchung-list.module').then( m => m.UntersuchungListPageModule)
@@ -97,11 +96,8 @@ const routes: Routes = [
   {
     path: 'create-ista-order',
     loadChildren: () => import('./pages/create-ista-order/create-ista-order.module').then( m => m.CreateIstaOrderPageModule)
-  },
-  { 
-    path: 'order/:id', 
-    loadChildren: () => import('./components/ista-order-detail/ista-order-detail.component').then(m => m.IstaOrderDetailComponent) 
-  },   {
+  }, 
+  {
     path: 'ista-order-table',
     loadChildren: () => import('./pages/ista-order-table/ista-order-table.module').then( m => m.IstaOrderTablePageModule)
   },

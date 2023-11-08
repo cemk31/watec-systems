@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { OrderService } from '../../../services/order/order.service';
 
 @Component({
   selector: 'app-rejected',
@@ -6,9 +7,23 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./rejected.component.scss'],
 })
 export class RejectedComponent implements OnInit {
+  response: any;
 
-  constructor() { }
+  constructor(private orderService: OrderService, private cd: ChangeDetectorRef) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.orderService.dataLoaded$.subscribe(() => {
+      this.response = this.orderService.getData();
+      if(this.response) {
+        console.log('Retrieved data', this.response);
+        this.cd.detectChanges();
+      } else {
+        console.error('No data retrieved');
+      }
+    });
+  }
+  unsubscribe$(unsubscribe$: any): any {
+    throw new Error('Method not implemented.');
+  }
 
 }

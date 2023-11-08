@@ -7,6 +7,7 @@ import { AboutPage } from './about';
 import { PopoverPage } from '../about-popover/about-popover';
 import { AboutPageRoutingModule } from './about-routing.module';
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -15,7 +16,6 @@ import { AboutPageRoutingModule } from './about-routing.module';
     AboutPageRoutingModule
   ],
   declarations: [AboutPage, PopoverPage],
-  entryComponents: [PopoverPage],
-  bootstrap: [AboutPage],
+  // entryComponents: [PopoverPage],
 })
 export class AboutModule {}

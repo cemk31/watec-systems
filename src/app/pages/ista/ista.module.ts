@@ -15,7 +15,7 @@ import { IstaOrderListComponent } from '../../components/ista-order-list/ista-or
     CommonModule,
     FormsModule,
     IonicModule,
-    Ng2SearchPipeModule,
+    // Ng2SearchPipeModule,
     IstaPageRoutingModule
   ],
   declarations: [IstaPage, IstaOrderListComponent]

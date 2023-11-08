@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
-    ReceivedComponent,
+    // ReceivedComponent,
     // ... (andere Komponenten, Direktiven, Pipes)
   ],
   imports: [
@@ -14,7 +14,7 @@ import { CommonModule } from '@angular/common';
     // ... (andere notwendige Module)
   ],
   exports: [
-    ReceivedComponent,
+    // ReceivedComponent,
     // ... (andere zu exportierende Komponenten, Direktiven, Pipes)
   ]
 })

@@ -17,7 +17,7 @@ import { HighlightPipe } from '../../pipe/highlight.pipe';
     FormsModule,
     IonicModule,
     IstaOrderTablePageRoutingModule,
-    Ng2SearchPipeModule,
+    // Ng2SearchPipeModule,
     ReactiveFormsModule,
   ],
   declarations: [IstaOrderTablePage, OrderTableComponent]
