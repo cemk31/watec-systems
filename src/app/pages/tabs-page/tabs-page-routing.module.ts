@@ -97,7 +97,6 @@ const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'auftrag-detail',
         children: [

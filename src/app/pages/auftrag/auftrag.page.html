@@ -29,16 +29,27 @@
               <ion-checkbox formControlName="done"></ion-checkbox>
             </ion-item>
             <ion-item>
-              <ion-label position="floating" >Email Eingang</ion-label>
-              <ion-datetime formControlName="emailEingang" displayFormat="DD.MM.  YYYY HH:mm"></ion-datetime>
+              <ion-label>Email Eingang</ion-label>
+              <ion-datetime-button datetime="emailEingang"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime formControlName="emailAnhang" id="emailEingang"></ion-datetime>
+                </ng-template>
+              </ion-modal>
             </ion-item>
             <ion-item>
               <ion-label position="floating">Bemerkung</ion-label>
               <ion-input name="bemerkung" formControlName="bemerkung" type="text"></ion-input>
             </ion-item>
+
             <ion-item>
-              <ion-label position="floating">Vorgemerkt (Datum)</ion-label>
-              <ion-datetime name="emailEingang" formControlName="vorgemerkt" displayFormat="DD.MM.YYYY"></ion-datetime>
+              <ion-label>Vorgemerkt (Datum)</ion-label>
+              <ion-datetime-button datetime="vorgemerkt"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime name="vorgemerkt" id="vorgemerkt"></ion-datetime>
+                </ng-template>
+              </ion-modal>
             </ion-item>
           </ion-card-content>
         </ion-card>
@@ -249,16 +260,21 @@
             <ion-label position="floating">VwBestätigung</ion-label>
             <ion-input name="vwBestatigung" formControlName="vwBestatigung" type="text"></ion-input>
           </ion-item>
-          
+
           <ion-item>
-            <ion-label position="floating">Terminiert zum</ion-label>
-            <ion-datetime name="terminiertZum" formControlName="terminiertZum" display-format="DD.MM.YYYY"></ion-datetime>
+            <ion-label>Terminiert zum</ion-label>
+            <ion-datetime-button datetime="terminiertZum"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime name="terminiertZum" id="terminiertZum"></ion-datetime>
+              </ng-template>
+            </ion-modal>
           </ion-item>
           
-          <ion-item>
+          <!-- <ion-item>
             <ion-label position="floating">Uhrzeit</ion-label>
             <ion-datetime name="uhrzeit" formControlName="uhrzeit" display-format="HH:mm" picker-format="HH:mm"></ion-datetime>
-          </ion-item>
+          </ion-item> -->
           
           <ion-item>
             <ion-label position="end">Aushang</ion-label>
@@ -266,8 +282,13 @@
           </ion-item>
           
           <ion-item>
-            <ion-label position="floating">Datum Aushang</ion-label>
-            <ion-datetime name="datumAushang" formControlName="datumAushang" display-format="DD.MM.YYYY"></ion-datetime>
+            <ion-label>Datum Aushang</ion-label>
+            <ion-datetime-button datetime="datumAushang"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime presentation="date" name="datumAushang" id="datumAushang"></ion-datetime>
+              </ng-template>
+            </ion-modal>
           </ion-item>
       
           <ion-row>
