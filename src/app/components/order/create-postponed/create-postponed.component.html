@@ -12,8 +12,13 @@
     <ion-row>
       <ion-col>
         <ion-item>
-          <ion-label position="floating" >gesetzt am</ion-label>
-          <ion-datetime formControlName="setOn" display-format="DD.MM.YYYY"></ion-datetime>
+          <ion-label>gesetzt am</ion-label>
+          <ion-datetime-button datetime="setOn"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" name="setOn" id="setOn"></ion-datetime>
+            </ng-template>
+          </ion-modal>
         </ion-item>
       </ion-col>
     </ion-row>

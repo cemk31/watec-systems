@@ -51,18 +51,37 @@
     <ion-title color="primary">Planung</ion-title>
     <ion-row>
       <ion-col>
-        <ion-item>
+        <!-- <ion-item>
           <ion-label position="floating">Detailliertes Planungsdatum</ion-label>
           <ion-datetime formControlName="detailedScheduleDate" display-format="DD.MM.YYYY"></ion-datetime>
+        </ion-item> -->
+        <ion-item>
+          <ion-label>Detailliertes Planungsdatum</ion-label>
+          <ion-datetime-button datetime="detailedScheduleDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="date" name="detailedScheduleDate" id="detailedScheduleDate"></ion-datetime>
+            </ng-template>
+          </ion-modal>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Detaillierte Planungszeit Von</ion-label>
-          <ion-datetime formControlName="detailedScheduleTimeFrom" display-format="HH:mm"></ion-datetime>
+          <ion-label>Detaillierte Planungszeit von</ion-label>
+          <ion-datetime-button datetime="detailedScheduleDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="time" name="detailedScheduleTimeFrom" id="detailedScheduleTimeFrom"></ion-datetime>
+            </ng-template>
+          </ion-modal>
         </ion-item>
         <ion-item>
-          <ion-label position="floating">Detaillierte Planungszeit Bis</ion-label>
-          <ion-datetime formControlName="detailedScheduleTimeTo" display-format="HH:mm"></ion-datetime>
-        </ion-item>        
+          <ion-label>Detaillierte Planungszeit bis</ion-label>
+          <ion-datetime-button datetime="detailedScheduleTimeTo"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime presentation="time" name="detailedScheduleTimeTo" id="detailedScheduleTimeTo"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
         <ion-item>
           <ion-label position="floating" >Anfrage ID</ion-label>
           <ion-input type="text" formControlName="requestId" ></ion-input>

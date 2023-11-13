@@ -84,3 +84,33 @@ Homebrew ist ein Paketmanager für macOS, der das Installieren von Software erle
 brew install node
 brew install git
 
+## TODS 12-11-2023
+- [] Login-Authentication
+- [] Auftrag erstellen
+- [] Datetime umstellen auf Code-Beispiel:
+        ```<ion-item>
+            <ion-label>Datum Aushang</ion-label>
+            <ion-datetime-button datetime="datumAushang"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime presentation="date" name="datumAushang" id="datumAushang"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+            ```
+- [] Forgotten Password
+- [] Login / Registration
+- [] Fix Routing Exception
+- [] Customer - Area
+- [] Search Customer
+- [] Export Excel - Export PDF
+- [] Status
+- [] RECEIVED,PLANNED, IN PROGRESS;
+- [] Create Ister Order werden Kontaktdaten nicht mitgegeben
+
+
+
+
+
+
+

@@ -1,9 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, FormArray, NgForm } from '@angular/forms';
 import { throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { ActivationStart, Router, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-ista-order-table',
@@ -11,6 +12,10 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./ista-order-table.page.scss'],
 })
 export class IstaOrderTablePage implements OnInit {
+
+  @ViewChild(RouterOutlet) outlet: RouterOutlet;
+
+
   filterTerm: string;
   orders: any[];  // change this according to your data type
   filteredOrders: any[];
@@ -60,7 +65,7 @@ export class IstaOrderTablePage implements OnInit {
   };
 
   detailsVisible: boolean[] = [];
-  constructor(private fb: FormBuilder, private http: HttpClient) { 
+  constructor(private fb: FormBuilder, private http: HttpClient, private router: Router) { 
     this.statusForm = new FormGroup({
       id: new FormControl(''),
       remarkExternal: new FormControl(''),
@@ -96,6 +101,11 @@ export class IstaOrderTablePage implements OnInit {
   }
 
   ngOnInit() {
+    this.router.events.subscribe(e => {
+      if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
+        this.outlet.deactivate();
+    });
+    
     const response = this.getIstaOrders();
 
     // list attributes

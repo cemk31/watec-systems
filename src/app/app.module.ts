@@ -18,6 +18,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { GeneralComponent } from './components/order/general/general.component';
 import { SharedModule } from './shared/shared.module';
+import { ForgottenPasswordComponent } from './components/login/forgotten-password/forgotten-password.component';
 
 @NgModule({
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -36,7 +37,7 @@ import { SharedModule } from './shared/shared.module';
     // SharedModule,
   ],
 
-  declarations: [AppComponent, CustomerPipe],
+  declarations: [AppComponent, CustomerPipe, ForgottenPasswordComponent],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],
 })
