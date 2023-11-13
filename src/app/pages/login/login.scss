@@ -68,3 +68,21 @@ ion-item.lines-none {
   max-height: 100%;
 }
 
+//mobile
+@media (max-width: 767px) {
+  .login-logo {
+    margin-bottom: 0;
+  }
+
+  .left-content {
+    padding: 0;
+  }
+
+  .login-form {
+    border-radius: 0;
+  }
+  
+  ion-col {
+    width: 100%;
+  }
+}

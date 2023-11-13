@@ -141,4 +141,14 @@ export class IstaOrderReceivedFormComponent implements OnInit {
       this.isSubmitted = true;
     });
   }
+
+  neuerKontakt() {
+    const kontakt = this.fb.group({
+      name: '',
+      telefon: '',
+      email: ''
+    });
+
+    this.kontakte.push(kontakt);
+  }
 }

@@ -17,7 +17,7 @@
         <th>ID</th>
         <th>Status</th>
         <th>erstellt</th>
-        <th>Liegenschaftsnummer</th>
+        <th>Liegenschaft</th>
         <th>Firma</th>
         <th>Ansprechpartner Kunde</th>
         <th>Ort</th>
@@ -28,6 +28,7 @@
     </thead>
     <tbody>
       <ng-container *ngFor="let data of orders">
+        <!-- <tr><ion-select></ion-select></tr> -->
         <tr>
           <td>
             <a [href]="'/app/tabs/ista-order-detail/' + data.id">

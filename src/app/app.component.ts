@@ -78,34 +78,33 @@ export class AppComponent implements OnInit {
   ];
 
   istaPages = [
+    // {
+    //   title: 'ISTA Bestellungen (Liste)',
+    //   url: '/app/tabs/ista',
+    //   icon: 'document'
+    // }
+    // ,
     {
-      title: 'ISTA Bestellungen (Liste)',
-      url: '/app/tabs/ista',
-      icon: 'document'
-    }
-    ,
+      title: 'Kundenkontakt erstellen',
+      url: '/app/tabs/create-ista-order',
+      icon: 'water'
+    },
     {
       title: 'ISTA Bestellungen (Tabelle)',
       url: '/app/tabs/ista-order-table',
-      icon: 'document'
+      icon: 'water'
     }
     ,
     {
       title: 'ISTA INFO AUFTRAG',
       url: 'app/tabs/ista-order-detail/:id',
       icon: 'water'
-    }
-    ,
-    {
-      title: 'ISTA Kundenkontakt erstellen',
-      url: '/app/tabs/create-ista-order',
-      icon: 'water'
     },
-    {
-      title: 'Auftrag Erstellen (Testkomponente)',
-      url: '/app/tabs/auftrag-detail',
-      icon: 'person'
-    },
+    // {
+    //   title: 'Auftrag Erstellen (Testkomponente)',
+    //   url: '/app/tabs/auftrag-detail',
+    //   icon: 'person'
+    // },
   ];
 
   personalPages = [

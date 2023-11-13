@@ -44,7 +44,7 @@
       <ion-input type="text" formControlName="remarkExternal"></ion-input>
     </ion-item>
     <div formArrayName="Received">
-      <div *ngFor="let receivedCtrl of orderForm.get('Received'); let i = index" [formGroupName]="i">
+      <!-- <div *ngFor="let receivedCtrl of orderForm.get('Received'); let i = index" [formGroupName]="i"> -->
         <ion-item>
           <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
           <ion-input type="text" formControlName="orderstatusType"></ion-input>
@@ -61,7 +61,7 @@
             </ion-item>
             <ion-item>
               <ion-label position="stacked"><strong>contactPersonCustomer:</strong></ion-label>
-              <ion-input type="text" formControlName="contactPersonCustomer"></ion-input>
+              <ion-input type="text" formControlName="contactPersonCustomer"></ion-input> 
             </ion-item>
             <ion-item>
               <ion-label position="stacked"><strong>agentCP:</strong></ion-label>
@@ -78,7 +78,7 @@
           </div>
         </div>
       </div>
-    </div>
+    <!-- </div> -->
     <ion-row>
       <ion-col>
         <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Submit</ion-button>

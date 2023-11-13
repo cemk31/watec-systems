@@ -5,6 +5,7 @@ import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-ista-order',
@@ -19,7 +20,7 @@ export class CreateIstaOrderPage implements OnInit {
   customers: any; 
   isSubmitted = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController) {
+  constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController, private router: Router) {
     this.orderForm = this.fb.group({
       number: [''],
       remarkExternal: [''],
@@ -34,14 +35,24 @@ export class CreateIstaOrderPage implements OnInit {
 
   }
 
-  async presentToast() {
+  async presentToast(orderId: number) {
     const toast = await this.toastController.create({
-      message: 'Order created successfully.',
-      duration: 2000,
+      message: 'Auftrag {' + orderId + '} wurde erfolgreich erstellt',
+      // duration: 2000,
       color: 'success',
-      position: 'top'
+      position: 'top',
+      buttons: [{ text: 'schliessen', role: 'cancel' },
+                { text: 'öffnen', role: 'end', 
+                handler: () => {
+                  this.navigateToProductDetails(orderId);
+                }
+                },],
     });
     toast.present();
+  }
+
+  navigateToProductDetails(orderId: number) {
+    this.router.navigateByUrl('/ista-order-detail/' + orderId);
   }
 
   createReceivedFormGroup(): FormGroup {
@@ -89,7 +100,7 @@ export class CreateIstaOrderPage implements OnInit {
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
-    this.http.post<any[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
+    this.http.post<Response[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
     .pipe(
       catchError((error) => {
         this.exceptionMessage = error.error.message;
@@ -99,7 +110,7 @@ export class CreateIstaOrderPage implements OnInit {
     .subscribe(response => {
       console.log(response);
       this.customers = response;
-      this.presentToast(); // Present the toast
+      this.presentToast(this.customers?.id); // Present the toast
       this.orderForm.disable(); // Disable all fields in the form
       this.isSubmitted = true;
     });
@@ -109,5 +120,10 @@ export class CreateIstaOrderPage implements OnInit {
     console.log("Data transferred to Ista");
     // Your logic to transfer data to Ista goes here
   }
+}
+
+//Interface
+export interface Response {
+  id: number;
 }
 
