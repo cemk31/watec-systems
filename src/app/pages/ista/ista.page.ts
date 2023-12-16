@@ -11,84 +11,82 @@ import { map, catchError } from 'rxjs/operators';
   styleUrls: ['./ista.page.scss'],
 })
 export class IstaPage implements OnInit {
-  filterTerm: string;
+  // filterTerm: string;
 
-  orders: any[];  // change this according to your data type
-  filteredOrders: any[];
+  // orders: any[];  // change this according to your data type
+  // filteredOrders: any[];
 
-  toggleReceived = false;
-  togglePlanned = false;
+  // toggleReceived = false;
+  // togglePlanned = false;
 
-  exceptionMessage = null;
+  // exceptionMessage = null;
 
-  opened = '';
+  // opened = '';
 
-  showList = {};
-  allStatuses = [];
+  // showList = {};
+  // allStatuses = [];
 
 
-  toggleList(id) {
-    this.showList[id] = !this.showList[id];
-  }
+  // toggleList(id) {
+  //   this.showList[id] = !this.showList[id];
+  // }
 
 
   constructor(private router : Router, private http: HttpClient) {
-    this.orders = []; // Initialize with your orders data
-    this.filteredOrders = [...this.orders]; // Initialize filteredOrders with all orders
    }
 
   ngOnInit() {
-    this.getIstaOrders();
+    // this.getIstaOrders();
     
   }
 
-  ngOnChanges() {
-    this.filterOrders();
-  }
+  // ngOnChanges() {
+  //   this.filterOrders();
+  // }
 
-  filterItems() {
-    if (this.filterTerm.trim() === '') {
-      this.filteredOrders = [...this.orders];
-    } else {
-      this.filteredOrders = this.orders.filter(order => {
-        // change 'id' and 'number' to the fields you want to search by
-        return order.id.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-               order.number.toLowerCase().includes(this.filterTerm.toLowerCase());
-      });
-    }
-  }
+  // filterItems() {
+  //   if (this.filterTerm.trim() === '') {
+  //     this.filteredOrders = [...this.orders];
+  //   } else {
+  //     this.filteredOrders = this.orders.filter(order => {
+  //       // change 'id' and 'number' to the fields you want to search by
+  //       return order.id.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
+  //              order.number.toLowerCase().includes(this.filterTerm.toLowerCase());
+  //     });
+  //   }
+  // }
 
-  filterOrders() {
-    if (this.filterTerm) {
-      this.filteredOrders = this.orders.filter(order => 
-        order.id.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
-        order.number.toLowerCase().includes(this.filterTerm.toLowerCase())
-        // Add more conditions if you want to filter by other fields
-      );
-    } else {
-      this.filteredOrders = [...this.orders];
-    }
-  }
+  // filterOrders() {
+  //   if (this.filterTerm) {
+  //     this.filteredOrders = this.orders.filter(order => 
+  //       order.id.toLowerCase().includes(this.filterTerm.toLowerCase()) ||
+  //       order.number.toLowerCase().includes(this.filterTerm.toLowerCase())
+  //       // Add more conditions if you want to filter by other fields
+  //     );
+  //   } else {
+  //     this.filteredOrders = [...this.orders];
+  //   }
+  // }
 
-  getIstaOrders() {
-    const accessToken = sessionStorage.getItem("access_token");
-    let headers = new HttpHeaders();
-    if (accessToken) {
-      headers = headers.append('Authorization', `Bearer ${accessToken}`);
-    }
-    this.http.get<any[]>(environment.backend + environment.url.ista.url, { headers })
-    .pipe(
-      map(response => {
-        console.log(response);
-        this.orders = response;
-        return response;
-      }),
-      catchError((error) => {
-        this.exceptionMessage = error.error.message;
-        return throwError(error);
-      })
-    )
-    .subscribe();
-  }
+  // getIstaOrders() {
+  //   const accessToken = sessionStorage.getItem("access_token");
+  //   let headers = new HttpHeaders();
+  //   if (accessToken) {
+  //     headers = headers.append('Authorization', `Bearer ${accessToken}`);
+  //   }
+  //   this.http.get<any[]>(environment.backend + environment.url.ista.url, { headers })
+  //   .pipe(
+  //     map(response => {
+  //       console.log(response);
+  //       this.orders = response;
+  //       return response;
+  //     }),
+  //     catchError((error) => {
+  //       this.exceptionMessage = error.error.message;
+  //       return throwError(error);
+  //     })
+  //   )
+  //   .subscribe();
+  // }
 
 }

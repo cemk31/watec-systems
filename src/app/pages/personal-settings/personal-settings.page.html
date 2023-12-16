@@ -28,7 +28,7 @@
         <form (ngSubmit)="editUser(firstName, lastName)">
           <ion-item>
             <ion-label position="floating">ID</ion-label>
-            <ion-textarea name="id" [(ngModel)]="id" disabled placeholder="{{user.id}}" value="{{user.id}}"></ion-textarea>
+            <ion-textarea name="id" [(ngModel)]="user.id" disabled placeholder="{{user.id}}" value="{{user.id}}"></ion-textarea>
           </ion-item>
         <ion-item>
           <ion-label position="floating">Erstellt am</ion-label>
@@ -44,7 +44,7 @@
           </ion-item>
           <ion-item>
             <ion-label position="floating">E-Mail</ion-label>
-            <ion-textarea name="mail" [(ngModel)]="mail" [disabled]="true" placeholder="{{user.email}}" value="{{user.email}}"></ion-textarea>
+            <ion-textarea name="mail" [(ngModel)]="user.mail" [disabled]="true" placeholder="{{user.email}}" value="{{user.email}}"></ion-textarea>
           </ion-item>
           <ion-item>
             <ion-label position="floating">Vorname</ion-label>

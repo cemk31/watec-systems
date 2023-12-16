@@ -10,6 +10,7 @@ import { AppComponent } from '../../app.component';
 import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { toUnicode } from 'punycode';
+import { ToastController } from '@ionic/angular';
 
 
 
@@ -52,7 +53,8 @@ export class LoginPage implements OnInit {
     public router: Router,
     private http: HttpClient,
     private appComponent: AppComponent,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastController: ToastController
   ) {}
 
   onLogin(loginForm: NgForm) {
@@ -80,6 +82,16 @@ export class LoginPage implements OnInit {
   onSignup(){
     this.router.navigateByUrl("signup");
   }
+
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color
+    });
+    toast.present();
+  }
+  
 
 }
 export interface AuthResponse {

@@ -19,6 +19,9 @@ import { NotificationService } from '../../services/notification.service';
 
 export class SignupPage implements OnInit {
 
+  isUserLoggedIn: boolean = false;
+ 
+  
    notificationMessage = {
     message: '',
     color: ''    
@@ -79,63 +82,65 @@ export class SignupPage implements OnInit {
     }
   }
 
-  onSignup() {
-    this.http.post<any>(environment.backend + environment.url.register, this.signup).subscribe(
-      res => {
-        if (res && res.access_token) {
-          sessionStorage.setItem("access_token", res.access_token);
-          sessionStorage.setItem("loggedIn", "true");
-          this.notificationMessage = this.notificationMessages.success;
-          this.ngZone.runOutsideAngular(() => {
-            window.location.href = '/app/tabs/about';
-        });
-        } else {
-          // Handle unexpected server response
-          console.error("Unexpected server response:", res);
-          this.notificationMessage = this.notificationMessages.unexpected;
+  onSignup(signupForm: NgForm) {
+    if(signupForm.invalid){
+      return
+    } else{
+      this.http.post<any>(environment.backend + environment.url.register, this.signup).subscribe(
+        res => {
+          if (res && res.access_token) {
+            localStorage.setItem("loggedInMessage", "true");
+            localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
+            this.router.navigate(['/app/tabs/about']);
+            window.location.reload();
+          } else {
+            // Handle unexpected server response
+            console.error("Unexpected server response:", res);
+            this.notificationMessage = this.notificationMessages.unexpected;
+          }
+        },
+        err => {
+  
+          if (err.status === 403 && err.error.message === "Credentials taken") {
+            // display the error to the user
+            this.notificationMessage = this.notificationMessages.userNameAlreadyInUs;
+          } else {
+            console.error(err);
+            // Better error handling: show a message to the user, for example
+            this.notificationMessage = this.notificationMessages.error;
+          }
         }
-      },
-      err => {
-
-        if (err.status === 403 && err.error.message === "Credentials taken") {
-          // display the error to the user
-          this.notificationMessage = this.notificationMessages.userNameAlreadyInUs;
-        } else {
-          console.error(err);
-          // Better error handling: show a message to the user, for example
-          this.notificationMessage = this.notificationMessages.error;
-        }
-      }
-    );
+      );
+    }
   }  
 
-  validateCode(inviteCodeForm: NgForm) {
-    try {
-      const accessToken = inviteCodeForm.value.token;
-      let role: string;
+  // validateCode(inviteCodeForm: NgForm) {
+  //   try {
+  //     const accessToken = inviteCodeForm.value.token;
+  //     let role: string;
 
-      switch (accessToken) {
-        case 'MITARBEITER2023':
-          role = 'MITARBEITER';
-          break;
-        case 'ADMIN2020':
-          role = 'Administrator';
-          break;
-        case 'SUPERADMIN22':
-          role = 'SuperAdministrator';
-          break;
-        default:
-          throw new Error("Invalid access token");
-      }
+  //     switch (accessToken) {
+  //       case 'MITARBEITER2023':
+  //         role = 'MITARBEITER';
+  //         break;
+  //       case 'ADMIN2020':
+  //         role = 'Administrator';
+  //         break;
+  //       case 'SUPERADMIN22':
+  //         role = 'SuperAdministrator';
+  //         break;
+  //       default:
+  //         throw new Error("Invalid access token");
+  //     }
 
-      this.showRegisterForm = true;
-      this.signup.userRole = role;
-      this.notificationMessage = this.notificationMessages.validCode;
+  //     this.showRegisterForm = true;
+  //     this.signup.userRole = role;
+  //     this.notificationMessage = this.notificationMessages.validCode;
       
-      return role;
-    } catch (error) {
-      // display error message
-      this.notificationMessage = this.notificationMessages.invalidCode;
-    }
-  }
+  //     return role;
+  //   } catch (error) {
+  //     // display error message
+  //     this.notificationMessage = this.notificationMessages.invalidCode;
+  //   }
+  // }
 }

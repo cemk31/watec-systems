@@ -1,321 +1,131 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>Order</ion-title>
+  <ion-toolbar color="primary" class="ion-padding">
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+        Zurück
+      </ion-button>
+    </ion-buttons>
+  
+    <ion-title class="custom-title">
+      Auftrag: #{{orderNumber}}
+    </ion-title>
+  
+    <ion-buttons slot="end">
+      <ion-button (click)="refreshData()">
+        <ion-icon name="refresh-outline"></ion-icon>
+        Aktualisieren
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
-</ion-header>
-
-<ion-content>
-  <form (ngSubmit)="onSubmit(orderForm)" #orderForm="ngForm">
+  <ion-toolbar>
     <ion-row>
-      <ion-col>
-        <ion-toolbar>
-          Status
-        </ion-toolbar>
-        <ion-row>
-          <ion-button color="secondary" *ngIf="order.actualStatus === 'RECEIVED' || showButtons" expand="block">RECEIVED</ion-button>
-          <ion-button color="success" *ngIf="order.actualStatus === 'PLANNED' || showButtons" expand="block">PLANNED</ion-button>
-          <ion-button color="warning" *ngIf="order.actualStatus === 'NOT POSSIBLE' || showButtons" expand="block">NOT POSSIBLE</ion-button>
-          <ion-button color="dark" *ngIf="order.actualStatus === 'POSTPONED' || showButtons" expand="block">POSTPONED</ion-button>
-          <ion-button color="danger" *ngIf="order.actualStatus === 'REJECTED' || showButtons" expand="block">REJECTED</ion-button>
-          <ion-button color="medium" *ngIf="order.actualStatus === 'CLOSED' || showButtons" expand="block">CLOSED</ion-button>
-        
-          <ion-button (click)="toggleButtons()"><ion-icon name="create-outline"></ion-icon></ion-button>
-        </ion-row>
+      <ion-col size="6">
+        <div class="status-box" [ngStyle]="{'background-color': currentStatusColor}">
+          Aktueller Status: {{currentStatus || 'Laden...'}}
+        </div>
       </ion-col>
-
-      <ion-col>
-        <ion-row>
-          <ion-button disabled expand="block">Synchronization</ion-button>
-        </ion-row>
-        <ion-row>
-          <ion-button color="secondary" expand="block">STATUS</ion-button>
-          <ion-button color="success" expand="block"><ion-icon name="refresh-outline"></ion-icon></ion-button>
-        </ion-row>
-      </ion-col>
-
-      <ion-col></ion-col>
-
-      <ion-col></ion-col>
-      <ion-col></ion-col>
     </ion-row>
-    <ion-item>
-      <ion-label>Number:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.number" name="number" required></ion-input>
-    </ion-item>
+    <ion-row>
+<!-- <ion-col size="6"> -->
+<!-- Toggle-Button mit einer kleinen Animation -->
+<ion-button (click)="toggleSegmentVisibility()" [class.active]="segmentVisible">
+  <ion-icon name="add-outline"></ion-icon>
+  Status hinzufügen
+</ion-button>
 
-    <ion-item>
-      <ion-label>Remark External:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.remarkExternal" name="remarkExternal"></ion-input>
-    </ion-item>
+<ion-segment *ngIf="segmentVisible" [ngClass]="{'slide-in': segmentVisible}">
+  <!-- Mit Icons und Farben -->
+  <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')" layout="icon-start">
+    <ion-icon name="checkmark-outline"></ion-icon>
+    Kundenkontakt 
+    <!-- (RECEIVED) -->
+  </ion-segment-button>
+  <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')" layout="icon-start">
+    <ion-icon name="calendar-outline"></ion-icon>
+    IN PLANUNG 
+    <!-- (PLANNED) -->
+  </ion-segment-button>
+  <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')" layout="icon-start">
+    <ion-icon name="pause-outline"></ion-icon>
+    Vershoben 
+    <!-- (POSTPONED) -->
+  </ion-segment-button>
+  <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')" layout="icon-start">
+    <ion-icon name="close-outline"></ion-icon>
+    Storno 
+    <!-- (CANCELLED) -->
+  </ion-segment-button>
+  <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')" layout="icon-start">
+    <ion-icon name="close-circle-outline"></ion-icon>
+    Abgelehnt
+  </ion-segment-button>
+  <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')" layout="icon-start">
+    <ion-icon name="play-circle-outline"></ion-icon>
+    Ausführung <br>erfolgt
+  </ion-segment-button>
+  <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')" layout="icon-start">
+    <ion-icon name="paper-plane-outline"></ion-icon>
+    TWA
+  </ion-segment-button>
+</ion-segment>
 
-    <ion-item>
-      <ion-label>Erstellt am:</ion-label>
-      <ion-input type="text" [(ngModel)]="order.createdAt" name="createdAt"></ion-input>
-    </ion-item>
+ <!-- </ion-col>         -->
+    </ion-row>
+  </ion-toolbar>
 
-    <ion-toolbar color="primary">
-      <ion-title>Aktivitäten</ion-title>
-      <ion-buttons slot="primary">
-        <ion-button> Erstellen 
-          <ion-icon slot="end" name="create"></ion-icon>
-        </ion-button>
-        <ion-button fill="outline">
-          mehr
-          <ion-icon name="arrow-down-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-    <div *ngIf="order.Received.length > 0">
-      <ng-container *ngFor="let received of order.Received; let i = index">
-        <ion-toolbar  color="danger">
-            <ion-title>Received - (ID: {{received.id}})</ion-title>
-        </ion-toolbar>
-        <ion-toolbar color="danger">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline" (click)="showReceived = !showReceived">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.orderId" name="orderId" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.orderstatusType" name="orderstatusType" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="received.requestId" name="requestId" [readonly]="!editModes[received.id]"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="received.setOn" name="setOn" [disabled]="!editModes[received.id]"></ion-datetime>
-        </ion-item>
-      </ng-container>
-    </div>
+</ion-header>
+<ion-content>
+  <app-create-received *ngIf="currentStatus === 'RECEIVED'" (formSubmit)="onSubmitReceived()" [orderId]="[orderNumber]"></app-create-received>
+  <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()" [orderId]="[orderNumber]"></app-create-planned>
+  <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()" [orderId]="[orderNumber]"></app-create-postponed>
+  <app-create-cancelled *ngIf="currentStatus === 'CANCELLED'" (formSubmit)="onSubmitCancelled()" [orderId]="[orderNumber]"></app-create-cancelled>
 
-    <div *ngIf="order.Planned.length > 0">
-      <ng-container *ngFor="let planned of order.Planned; let i = index">
-        <ion-toolbar color="success">
-          <ion-title>Planned - (ID: {{planned.id}})</ion-title>
-        </ion-toolbar> 
-        <ion-toolbar color="success">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.orderId" name="orderId" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="planned.setOn" name="setOn"></ion-datetime>
-        </ion-item>
-        <!-- add other fields similarly -->
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="planned.requestId" name="requestId" appearance="outline"></ion-input>
-        </ion-item>
-      </ng-container>
-    </div>
+  <!-- <app-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="addPos($event)"></app-postponed> -->
+  <!-- <ng-container *ngFor="let item of response">
+    <app-general *ngIf="item?.status === 'RECEIVED'"></app-general>
+    <app-received *ngIf="item?.status === 'PLANNED'"></app-received>
+    <app-planned *ngIf="item?.status === 'POSTPONED'"></app-planned>
+    <app-cancelled *ngIf="item?.status === 'CANCELLED'"></app-cancelled>
+  </ng-container> -->
+  
+  <app-general></app-general>
 
-    <div *ngIf="order.Postponed.length > 0">
-      <ng-container *ngFor="let postponed of order.Postponed; let i = index">
-        <ion-toolbar color="success">
-          <ion-title>Postponed - (ID: {{postponed.id}})</ion-title>
-        </ion-toolbar> 
-        <ion-toolbar color="success">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
+  <ion-card>
+    <ion-card-header>
+      <ion-toolbar class="ion-padding" color="light"><ion-title>Aktivitätenprotokoll</ion-title></ion-toolbar>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
         <ion-item>
-          <ion-label position="stacked"><strong>Order ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.orderId" name="orderId" appearance="outline"></ion-input>
+          <ion-label>
+            <h2>Empfangen</h2>
+            <p>{{ response?.createdAt | date: 'dd.MM.yyyy HH:mm' }}</p>
+          </ion-label>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.orderstatusType" name="orderstatusType" appearance="outline"></ion-input>
+      </ion-list>
+      <ion-list>
+        <ion-item *ngFor="let component of statusList">
+          <p>{{component}}</p>
+          <ng-container *ngIf="component === 'RECEIVED'"> <app-received [data]="component"></app-received> </ng-container>
+          <ng-container *ngIf="component === 'PLANNED'"> <app-planned [data]="component"></app-planned> </ng-container>
+          <ng-container *ngIf="component === 'CANCELLED'"> <app-cancelled [data]="component"></app-cancelled> </ng-container>
+          <ng-container *ngIf="component === 'POSTPONED'"> <app-postponed [data]="component"></app-postponed> </ng-container>
         </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-          <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="postponed.setOn" name="setOn"></ion-datetime>
-        </ion-item>
-        <ion-item>
-          <ion-label position="stacked"><strong>Request ID:</strong></ion-label>
-          <ion-input type="text" [(ngModel)]="postponed.requestId" name="requestId" appearance="outline"></ion-input>
-        </ion-item>
-      </ng-container>
-    </div>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 
-        <div *ngIf="order.Cancelled.length > 0">
-          <ng-container *ngFor="let cancelled of order.Cancelled; let i = index">
-            <ion-toolbar color="warning">
-              <ion-title>Cancelled - (ID: {{cancelled.id}})</ion-title>
-            </ion-toolbar>
-            <ion-toolbar color="warning">
-              <ion-buttons slot="primary">
-                <ion-button fill="outline">
-                  Bearbeiten
-                  <ion-icon slot="end" name="create"></ion-icon>
-                </ion-button>
-                <ion-button fill="outline">
-                  mehr
-                  <ion-icon name="arrow-down-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-            <ion-item>
-              <ion-label position="stacked"><strong>Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.id" name="id" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.requestId" name="requestId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.orderId" name="orderId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.statusType" name="statusType" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Set On:</strong></ion-label>
-              <ion-datetime displayFormat="D MMM YYYY" [(ngModel)]="cancelled.setOn" name="setOn"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Cancellation Reason:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="cancelled.cancellationReason" name="cancellationReason" appearance="outline"></ion-input>
-            </ion-item>
-          </ng-container>
-        </div>
 
-        <div *ngIf="order.Rejected.length > 0">
-          <ng-container *ngFor="let rejected of order.Rejected; let i = index">
-            <ion-toolbar color="warning">
-              <ion-title>Rejected - (ID: {{rejected.id}})</ion-title>
-            </ion-toolbar>
-            <ion-toolbar color="warning">
-              <ion-buttons slot="primary">
-                <ion-button fill="outline">
-                  Bearbeiten
-                  <ion-icon slot="end" name="create"></ion-icon>
-                </ion-button>
-                <ion-button fill="outline">
-                  mehr
-                  <ion-icon name="arrow-down-outline"></ion-icon>
-                </ion-button>
-              </ion-buttons>
-            </ion-toolbar>
-            <ion-item>
-              <ion-label position="stacked"><strong>Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.id" name="id" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Request Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.requestId" name="requestId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Order Id:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.orderId" name="orderId" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.statusType" name="statusType" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Reason:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.reason" name="reason" appearance="outline"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>Reason Text:</strong></ion-label>
-              <ion-input type="text" [(ngModel)]="rejected.reasonText" name="reasonText" appearance="outline"></ion-input>
-            </ion-item>
-          </ng-container>
-        </div>
-
-      <div *ngIf="order.ClosedContractPartner.length > 0" style="padding:10px;">
-        <ion-toolbar color="warning">
-          <ion-title>ClosedContractPartner</ion-title>
-        </ion-toolbar>
-        <ion-toolbar color="warning">
-          <ion-buttons slot="primary">
-            <ion-button fill="outline">
-              Bearbeiten
-              <ion-icon slot="end" name="create"></ion-icon>
-            </ion-button>
-            <ion-button fill="outline">
-              mehr
-              <ion-icon name="arrow-down-outline"></ion-icon>
-            </ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-        <ng-container *ngFor="let closedContractPartner of order.ClosedContractPartner; let i = index">
-          <ion-item>
-            <ion-label color="primary"><strong>Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.id}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Request Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.requestId}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Order Id:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.orderId}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Orderstatus Type:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.orderstatusType}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Set On:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.setOn}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Deficiency Description:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.deficiencyDescription}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Registration Health Authorities On:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.registrationHealthAuthoritiesOn}}</ion-note>
-          </ion-item>
-          <ion-item>
-            <ion-label color="primary"><strong>Extraordinary Expenditure Reason:</strong></ion-label>
-            <ion-note slot="end">{{closedContractPartner.extraordinaryExpenditureReason}}</ion-note>
-          </ion-item>
-        </ng-container>
-      </div>
   
 
-    <ion-button expand="full" type="submit">Submit</ion-button>
+  <!-- <app-received></app-received>
+  <app-planned></app-planned>
+  <app-cancelled></app-cancelled>
+  <app-postponed></app-postponed> -->
+    <!-- <app-closed-contract-partner></app-closed-contract-partner> -->
 
-  </form>
+    <!-- test -->
+    <app-ista-order-detail-twa></app-ista-order-detail-twa>
+    <app-execution-on-site-not-possible></app-execution-on-site-not-possible>
 </ion-content>

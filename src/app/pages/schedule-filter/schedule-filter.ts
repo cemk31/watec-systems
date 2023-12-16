@@ -4,11 +4,11 @@ import { Config, ModalController, NavParams } from '@ionic/angular';
 import { ConferenceData } from '../../providers/conference-data';
 
 
-@Component({
-  selector: 'page-schedule-filter',
-  templateUrl: 'schedule-filter.html',
-  styleUrls: ['./schedule-filter.scss'],
-})
+// @Component({
+//   selector: 'page-schedule-filter',
+//   templateUrl: 'schedule-filter.html',
+//   styleUrls: ['./schedule-filter.scss'],
+// })
 export class ScheduleFilterPage {
   ios: boolean;
 
