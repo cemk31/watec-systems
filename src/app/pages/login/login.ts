@@ -12,8 +12,6 @@ import { environment } from '../../../environments/environment';
 import { toUnicode } from 'punycode';
 import { ToastController } from '@ionic/angular';
 
-
-
 @Component({
   selector: 'page-login',
   templateUrl: 'login.html',

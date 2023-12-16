@@ -14,8 +14,6 @@ import { ActivationStart, Router, RouterOutlet } from '@angular/router';
 export class IstaOrderTablePage implements OnInit {
 
   @ViewChild(RouterOutlet) outlet: RouterOutlet;
-
-
   filterTerm: string;
   orders: any[];  // change this according to your data type
   filteredOrders: any[];
@@ -28,7 +26,6 @@ export class IstaOrderTablePage implements OnInit {
   opened = '';
 
   statuses = ['Received', 'Planned', 'Postponed', 'Closed']; // Add more statuses as needed
-  
   data: any[];
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
@@ -49,7 +46,6 @@ export class IstaOrderTablePage implements OnInit {
 
   orderId: string;
   id: number; // or string, depending on your data
-
   items: {
     Postponed: Array<any>,
     Cancelled: Array<any>,
@@ -80,7 +76,6 @@ export class IstaOrderTablePage implements OnInit {
       this.adjustForm(val);
     });
   }
-
   adjustForm(val) {
     const control = this.statusForm.get(val);
     if (control instanceof FormArray) {
@@ -99,7 +94,6 @@ export class IstaOrderTablePage implements OnInit {
       }));
     }
   }
-
   ngOnInit() {
     this.router.events.subscribe(e => {
       if (e instanceof ActivationStart && e.snapshot.outlet === "administration")
@@ -113,7 +107,6 @@ export class IstaOrderTablePage implements OnInit {
     
     //fill 
   }
-
   filterItems() {
     if (!this.filterTerm.trim()) {
       // If search term is empty, display all items
@@ -138,11 +131,9 @@ export class IstaOrderTablePage implements OnInit {
       this.sortType = 'asc';
     }
   }
-
   filterOrderID() {
     this.orders = this.orders.filter(order => order.orderId.includes(this.filterTerm));
   }
-
   statusTypes = [
     { title: 'Postponed', items: this.items.Postponed },
     { title: 'Cancelled', items: this.items.Cancelled },
@@ -261,5 +252,4 @@ export class IstaOrderTablePage implements OnInit {
     )
     .subscribe();
   }
-
 }
