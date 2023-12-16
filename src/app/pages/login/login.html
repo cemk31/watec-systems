@@ -1,11 +1,11 @@
-<ion-header>
+<!-- <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Login</ion-title>
   </ion-toolbar>
-</ion-header>
+</ion-header> -->
 
 <ion-content>
   <!-- Logo -->
@@ -33,11 +33,11 @@
           <!-- Formular -->
           <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate class="login-form">
             <ion-list>
-              <ion-item lines="none">
+              <ion-item fill="outline" lines="none">
                 <ion-label position="floating">E-Mail</ion-label>
                 <ion-input type="email" [(ngModel)]="login.email" name="email" required></ion-input>
               </ion-item>
-              <ion-item lines="none">
+              <ion-item fill="outline" lines="none">
                 <ion-label position="floating">Passwort</ion-label>
                 <ion-input type="password" [(ngModel)]="login.password" name="password" required></ion-input>
               </ion-item>
@@ -46,7 +46,7 @@
             <!-- Buttons -->
             <ion-row class="ion-margin-top button-row">
               <ion-col>
-                <ion-button (click)="onSignup()" fill="outline" expand="block">Passwort vergessen</ion-button>
+                <ion-button (click)="forgottenPassword()" tyoe="" fill="outline" expand="block">Passwort vergessen</ion-button>
               </ion-col>
               <ion-col>
                 <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>

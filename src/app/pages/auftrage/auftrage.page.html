@@ -28,6 +28,14 @@
         {{item[key]}}
       </ion-col>
     </ion-row>
+    <ion-row *ngFor="let item of data">
+      <ion-card>
+        <ion-col *ngFor="let key of keysToDisplay">
+          {{item[key]}}
+        </ion-col>
+      </ion-card>
+
+    </ion-row>
   </ion-grid>
 </ion-content>
 

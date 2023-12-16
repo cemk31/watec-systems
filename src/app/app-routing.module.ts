@@ -101,7 +101,10 @@ const routes: Routes = [
     path: 'ista-order-table',
     loadChildren: () => import('./pages/ista-order-table/ista-order-table.module').then( m => m.IstaOrderTablePageModule)
   },
- 
+  {
+    path: 'forgotten-password',
+    loadChildren: () => import('./pages/forgotten-password-page/forgotten-password-page.module').then( m => m.ForgottenPasswordPageModule)
+  }
 ];
 
 @NgModule({

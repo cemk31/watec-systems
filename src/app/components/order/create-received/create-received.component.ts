@@ -28,20 +28,6 @@ export class CreateReceivedComponent implements OnInit {
 
   ngOnInit() {
     this.orderForm = this.fb.group({
-      // Customer: this.fb.group({
-      //     propertyNumber: [''], // Liegenschaftsnummer
-      //     companyName: [''], // Firma
-      //     firstName: [''], // Vorname
-      //     lastName: [''], // Nachname
-      //     customerContact: [''], // Ansprechpartner Kunde
-      //     street: [''], // Adresse
-      //     zipCode: [''], // PLZ
-      //     city: [''], // Ort
-      //     phone: [''], // Telefon
-      //     mobile: [''], // Mobil
-      //     fax: [''], // Fax
-      //     email: [''], // E-Mail
-      //   }),
       number: [''],
       actualStatus: [''],
       remarkExternal: [''],
@@ -49,7 +35,7 @@ export class CreateReceivedComponent implements OnInit {
       Received: this.fb.array([
         this.fb.group({
           orderstatusType: [''],
-          CustomerContacts: this.fb.array([
+          CustomerContacts: this.fb.group([
             this.fb.group({
               contactAttemptOn: [''],
               contactPersonCustomer: [''],
@@ -67,7 +53,7 @@ export class CreateReceivedComponent implements OnInit {
   async presentToast() {
     const toast = await this.toastController.create({
       message: 'Empfang wurde zur Bestellung hinzufgeügt. | Auftrag ' + this.orderId + ' | Empfang ' + this.orderForm.value.number,
-      duration: 4000,
+      // duration: 4000,
       color: 'success',
       position: 'top'
     });
@@ -136,7 +122,7 @@ export class CreateReceivedComponent implements OnInit {
       console.log(response);
       this.customers = response;
       this.presentToast(); // Present the toast
-      this.orderForm.disable(); // Disable all fields in the form
+      this.orderForm.disable() // Disable all fields in the form
       this.isSubmitted = true;
     });
   }

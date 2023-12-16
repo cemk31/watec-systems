@@ -24,7 +24,7 @@ export class ClosedContractPartnerComponent implements OnInit {
     suppliedDocuments: [],
     recordedSystem: [
       {
-
+        
       }
     ]
   };

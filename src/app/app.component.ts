@@ -125,6 +125,11 @@ export class AppComponent implements OnInit {
       url: '/signup',
       icon: 'person'
     },
+    {
+      title: 'Passwort vergessen',
+      url: '/forgotten-password',
+      icon: 'person'
+    },
   ];
   dark = true;
 
