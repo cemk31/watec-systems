@@ -22,7 +22,8 @@ export const environment = {
       planned: '/ista/planned',
       cancelled: '/ista/cancelled',
       postponed: '/ista/postponed',
-    }
+    },
+    resetPassword: '/auth/resetPassword',
   }
 };
 

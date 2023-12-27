@@ -188,6 +188,15 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'forgotten-password',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../forgotten-password-page/forgotten-password-page.module').then(m => m.ForgottenPasswordPageModule)
+          }
+        ]
+      },
+      {
         path: '',
         redirectTo: '/app/tabs/home',
         pathMatch: 'full'

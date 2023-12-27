@@ -11,6 +11,7 @@ import { AuthService } from '../../auth/auth.service';
 import { environment } from '../../../environments/environment';
 import { toUnicode } from 'punycode';
 import { ToastController } from '@ionic/angular';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'page-login',
@@ -68,6 +69,12 @@ export class LoginPage implements OnInit {
     };
 
     this.http.post<Response>(environment.backend + environment.url.login, body, { headers })
+    .pipe(
+      catchError(error => {
+        this.presentErrorToast();
+        return of(); // Leerer Observable, um den Stream nicht zu unterbrechen
+      })
+    )
       .subscribe(response => {
         this.authService.login(response['access_token'], response['userId'])
         this.showSuccessMessage = true;
@@ -75,11 +82,34 @@ export class LoginPage implements OnInit {
         localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
         this.router.navigate(['/app/tabs/about']);
         window.location.reload();
-      });
+      })
+      ;
+  }
+
+  async presentErrorToast() {
+    const toast = await this.toastController.create({
+      message: 'Login fehlgeschlagen. Bitte überprüfen Sie Ihre E-Mail und Passwort.',
+      buttons: [
+        {
+          text: 'schließen',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ],
+      // duration: 2000,
+      color: 'danger'
+    });
+    toast.present();
   }
 
   onSignup(){
     this.router.navigateByUrl("signup");
+  }
+
+  forgottenPassword(){
+    this.router.navigate(["forgotten-password"]);
   }
 
   async presentToast(message: string, color: string) {

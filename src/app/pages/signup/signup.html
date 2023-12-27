@@ -35,8 +35,8 @@
                   </ion-toolbar>
                 </div>
                 <form #inviteCodeForm="ngForm">
-                  <ion-item>
-                    <ion-label position="stacked" color="primary">EINLADUNGS-CODE</ion-label>
+                  <ion-item fill="outline">
+                    <ion-label position="floating" color="primary">EINLADUNGS-CODE</ion-label>
                     <ion-input [(ngModel)]="inviteCodeForm.token" name="token" type="text" #token="ngModel" required placeholder="Diesen Code erhalten Sie druch den Administrator.">
                     </ion-input>
                   </ion-item>
