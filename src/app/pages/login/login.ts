@@ -45,6 +45,7 @@ export class LoginPage implements OnInit {
   // password: any;
   showSuccessMessage = false;
   token: any;
+  loginForm: NgForm; // Definieren Sie die loginForm Eigenschaft
 
   constructor(
     public userData: UserData,
