@@ -2,7 +2,6 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
 import { IstaOrderListPage } from './ista-order-list.page';
-
 describe('IstaOrderListPage', () => {
   let component: IstaOrderListPage;
   let fixture: ComponentFixture<IstaOrderListPage>;
@@ -12,7 +11,6 @@ describe('IstaOrderListPage', () => {
       declarations: [ IstaOrderListPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
-
     fixture = TestBed.createComponent(IstaOrderListPage);
     component = fixture.componentInstance;
     fixture.detectChanges();

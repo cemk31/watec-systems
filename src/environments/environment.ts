@@ -8,6 +8,7 @@ export const environment = {
   url: {
     login: '/auth/signin',
     register: '/auth/signup',
+    emailConfirm: '/auth/verify-email/:confirmationToken',
     logout: '/auth/logout',
     customers: '/customers',
     trinkwasseruntersuchungen: '/trinkwasseruntersuchung',

@@ -25,7 +25,11 @@
     </thead>
     <tbody>
       <tr *ngFor="let data of userRecords">
-        <td><ion-input type="text" [(ngModel)]="data.id" placeholder="ID"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.id" placeholder="ID"></ion-input></td>        
+        <td><ion-input type="text" [(ngModel)]="data.propertyNumber" placeholder="Liegenschaftsnummer"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.company" placeholder="Firma"></ion-input></td>
+        <td><ion-input type="text" [(ngModel)]="data.customerContact" placeholder="Ansprechpartner Kunde"></ion-input></td>
+
         <td><ion-input type="text" [(ngModel)]="data.propertyNumber" placeholder="Liegenschaftsnummer"></ion-input></td>
         <td><ion-input type="text" [(ngModel)]="data.company" placeholder="Firma"></ion-input></td>
         <td><ion-input type="text" [(ngModel)]="data.customerContact" placeholder="Ansprechpartner Kunde"></ion-input></td>

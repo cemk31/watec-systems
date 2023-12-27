@@ -12,7 +12,6 @@
   <div class="login-logo">
     <img src="assets/img/watec/watec_logo.png" alt="Logo">
   </div>
-
   <ion-grid>
     <ion-row>
       <ion-col size="12" size-md="6">
@@ -30,6 +29,23 @@
             <p class="info-text">Füllen Sie die Felder unten aus, um sich einzuloggen.</p>
           </ng-container>
 
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12" size-md="6">
+        <div class="image-container">
+          <img max-height="360px" src="../../../assets/img/196.png" alt="Platzhalter-Bild" >
+        </div>
+      </ion-col>
+      <!-- Linke Spalte für Formular -->
+      <ion-col size="12" size-md="6">
+        <div class="left-content">
+          <!-- Titel und Untertitel -->
+          <ng-container *ngIf="!showLoggedInWarning">
+            <h1>Login</h1>
+            <!-- <h2 class="info-text">Bitte einloggen</h2> -->
+            <p class="info-text">Füllen Sie die Felder unten aus, um sich einzuloggen.</p>
+          </ng-container>
           <!-- Formular -->
           <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate class="login-form">
             <ion-list>
@@ -61,6 +77,20 @@
     </ion-row>
   </ion-grid>
 
+            <!-- Buttons -->
+            <ion-row class="ion-margin-top button-row">
+              <ion-col>
+                <ion-button (click)="onSignup()" fill="outline" expand="block">Passwort vergessen</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+              </ion-col>
+            </ion-row>
+        </div>
+      </ion-col>
+      <!-- Rechte Spalte für Bild -->
+    </ion-row>
+  </ion-grid>
   <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
     <ion-toolbar color="success">
       <ion-title >Login successful!</ion-title>
