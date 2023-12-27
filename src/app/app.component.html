@@ -21,6 +21,7 @@
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let indexA = index">
             <div *ngIf="isUserLoggedIn">
+
               <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
                 <ion-label>
@@ -103,6 +104,4 @@
     <ion-router-outlet id="main-content"></ion-router-outlet>
     
   </ion-split-pane>
-  
-
 </ion-app>

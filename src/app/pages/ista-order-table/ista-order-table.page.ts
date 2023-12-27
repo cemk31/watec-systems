@@ -26,6 +26,7 @@ export class IstaOrderTablePage implements OnInit {
   opened = '';
 
   statuses = ['Received', 'Planned', 'Postponed', 'Closed']; // Add more statuses as needed
+
   data: any[];
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
@@ -46,6 +47,7 @@ export class IstaOrderTablePage implements OnInit {
 
   orderId: string;
   id: number; // or string, depending on your data
+
   items: {
     Postponed: Array<any>,
     Cancelled: Array<any>,
