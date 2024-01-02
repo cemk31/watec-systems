@@ -1,98 +1,86 @@
-<ion-header>
-  <ion-toolbar color="warning">
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>Registrieren</ion-title>
-  </ion-toolbar>
-  <ion-toolbar style="padding:10px;" [color]="notificationMessage.color">
-    {{ notificationMessage.message }}
-  </ion-toolbar>  
-  <ion-toolbar *ngIf="showLoggedInWarning" color="warning">
-    <ion-title >Sie sind schon eingeloggt!</ion-title>
-  </ion-toolbar>  
-</ion-header>
 
-<ion-content>
-
-  <div class="signup-logo">
-    <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
-  </div>
+<ion-grid>
   <ion-row>
-    <ion-col>
-      <!-- <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
-        <ion-toolbar color="warning">
-          <ion-title >Sie sind schon eingeloggt!</ion-title>
-        </ion-toolbar>
-      </div> -->
-      <form #signupForm="ngForm" *ngIf="!showLoggedInWarning" novalidate>
-        <ion-list lines="none">
-          <!-- <ion-row>
-            <ion-col>
-                <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
-                  <ion-toolbar color="success">
-                    <ion-title >Registrierung erfolgreich abgeschlossen!</ion-title>
-                  </ion-toolbar>
-                </div>
-                <form #inviteCodeForm="ngForm">
-                  <ion-item fill="outline">
-                    <ion-label position="floating" color="primary">EINLADUNGS-CODE</ion-label>
-                    <ion-input [(ngModel)]="inviteCodeForm.token" name="token" type="text" #token="ngModel" required placeholder="Diesen Code erhalten Sie druch den Administrator.">
-                    </ion-input>
-                  </ion-item>
-                </form>
+    <ion-col></ion-col>
+    <ion-col size="12" size-md="6"> 
+      <ion-card>
+        <ion-card-header>
+          <div class="signup-logo">
+            <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
+          </div>
+          <h1> <ion-icon name="lock-closed-outline"></ion-icon>
+            Registrieren</h1>
+            <ion-chip color="primary">
+              <h3>Bitte füllen Sie alle notwendigen Felder aus um zu Registrieren!</h3>
+            </ion-chip>
+            <ion-chip color="success" *ngIf="showSuccessMessage">
+              <h3>{{successMessage}}</h3>
+            </ion-chip>
+        </ion-card-header>
 
-            </ion-col>
-            <ion-col>          
-              <ion-item>
-                <ion-button (click)="validateCode(inviteCodeForm)" type="submit" expand="block">Code prüfen</ion-button>
+          <form class="login-form" #signupForm="ngForm" *ngIf="showRegisterForm">
+            <ion-list>
+              <ion-item fill="outline">
+                <ion-icon  slot="start" name="person-circle"></ion-icon>
+                <ion-label position="floating">E-mail</ion-label>
+                <ion-input errorText="{{emailError}}" type="email" [(ngModel)]="signup.email" name="email" required></ion-input>
               </ion-item>
-          </ion-col>
-          </ion-row> -->
+              <ion-note color="danger" *ngIf="emailError" >
+                {{emailError}}
+              </ion-note>
+              <ion-item fill="outline">
+                <ion-icon  slot="start" name="key"></ion-icon>
+                <ion-label position="floating">Password</ion-label>
+                <ion-input helperText="Helper text" [counter]="true" [minLength]="8"  type="password" [(ngModel)]="signup.password" name="password" required></ion-input>
+              </ion-item>
+              <ion-item fill="outline">
+                <ion-icon slot="start" name="key"></ion-icon>
+                <ion-label position="floating">Password wiederholen</ion-label>
+                <ion-input type="password" [(ngModel)]="signup.passwordConfirm" name="passwordConfirm" required></ion-input>
+              </ion-item>
+              <ion-item fill="outline">
+                <ion-icon slot="start" name="person-circle"></ion-icon>
+                <ion-label position="floating">Vorname</ion-label>
+                <ion-input type="text" [(ngModel)]="signup.firstName" name="firstName" required></ion-input>
+              </ion-item>
+              <ion-item fill="outline">
+                <ion-icon slot="start" name="person-circle"></ion-icon>
+                <ion-label position="floating">Nachname</ion-label>
+                <ion-input type="text" [(ngModel)]="signup.lastName" name="lastName" required></ion-input>
+              </ion-item>
 
-          <ng-container>
-            <ion-card color="success">
-              <ion-card-content>
-                Einladungscode gültig! Sie können sich erfolgreich registrieren!
-              </ion-card-content>
-            </ion-card>            
-            <ion-item>
-              <ion-label position="stacked" color="primary">UserRole</ion-label>
-              <ion-input [(ngModel)]="signup.userRole" name="userRole" type="text" #userRole="ngModel" value="{{userRole}}" disabled></ion-input>
-            </ion-item>
-            
-            <ion-item [ngClass]="{'ion-invalid': email.invalid && email.touched}">
-              <ion-label position="stacked" color="primary">E-Mail</ion-label>
-              <ion-input [(ngModel)]="signup.email" name="email" type="email" #email="ngModel" required>
-              </ion-input>
-              <ion-text color="danger" *ngIf="email.invalid && email.touched">Email is required</ion-text>
-            </ion-item>
-      
-            <ion-item [ngClass]="{'ion-invalid': lastName.invalid && lastName.touched}">
-              <ion-label position="stacked" color="primary">Password</ion-label>
-              <ion-input [(ngModel)]="signup.password" name="password" type="password" #password="ngModel" required>
-              </ion-input>
-              <ion-text color="danger" *ngIf="password.invalid && password.touched">Password is required</ion-text>
-            </ion-item>
-            <ion-title>Persönliche Angaben</ion-title>
-            <ion-item [ngClass]="{'ion-invalid': firstName.invalid && firstName.touched}">
-              <ion-label position="stacked" color="primary">Vorname</ion-label>
-              <ion-input [(ngModel)]="signup.firstName" name="firstName" type="text" #firstName="ngModel" required>
-              </ion-input>
-              <ion-text color="danger" *ngIf="firstName.invalid && firstName.touched">First name is required</ion-text>
-            </ion-item>
-            <ion-item [ngClass]="{'ion-invalid': lastName.invalid && lastName.touched}">
-              <ion-label position="stacked" color="primary">Nachname</ion-label>
-              <ion-input [(ngModel)]="signup.lastName" name="lastName" type="text" #lastName="ngModel" required>
-              </ion-input>
-              <ion-text color="danger" *ngIf="lastName.invalid && lastName.touched">Last name is required</ion-text>
-            </ion-item>
-            <div class="ion-padding">
-              <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Registrieren</ion-button>
-            </div>
-          </ng-container>
-          </ion-list>
-      </form>
+            </ion-list>
+            <ion-row class="ion-margin-top button-row">
+              <ion-col>
+                <ion-button (click)="onSignup(signupForm)" type="submit" expand="block">Registrieren</ion-button>
+                <ion-button (click)="login()" fill="outline" expand="block">Abbrechen</ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+          <form class="login-form" #inviteCodeForm="ngForm" *ngIf="!showRegisterForm">
+            <ion-list>
+              <ion-item fill="outline">
+                <ion-icon slot="start" name="keypad-outline"></ion-icon>
+                <ion-label position="floating">Einladungs-Code</ion-label>
+                <ion-input type="text" [(ngModel)]="signup.token" name="inviteCode" required></ion-input>
+              </ion-item>
+              <ion-note color="danger" *ngIf="tokenError" >
+                Bitte geben Sie einen gültigen Einladungs-Code ein.
+              </ion-note>
+            </ion-list>
+            <ion-row class="ion-margin-top button-row">
+              <ion-col>
+                <ion-button (click)="validateCode(inviteCodeForm)" expand="block">Code verifizieren!</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="login()" fill="outline" expand="block">Login</ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+      </ion-card>
+    </ion-col>
+
+    <ion-col>
     </ion-col>
   </ion-row>
-</ion-content>
+</ion-grid>

@@ -6,4 +6,5 @@ export interface UserOptions {
   firstName: string;
   lastName: string;
   userRole: string;
+  passwordConfirm: string;
 }

@@ -39,7 +39,8 @@ export class LoginPage implements OnInit {
     token: '',
     firstName: '',
     lastName: '',
-    userRole: ''
+    userRole: '',
+    passwordConfirm: ''
   };
   submitted = false;
   // email: string;
@@ -98,7 +99,7 @@ export class LoginPage implements OnInit {
           }
         }
       ],
-      // duration: 2000,
+      duration: 5000,
       color: 'danger'
     });
     toast.present();
@@ -115,7 +116,7 @@ export class LoginPage implements OnInit {
   async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       color: color
     });
     toast.present();

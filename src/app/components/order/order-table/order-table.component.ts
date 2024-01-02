@@ -33,6 +33,21 @@ export class OrderTableComponent implements OnInit {
   }
 
   filterTerm: string;
+
+  search() {
+    this.filteredOrders = this.orders.filter(order => {
+      return order.id.toString().includes(this.filterTerm)
+        || order.actualStatus.toLowerCase().includes(this.filterTerm.toLowerCase())
+        || order.propertyNumber.toString().includes(this.filterTerm)
+        || order.company.toLowerCase().includes(this.filterTerm.toLowerCase())
+        || order.customerContact.toLowerCase().includes(this.filterTerm.toLowerCase())
+        || order.city.toLowerCase().includes(this.filterTerm.toLowerCase())
+        || order.phone.toString().includes(this.filterTerm)
+        || order.mobile.toString().includes(this.filterTerm)
+        || order.email.toLowerCase().includes(this.filterTerm.toLowerCase());
+    });
+  }  
+
   userRecords: Array<any> = [
     { id: 1, status:'RECEIVED', propertyNumber: '123', company: 'Firma1', customerContact: 'John', city: 'City1', phone: '1234567890', mobile: '0987654321', email: 'john@email.com' },
     // ...more records
@@ -57,7 +72,6 @@ export class OrderTableComponent implements OnInit {
     this.http.get<any[]>(environment.backend + environment.url.ista.url, { headers })
     .pipe(
       map(response => {
-        console.log(response);
         this.orders = response;
         
         this.orders.forEach(order => {
@@ -119,7 +133,38 @@ export class OrderTableComponent implements OnInit {
     }
   }
 
-
+  sortByStatus() {
+    this.orders.sort((a, b) => {
+      const statusA = a.actualStatus || ''; // Fallback zu leerem String, wenn undefined
+      const statusB = b.actualStatus || '';
+      return this.ascending ? statusA.localeCompare(statusB) : statusB.localeCompare(statusA);
+    });
+    this.ascending = !this.ascending; // Umschalten des Zustands
+  }
+  
+  sortByCreatedDate() {
+    this.orders.sort((a, b) => {
+      const dateA = new Date(a.createdAt || '');
+      const dateB = new Date(b.createdAt || '');
+  
+      if (this.ascending) {
+        return dateA.getTime() - dateB.getTime();
+      } else {
+        return dateB.getTime() - dateA.getTime();
+      }
+    });
+  
+    this.ascending = !this.ascending;
+  }  
+  
+  sortByCustomerContact() {
+    this.orders.sort((a, b) => {
+      const contactA = a.customerContact || '';
+      const contactB = b.customerContact || '';
+      return this.ascending ? contactA.localeCompare(contactB) : contactB.localeCompare(contactA);
+    });
+    this.ascending = !this.ascending;
+  }
 
   showOnlyOpenOrdersChanged() {
     this.filteredOrders = this.orders.filter(order => order.actualStatus !== 'Abgeschlossen' && order.actualStatus !== 'Storno');
@@ -171,12 +216,35 @@ export class OrderTableComponent implements OnInit {
   }
   //TODO: Implement delete
   delete() {
-    this.selectedOrders.forEach(id => {
-      
-      this.http.delete(environment.backend + environment.url.ista.order + '/' + id).subscribe();
-    });
-    this.getIstaOrders();
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+  
+    const idsToDelete = Array.from(this.selectedOrders);
+    this.deleteNext(idsToDelete, headers);
   }
+  
+  deleteNext(ids: number[], headers: HttpHeaders) {
+    if (ids.length === 0) {
+      this.getIstaOrders(); // Alle Löschvorgänge abgeschlossen, Liste aktualisieren
+      return;
+    }
+  
+    const id = ids.shift(); // Entfernen Sie die ID vom Anfang des Arrays
+    this.http.delete(environment.backend + environment.url.ista.order + '/' + id, { headers }).subscribe(
+      () => {
+        this.deleteNext(ids, headers); // Erfolgreich gelöscht, nächste ID löschen
+      },
+      (error) => {
+        this.exceptionMessage = error.error.message; // Fehlerbehandlung
+        // Optional: Entscheiden, ob Sie den Vorgang fortsetzen oder abbrechen möchten
+        this.deleteNext(ids, headers); // Fehler auftreten, aber mit dem nächsten fortfahren
+      }
+    );
+  }
+  
 
   exportSelectedToExcel() {
     // Filter the userRecords array based on the selected orders
@@ -255,6 +323,20 @@ export class OrderTableComponent implements OnInit {
         doc.save('order_' + order.id + '.pdf');
       }
     });
+  }
+
+  sortByPropertyNumber() {
+    if (!this.ascending) {
+      this.orders.sort((a, b) => {
+        this.ascending = true;
+        return a.propertyNumber.localeCompare(b.propertyNumber);
+      });
+    } else {
+      this.orders.sort((a, b) => {
+        this.ascending = false;
+        return b.propertyNumber.localeCompare(a.propertyNumber);
+      });
+    }
   }
 }
   
