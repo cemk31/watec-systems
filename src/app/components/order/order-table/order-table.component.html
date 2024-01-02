@@ -1,15 +1,19 @@
+<ion-grid>
+
+
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
-    <ion-card-header color="primary">
-      <ion-card-title>Bestellübersicht (ISTA)</ion-card-title>
-      <ion-searchbar onchange="search()" showCancelButton="focus" placeholder="Suche..." [(ngModel)]="filterTerm"
-      animated="true"></ion-searchbar>
-    </ion-card-header>
-  </ion-toolbar>
+  <!-- <ion-toolbar color="primary"> -->
+    <!-- <ion-card-header color="primary"> -->
+    <!-- </ion-card-header> -->
+  <!-- </ion-toolbar> -->
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-card-header>
+    <h2>ISTA Bestellungen</h2>
+    <p>Übersicht aller ISTA Bestellungen!</p>
+    <ion-searchbar  color="light" (ionChange)="search($event)" showCancelButton="focus" placeholder="Suche..." [(ngModel)]="filterTerm"
+    animated="true"></ion-searchbar>
     <ion-buttons>
       <ion-button href="/app/tabs/create-ista-order" fill="solid" color="primary" (click)="createOrder()">
         <ion-icon name="create-outline"></ion-icon>
@@ -272,5 +276,5 @@
       </ion-list>
     </ng-container>
   </ng-template>
-
 </ion-content>
+</ion-grid>

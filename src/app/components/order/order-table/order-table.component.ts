@@ -9,6 +9,7 @@ import * as XLSX from 'xlsx';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf'
 import autoTable from 'jspdf-autotable'
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -26,7 +27,7 @@ export class OrderTableComponent implements OnInit {
   exceptionMessage = null;
   selectedId: number | null = null;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private toastController: ToastController) { }
 
   ngOnInit(): void {
     this.getIstaOrders();
@@ -34,18 +35,14 @@ export class OrderTableComponent implements OnInit {
 
   filterTerm: string;
 
-  search() {
-    this.filteredOrders = this.orders.filter(order => {
-      return order.id.toString().includes(this.filterTerm)
-        || order.actualStatus.toLowerCase().includes(this.filterTerm.toLowerCase())
-        || order.propertyNumber.toString().includes(this.filterTerm)
-        || order.company.toLowerCase().includes(this.filterTerm.toLowerCase())
-        || order.customerContact.toLowerCase().includes(this.filterTerm.toLowerCase())
-        || order.city.toLowerCase().includes(this.filterTerm.toLowerCase())
-        || order.phone.toString().includes(this.filterTerm)
-        || order.mobile.toString().includes(this.filterTerm)
-        || order.email.toLowerCase().includes(this.filterTerm.toLowerCase());
-    });
+  search(event: CustomEvent) {
+    this.filterTerm = event.detail.value.toLowerCase();
+    const searchableFields = ['id', 'status', 'createdAt', 'customerContact', 'city']; // Beispiel für durchsuchbare Felder
+    this.filteredOrders = this.orders.filter(order => 
+      searchableFields.some(field => 
+        order[field] && order[field].toString().toLowerCase().includes(this.filterTerm)
+      )
+    );
   }  
 
   userRecords: Array<any> = [
@@ -123,11 +120,23 @@ export class OrderTableComponent implements OnInit {
     if (!this.ascending) {
       this.orders.sort((a, b) => {
         this.ascending = true;
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach der ID aufsteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
         return a.id - b.id;
       });
     } else {
       this.orders.sort((a, b) => {
         this.ascending = false;
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach der ID absteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
         return b.id - a.id;
       });
     }
@@ -140,6 +149,12 @@ export class OrderTableComponent implements OnInit {
       return this.ascending ? statusA.localeCompare(statusB) : statusB.localeCompare(statusA);
     });
     this.ascending = !this.ascending; // Umschalten des Zustands
+    this.toastController.create({
+      message: 'Die Bestellungen wurden nach dem Status sortiert.',
+      duration: 5000,
+      color: 'success',
+      position: 'middle',
+    }).then(toast => toast.present());
   }
   
   sortByCreatedDate() {
@@ -148,8 +163,21 @@ export class OrderTableComponent implements OnInit {
       const dateB = new Date(b.createdAt || '');
   
       if (this.ascending) {
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach dem Erstellungsdatum aufsteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
+
         return dateA.getTime() - dateB.getTime();
       } else {
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach dem Erstellungsdatum absteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
         return dateB.getTime() - dateA.getTime();
       }
     });
@@ -161,8 +189,20 @@ export class OrderTableComponent implements OnInit {
     this.orders.sort((a, b) => {
       const contactA = a.customerContact || '';
       const contactB = b.customerContact || '';
+      this.toastController.create({
+        message: 'Die Bestellungen wurden nach dem Kundenkontakt aufsteigend sortiert.',
+        duration: 5000,
+        color: 'success',
+        position: 'middle',
+      }).then(toast => toast.present());
       return this.ascending ? contactA.localeCompare(contactB) : contactB.localeCompare(contactA);
     });
+    this.toastController.create({
+      message: 'Die Bestellungen wurden nach dem Kundenkontakt absteigend sortiert.',
+      duration: 5000,
+      color: 'success',
+      position: 'middle',
+    }).then(toast => toast.present());
     this.ascending = !this.ascending;
   }
 
@@ -236,8 +276,20 @@ export class OrderTableComponent implements OnInit {
     this.http.delete(environment.backend + environment.url.ista.order + '/' + id, { headers }).subscribe(
       () => {
         this.deleteNext(ids, headers); // Erfolgreich gelöscht, nächste ID löschen
+        this.toastController.create({
+          message: 'Bestellung mit der ID ' + id + ' erfolgreich gelöscht.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
       },
       (error) => {
+        this.toastController.create({
+          message: 'Fehler beim Löschen der Bestellung mit der ID ' + id,
+          duration: 5000,
+          color: 'danger',
+          position: 'middle',
+        }).then(toast => toast.present());
         this.exceptionMessage = error.error.message; // Fehlerbehandlung
         // Optional: Entscheiden, ob Sie den Vorgang fortsetzen oder abbrechen möchten
         this.deleteNext(ids, headers); // Fehler auftreten, aber mit dem nächsten fortfahren
@@ -267,6 +319,13 @@ export class OrderTableComponent implements OnInit {
 
     // Save the Excel file as a download
     saveAs(excelBlob, 'selected_orders.xlsx');
+
+    this.toastController.create({
+      message: 'Die ausgewählten Bestellungen wurden erfolgreich exportiert.',
+      duration: 5000,
+      color: 'success',
+      position: 'middle',
+    }).then(toast => toast.present());
   }
 
   //TODO: Export to PDF
@@ -297,7 +356,13 @@ export class OrderTableComponent implements OnInit {
       columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 'auto' }, /* weitere Spaltenkonfigurationen */ }
       // ...tableStyle
     });
-    doc.save('selected_orders.pdf');  
+    doc.save('selected_orders.pdf');
+    this.toastController.create({
+      message: 'Die ausgewählten Bestellungen wurden erfolgreich exportiert.',
+      duration: 5000,
+      color: 'success',
+      position: 'middle',
+    }).then(toast => toast.present());
   }
   
   getSelectedOrders() {
@@ -321,6 +386,12 @@ export class OrderTableComponent implements OnInit {
           columnStyles: { 0: { cellWidth: 'auto' }, 1: { cellWidth: 'auto' }, /* weitere Spaltenkonfigurationen */ }
         });
         doc.save('order_' + order.id + '.pdf');
+        this.toastController.create({
+          message: 'Die Bestellung wurde erfolgreich exportiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
       }
     });
   }
@@ -329,11 +400,23 @@ export class OrderTableComponent implements OnInit {
     if (!this.ascending) {
       this.orders.sort((a, b) => {
         this.ascending = true;
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach der Eigentumsnummer aufsteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
         return a.propertyNumber.localeCompare(b.propertyNumber);
       });
     } else {
       this.orders.sort((a, b) => {
         this.ascending = false;
+        this.toastController.create({
+          message: 'Die Bestellungen wurden nach der Eigentumsnummer absteigend sortiert.',
+          duration: 5000,
+          color: 'success',
+          position: 'middle',
+        }).then(toast => toast.present());
         return b.propertyNumber.localeCompare(a.propertyNumber);
       });
     }
