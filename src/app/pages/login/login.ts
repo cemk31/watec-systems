@@ -70,21 +70,22 @@ export class LoginPage implements OnInit {
     };
 
     this.http.post<Response>(environment.backend + environment.url.login, body, { headers })
-    .pipe(
-      catchError(error => {
-        this.presentErrorToast();
-        return of(); // Leerer Observable, um den Stream nicht zu unterbrechen
-      })
-    )
+      .pipe(
+        catchError(error => {
+          this.presentErrorToast();
+          return of(); // Leerer Observable, um den Stream nicht zu unterbrechen
+        })
+      )
       .subscribe(response => {
-        this.authService.login(response['access_token'], response['userId'])
+        this.authService.login(response['access_token'], response['userId']);
         this.showSuccessMessage = true;
         localStorage.setItem("loggedInMessage", "true");
-        localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
+        sessionStorage.setItem("access_token", response['access_token']);
+        sessionStorage.setItem("userId", response['userId']);
+        sessionStorage.setItem("expires", response['expires']);
         this.router.navigate(['/app/tabs/about']);
         window.location.reload();
-      })
-      ;
+      });
   }
 
   async presentErrorToast() {

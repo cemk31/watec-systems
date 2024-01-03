@@ -263,7 +263,12 @@ export class OrderTableComponent implements OnInit {
     }
   
     const idsToDelete = Array.from(this.selectedOrders);
-    this.deleteNext(idsToDelete, headers);
+    
+    // Show confirmation alert
+    const confirmation = confirm("Sind Sie sicher, dass Sie die ausgewählten Bestellungen löschen möchten?");
+    if (confirmation) {
+      this.deleteNext(idsToDelete, headers);
+    }
   }
   
   deleteNext(ids: number[], headers: HttpHeaders) {

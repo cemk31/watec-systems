@@ -146,11 +146,25 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
   }
-
-  async ngOnInit() {
-    if (!sessionStorage.getItem("access_token")) {
-      this.router.navigateByUrl("login");
+  loginValid = false;
+  validateToken() {
+    const expires = new Date(sessionStorage.getItem("expires")).getTime();
+    const currentTime = new Date().getTime();
+    console.log("currentTime: " + currentTime);
+    console.log("expires: " + expires);
+    console.log("expiresTrue: ",  currentTime < expires);
+    
+    if (sessionStorage.getItem("access_token") && currentTime < expires) {
+      sessionStorage.setItem("loggedIn", "true"); // Convert boolean value to string
+      this.loginValid = true;
+    } else {
+      sessionStorage.clear();
+      this.router.navigateByUrl('/login');
+      this.loginValid = false;
     }
+  }
+  async ngOnInit() {
+    this.validateToken();
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
