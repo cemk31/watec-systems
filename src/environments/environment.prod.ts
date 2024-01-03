@@ -18,6 +18,9 @@ export const environment = {
       cancelled: '/ista/cancelled',
       postponed: '/ista/postponed',
     },
-    resetPassword: '/auth/resetPassword'
+    resetPassword: '/auth/reset-password',
+    forgotPassword: '/auth/forgot-password',
+    submitAccessToken: '/auth/submitAccessToken',
+    verifyEmail: '/auth/verify-email/:confirmationToken',
   }
 };

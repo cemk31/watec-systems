@@ -39,7 +39,8 @@ export class LoginPage implements OnInit {
     token: '',
     firstName: '',
     lastName: '',
-    userRole: ''
+    userRole: '',
+    passwordConfirm: ''
   };
   submitted = false;
   // email: string;
@@ -69,21 +70,22 @@ export class LoginPage implements OnInit {
     };
 
     this.http.post<Response>(environment.backend + environment.url.login, body, { headers })
-    .pipe(
-      catchError(error => {
-        this.presentErrorToast();
-        return of(); // Leerer Observable, um den Stream nicht zu unterbrechen
-      })
-    )
+      .pipe(
+        catchError(error => {
+          this.presentErrorToast();
+          return of(); // Leerer Observable, um den Stream nicht zu unterbrechen
+        })
+      )
       .subscribe(response => {
-        this.authService.login(response['access_token'], response['userId'])
+        this.authService.login(response['access_token'], response['userId']);
         this.showSuccessMessage = true;
         localStorage.setItem("loggedInMessage", "true");
-        localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
+        sessionStorage.setItem("access_token", response['access_token']);
+        sessionStorage.setItem("userId", response['userId']);
+        sessionStorage.setItem("expires", response['expires']);
         this.router.navigate(['/app/tabs/about']);
         window.location.reload();
-      })
-      ;
+      });
   }
 
   async presentErrorToast() {
@@ -98,7 +100,7 @@ export class LoginPage implements OnInit {
           }
         }
       ],
-      // duration: 2000,
+      duration: 5000,
       color: 'danger'
     });
     toast.present();
@@ -115,7 +117,7 @@ export class LoginPage implements OnInit {
   async presentToast(message: string, color: string) {
     const toast = await this.toastController.create({
       message: message,
-      duration: 2000,
+      duration: 5000,
       color: color
     });
     toast.present();

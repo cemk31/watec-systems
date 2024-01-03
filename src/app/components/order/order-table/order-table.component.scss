@@ -1,39 +1,4 @@
-/* Grundlegendes Styling */
-table {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0;
-  overflow-x: auto;
-  border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
 
-/* Keine Ränder, padding für Abstände */
-th, td {
-  border: none;
-  padding: 16px;
-  white-space: nowrap;
-}
-
-/* Kopfzeilen-Design */
-th {
-  background-color: #f4f4f4;
-  color: var(--ion-color-primary); /* Verwendung von CSS Variablen für bessere Wartbarkeit */
-  font-weight: 600;
-}
-
-/* Zebrastreifen-Stil für bessere Lesbarkeit */
-tbody tr:nth-of-type(odd) {
-  background-color: #f9f9f9;
-}
-
-/* Hover-Effekt für Zeilen */
-tbody tr:hover {
-  background-color: #f2f2f2;
-  // transform: scale(1.02); /* Leichte Skalierung */
-  transition: transform 0.3s ease;
-}
 
 /* Status-Farbcode */
 .status-red {
@@ -41,8 +6,9 @@ tbody tr:hover {
   color: red;
 }
 .status-green {
-  background-color: rgba(0, 255, 0, 0.1);
+  // background-color: rgba(0, 255, 0, 0.1);
   color: green;
+  font-weight: bold;
 }
 
 /* Filter-Ausklappbutton */
@@ -67,24 +33,19 @@ tbody tr:hover {
   transition: opacity 300ms;
 }
 
-a {
-  color: var(--ion-color-primary);
-  text-decoration: none;
-  font-weight: 600;
-}
 
 ion-item {
   --inner-padding-end: 0;
   --inner-padding-start: 0;
 }
 
-ion-card-title {
-  font-size: 1.2rem;
-  font-weight: 600;
-  padding: 10px;
-  color: var(--ion-color-primary);
-  border-bottom: var(--ion-color-primary) 1px solid;
-}
+// ion-card-title {
+//   font-size: 1.2rem;
+//   font-weight: 600;
+//   padding: 10px;
+//   color: var(--ion-color-primary);
+//   border-bottom: var(--ion-color-primary) 1px solid;
+// }
 
 .edit-link,
 ion-input {
@@ -95,4 +56,19 @@ ion-input {
 .remove-link {
   color: var(--ion-color-danger);
   font-size: 1.2rem;
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-light);
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+ion-searchbar {
+  margin: 10px;
 }

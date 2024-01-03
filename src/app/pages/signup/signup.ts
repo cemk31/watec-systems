@@ -8,6 +8,8 @@ import { UserOptions } from '../../interfaces/user-options';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { NotificationService } from '../../services/notification.service';
+import { ToastController } from '@ionic/angular';
+import { set } from 'date-fns';
 
 
 
@@ -54,7 +56,7 @@ export class SignupPage implements OnInit {
     }
   }
 
-  signup: UserOptions = { email: '', password: '', token: '', firstName: '', lastName: '', userRole: ''};
+  signup: UserOptions = { email: '', password: '', passwordConfirm: '', token: '', firstName: '', lastName: '', userRole: ''};
   submitted = false;
   showSuccessMessage = false;
   showLoggedInWarning = false;
@@ -71,7 +73,8 @@ export class SignupPage implements OnInit {
     public userData: UserData,
     private http: HttpClient,
     private notificationService: NotificationService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private toastController: ToastController
   ) {
     this.notificationService.currentMessage.subscribe(message => this.message = message);
   }
@@ -82,6 +85,15 @@ export class SignupPage implements OnInit {
     }
   }
 
+  async presentToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      color: color
+    });
+    toast.present();
+  }
+  emailError : string;
   onSignup(signupForm: NgForm) {
     if(signupForm.invalid){
       return
@@ -89,58 +101,86 @@ export class SignupPage implements OnInit {
       this.http.post<any>(environment.backend + environment.url.register, this.signup).subscribe(
         res => {
           if (res && res.access_token) {
+            this.showSuccessMessage = true;
+            setTimeout(() => {
+              duration: 2000
+            });
             localStorage.setItem("loggedInMessage", "true");
             localStorage.setItem('isUserLoggedIn', this.isUserLoggedIn ? "true" : "false");
-            this.router.navigate(['/app/tabs/about']);
+            this.router.navigate(['/login']);
             window.location.reload();
           } else {
             // Handle unexpected server response
             console.error("Unexpected server response:", res);
+            this.presentToast(this.notificationMessages.unexpected.message, this.notificationMessages.unexpected.color);
             this.notificationMessage = this.notificationMessages.unexpected;
           }
         },
         err => {
-  
           if (err.status === 403 && err.error.message === "Credentials taken") {
             // display the error to the user
             this.notificationMessage = this.notificationMessages.userNameAlreadyInUs;
+            this.emailError = "Email already in use"; 
+            console.log("emailerror", this.emailError);
+            this.presentToast(this.notificationMessages.userNameAlreadyInUs.message, this.notificationMessages.userNameAlreadyInUs.color);
           } else {
             console.error(err);
             // Better error handling: show a message to the user, for example
             this.notificationMessage = this.notificationMessages.error;
+            this.emailError = "Registration failed! Please contact admin or try it again later!";
+            this.presentToast(this.notificationMessages.error.message, this.notificationMessages.error.color);
           }
         }
       );
     }
-  }  
+  }
 
-  // validateCode(inviteCodeForm: NgForm) {
-  //   try {
-  //     const accessToken = inviteCodeForm.value.token;
-  //     let role: string;
+  login() {
+    this.router.navigate(['/login']);
+  }
 
-  //     switch (accessToken) {
-  //       case 'MITARBEITER2023':
-  //         role = 'MITARBEITER';
-  //         break;
-  //       case 'ADMIN2020':
-  //         role = 'Administrator';
-  //         break;
-  //       case 'SUPERADMIN22':
-  //         role = 'SuperAdministrator';
-  //         break;
-  //       default:
-  //         throw new Error("Invalid access token");
-  //     }
+  tokenError : string;
+  validateCode(inviteCodeForm: NgForm) {
+    try {
+      const accessToken = this.signup.token;
+      let role: string;
+      console.log(accessToken)
+      switch (accessToken) {
+        case 'MITARBEITER2023':
+          role = 'MITARBEITER';
+          break;
+        case 'ADMIN2020':
+          role = 'Administrator';
+          break;
+        case 'SUPERADMIN22':
+          role = 'SuperAdministrator';
+          break;
+        default:
+          throw new Error("Invalid access token");
+      }
+      this.notificationMessage = this.notificationMessages.validCode;
+      //wait 3 seconds
+      setTimeout(() => {
+      }, 5000);
+      this.showRegisterForm = true;
+      this.signup.userRole = role;
+      this.toastController.create({
+        message: 'Code gültig!',
+        duration: 5000,
+        color: 'success'
+      }).then(toast => toast.present());
 
-  //     this.showRegisterForm = true;
-  //     this.signup.userRole = role;
-  //     this.notificationMessage = this.notificationMessages.validCode;
-      
-  //     return role;
-  //   } catch (error) {
-  //     // display error message
-  //     this.notificationMessage = this.notificationMessages.invalidCode;
-  //   }
-  // }
+      return role;
+    } catch (error) {
+      this.tokenError = "Code ungültig";
+      this.toastController.create({
+        message: 'Code ungültig! Fehler: ' + error.message,
+        duration: 5000,
+        color: 'danger'
+      }).then(toast => toast.present());
+      // display error message
+      this.notificationMessage = this.notificationMessages.invalidCode;
+    }
+  }
 }
+
