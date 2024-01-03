@@ -1,5 +1,5 @@
 <ion-app [class.dark-theme]="light">
-  <ion-split-pane contentId="main-content">1
+  <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" *ngIf="loginValid">
       <ion-content>
         <ion-list lines="none">
@@ -20,8 +20,7 @@
             </ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let indexA = index">
-            <div *ngIf="isUserLoggedIn">
-
+            <div *ngIf="loginValid">
               <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="a.icon + '-outline'"></ion-icon>
                 <ion-label>
@@ -36,7 +35,7 @@
             </ion-label>
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let i of istaPages; let indexI = index">
-            <div *ngIf="isUserLoggedIn">
+            <div *ngIf="loginValid">
 
               <ion-item [routerLink]="i.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="i.icon + '-outline'"></ion-icon>
@@ -52,7 +51,7 @@
           <ion-list-header>
             Account
           </ion-list-header>
-          <div *ngIf="isUserLoggedIn">
+          <div *ngIf="loginValid">
             <ion-menu-toggle autoHide="false" *ngFor="let p of personalPages; let indexP = index">
               <ion-item [routerLink]="p.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="p.icon + '-outline'"></ion-icon>
@@ -72,7 +71,7 @@
             </ion-item>
           </ion-menu-toggle> -->
 
-          <ion-item *ngIf="isUserLoggedIn" (click)="logout()">
+          <ion-item *ngIf="loginValid" (click)="logout()">
             <ion-icon slot="start" name="moon-outline"></ion-icon>
             <ion-label>
               Logout

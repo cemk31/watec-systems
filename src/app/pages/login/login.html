@@ -18,7 +18,7 @@
         <div class="center-content">
           <!-- Titel und Untertitel -->
           <ng-container *ngIf="!showLoggedInWarning">
-            <h1> <ion-icon name="lock-closed-outline"></ion-icon>
+            <h1><ion-icon name="lock-closed-outline"></ion-icon>
               Login</h1>
             <p class="info-text">Füllen Sie die Felder unten aus, um sich einzuloggen.</p>
           </ng-container>
@@ -26,13 +26,13 @@
           <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate class="login-form">
             <ion-list>
               <ion-item fill="outline">
-                <ion-icon  slot="start" name="person-circle"></ion-icon>
-                <ion-label position="floating">E-mail</ion-label>
+                <ion-icon color="primary" slot="start" name="person-circle"></ion-icon>
+                <ion-label position="floating">E-Mail</ion-label>
                 <ion-input type="email" [(ngModel)]="login.email" name="email" required>
                 </ion-input>
               </ion-item>
               <ion-item fill="outline">
-                <ion-icon slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+                <ion-icon color="primary" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
                 <ion-label position="floating">Passwort</ion-label>
                 <ion-input type="password" [(ngModel)]="login.password" name="password" required></ion-input>
               </ion-item>
