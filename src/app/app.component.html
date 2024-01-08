@@ -1,24 +1,18 @@
 <ion-app [class.dark-theme]="light">
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" *ngIf="loginValid">
+      <ion-header>
+        <ion-toolbar>
+          <ion-buttons slot="start">
+            <ion-menu-button autoHide="false"></ion-menu-button>
+            <img height="50px" width="50px" src="assets/img/watec/watec_logo.png" alt="Ionic logo">
+          </ion-buttons>
+          <ion-title>ADMIN Dashboard</ion-title>
+        </ion-toolbar>
+      </ion-header>
+
       <ion-content>
         <ion-list lines="none">
-          <ion-list-header>
-            <img height="50px" width="50px" src="assets/img/watec/watec_logo.png" alt="Ionic logo">
-            <ion-title>ADMIN Dashboard</ion-title>
-            <!-- <ion-item>
-              <ion-label>
-                <p>Version</p>
-                <h2>1.0.0</h2>
-              </ion-label>
-            </ion-item> -->
-            <!-- <ion-subtitle>Version 1.0.0</ion-subtitle> -->
-          </ion-list-header>
-          <ion-list-header>
-            <ion-label>
-              WATEC
-            </ion-label>
-          </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let a of appPages; let indexA = index">
             <div *ngIf="loginValid">
               <ion-item [routerLink]="a.url" routerLinkActive="selected" routerDirection="root" detail="false">
@@ -36,7 +30,6 @@
           </ion-list-header>
           <ion-menu-toggle autoHide="false" *ngFor="let i of istaPages; let indexI = index">
             <div *ngIf="loginValid">
-
               <ion-item [routerLink]="i.url" routerLinkActive="selected" routerDirection="root" detail="false">
                 <ion-icon slot="start" [name]="i.icon + '-outline'"></ion-icon>
                 <ion-label>
@@ -62,45 +55,16 @@
             </ion-menu-toggle>
           </div>
 
-          <!-- <ion-menu-toggle autoHide="false" *ngFor="let o of otherPages; let indexO = index">
-            <ion-item [routerLink]="o.url" routerLinkActive="selected" routerDirection="root" detail="false">
-              <ion-icon slot="start" [name]="o.icon + '-outline'"></ion-icon>
-              <ion-label>
-                {{o.title}}
-              </ion-label>
-            </ion-item>
-          </ion-menu-toggle> -->
-
           <ion-item *ngIf="loginValid" (click)="logout()">
             <ion-icon slot="start" name="moon-outline"></ion-icon>
             <ion-label>
               Logout
             </ion-label>
           </ion-item>
-
-          <!-- <ion-item>
-            <ion-icon slot="start" name="moon-outline"></ion-icon>
-            <ion-label>
-              Dunkelmodus
-            </ion-label>
-            <ion-toggle (ionChange)="onToggleDarkMode()" [(ngModel)]="dark"></ion-toggle>
-          </ion-item> -->
         </ion-list>
-<!-- 
-        <ion-list lines="none">
-          <ion-list-header>
-            Tutorial  s
-          </ion-list-header>
-          <ion-menu-toggle autoHide="false">
-            <ion-item button (click)="openTutorial()" detail="false">
-              <ion-icon slot="start" name="hammer"></ion-icon>
-              <ion-label>Show Tutorial</ion-label>
-            </ion-item>
-          </ion-menu-toggle>
-        </ion-list> -->
       </ion-content>
     </ion-menu>
     <ion-router-outlet id="main-content"></ion-router-outlet>
-    
+
   </ion-split-pane>
 </ion-app>

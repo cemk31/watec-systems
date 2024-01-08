@@ -3,11 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   redirectTo: '/tutorial',
-  //   pathMatch: 'full'
-  // },
   {
     path: 'account',
     loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule)
@@ -28,15 +23,6 @@ const routes: Routes = [
     path: 'app',
     loadChildren: () => import('./pages/tabs-page/tabs-page.module').then(m => m.TabsModule)
   },
-  // {
-  //   path: 'tutorial',
-  //   loadChildren: () => import('./pages/tutorial/tutorial.module').then(m => m.TutorialModule),
-  //   canLoad: [CheckTutorial]
-  // },
-  // {
-  //   path: 'trinkwasseruntersuchung',
-  //   loadChildren: () => import('./pages/trinkwasseruntersuchung/trinkwasseruntersuchung.module').then( m => m.TrinkwasseruntersuchungPageModule)
-  // },
   {
     path: 'untersuchung-list',
     loadChildren: () => import('./pages/untersuchung-list/untersuchung-list.module').then( m => m.UntersuchungListPageModule)
@@ -104,7 +90,8 @@ const routes: Routes = [
   {
     path: 'forgotten-password',
     loadChildren: () => import('./pages/forgotten-password-page/forgotten-password-page.module').then( m => m.ForgottenPasswordPageModule)
-  }
+  },
+  { path: '**', redirectTo: 'home' } // Fügen Sie eine Wildcard-Route hinzu
 ];
 
 @NgModule({

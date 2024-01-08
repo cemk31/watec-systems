@@ -97,11 +97,7 @@ export class IstaOrderListPage implements OnInit {
 
   ngOnInit() {
     const response = this.getIstaOrders();
-
-    // list attributes
-    // ID, Status, contactPersonCustomer, agentCP, result, remark
     
-    //fill 
   }
 
   filterItems() {

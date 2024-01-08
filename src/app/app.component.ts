@@ -147,6 +147,7 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
   loginValid = false;
+
   validateToken() {
     const expires = new Date(sessionStorage.getItem("expires")).getTime();
     const currentTime = new Date().getTime();
@@ -232,16 +233,11 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
-  // openTutorial() {
-  //   // this.menu.enable(false);
-  //   // this.storage.set('ion_did_tutorial', false);
-  //   this.router.navigateByUrl('/tutorial');
-  // }
-
   onToggleDarkMode() {
     console.log("onToggleDarkMode");
     // this.dark = !this.dark;
     // document.body.classList.toggle('dark', this.dark);
   }
 
+  
 }

@@ -109,7 +109,7 @@ export class IstaOrderDetailPage implements OnInit {
   }
 
   refreshData() {
-    // Implementiere die Aktualisieren-Funktionalität
+    window.location.reload();
   }
 
   setStatus(status: string) {
@@ -120,11 +120,11 @@ export class IstaOrderDetailPage implements OnInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private orderService: OrderService, private router: Router, private location: Location) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get("id");
-    this.orderNumber = this.id;
-    console.log(this.id);
-    this.getIstaOrderDetail();
-    this.orderService.signalInit();
+    this.route.params.subscribe((params) => {
+      this.orderNumber = params['id'];
+      this.getIstaOrderDetail();
+      this.orderService.signalInit();
+    });
   }
 
   // Methode zum Hinzufügen von Dokumenten

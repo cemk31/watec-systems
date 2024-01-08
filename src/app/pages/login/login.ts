@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
         sessionStorage.setItem("access_token", response['access_token']);
         sessionStorage.setItem("userId", response['userId']);
         sessionStorage.setItem("expires", response['expires']);
-        this.router.navigate(['/app/tabs/about']);
+        this.router.navigate(['/app/tabs/home']);
         window.location.reload();
       });
   }

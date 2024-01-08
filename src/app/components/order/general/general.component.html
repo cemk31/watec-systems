@@ -1,183 +1,150 @@
-<ion-card class="custom-card"> <!-- farbliche Box -->
-  <ion-card-header>
-    <ion-toolbar color="light" class="custom-toolbar">
-      <ion-title color="primary" style="padding:20px">Allgemeine Informationen (ID:{{response?.id}})</ion-title>
-
-      <ion-buttons>
-        <ion-button (click)="onEdit()"><ion-icon name="create-outline"></ion-icon> Bearbeiten</ion-button>
-        <ion-button (click)="onDelete()"><ion-icon name="trash-outline"></ion-icon> Löschen</ion-button>
-        <ion-button (click)="onSyncWithIsta()"><ion-icon name="sync"></ion-icon>Synchronisieren mit Ista</ion-button>
-      </ion-buttons>
+<!-- <ion-row>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Allgemeine Informationen</ion-title>
     </ion-toolbar>
+  </ion-header>
+</ion-row> -->
 
-      <ion-row>
-        <ion-col>
-          <ion-item class="custom-input">
-            <ion-label position="floating">Erstellt Am</ion-label>
-            <ion-input [value]="formatDate(response?.createdAt)" readonly></ion-input>
-          </ion-item>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Auftragsnummer (intern)</ion-label>
-            <ion-input [value]="response?.id" readonly></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col>
-          <ion-item class="custom-input">
-            <ion-label position="floating">Geändert</ion-label>
-            <ion-input [value]="formatDate(response?.updatedAt)" readonly></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <ion-card>
-            <ion-toolbar color="light">
-              <ion-row>
-                <img style="padding:20px;" width="120px" height="60px" src="../../../../assets/img/ista_icon.png " alt="ISTA Icon">
-                <ion-title color="primary">Schnittstellenprotokoll</ion-title>
-              </ion-row>
-            </ion-toolbar>
-            <ion-textarea [value]="syncLog" readonly></ion-textarea>
-        
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Name</ion-label>
-              <ion-input value="Mustermann" readonly></ion-input>
-            </ion-item>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Telefon</ion-label>
-              <ion-input value="0123456789" readonly></ion-input>
-            </ion-item>
-          </ion-card>
-        </ion-col>
-      </ion-row>  
-  </ion-card-header>
-  <ion-card-content class="custom-card-content">
-    <ion-grid>
-      <ion-row>
-        <ion-col>
-          <ion-card>
-            <ion-toolbar color="light">
-              <ion-title color="primary" >Vertrag (ID:{{response?.id}})</ion-title>
-              <!-- <ion-buttons slot="end">
-                <ion-button (click)="onEdit()">Bearbeiten</ion-button>
-                <ion-button (click)="onDelete()">Löschen</ion-button>
-              </ion-buttons> -->
-            </ion-toolbar>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Vertrag</ion-label>
-              <ion-input [value]="response?.number || 'null'" readonly></ion-input>
-            </ion-item>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Rahmenvertrag</ion-label>
-              <ion-input [value]="response?.number || 'null'" readonly></ion-input>
-            </ion-item>
-          </ion-card>
+<ion-row>
+  <ion-list-header>
+    <ion-title>Allgemeine Informationen</ion-title>
+  </ion-list-header>
+</ion-row>
+<ion-row>
+  <!-- <ion-buttons> -->
+    <ion-col>
+      <ion-button color="primary" fill="outline" (click)="onEdit()"><ion-icon name="create-outline"></ion-icon> Bearbeiten</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="danger" fill="outline" (click)="onDelete()"><ion-icon name="trash-outline"></ion-icon> Löschen</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button color="tertiary" fill="outline" (click)="onSyncWithIsta()"><ion-icon name="sync"></ion-icon>Synchronisieren mit Ista</ion-button>
+    </ion-col>
+  <!-- </ion-buttons> -->
+</ion-row>
+<ion-row>
+  <ion-col>
+    <ion-item fill="outline" class="custom-input">
+      <ion-label position="floating">Erstellt Am</ion-label>
+      <ion-input [value]="formatDate(response?.createdAt)" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Auftragsnummer (intern)</ion-label>
+      <ion-input [value]="response?.id" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <ion-item fill="outline" class="custom-input">
+      <ion-label position="floating">Geändert</ion-label>
+      <ion-input [value]="formatDate(response?.updatedAt)" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
 
+<ion-row>
+  <ion-list-header>
+    <ion-title>Vertrag</ion-title>
+  </ion-list-header>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Vertragsnummer</ion-label>
+      <ion-input [value]="response?.number || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Rahmenvertrag</ion-label>
+      <ion-input [value]="response?.number || 'null'" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+  <ion-col>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Vertragsart</ion-label>
+      <ion-input [value]="response?.contractType || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Vertragsstatus</ion-label>
+      <ion-input [value]="response?.contractStatus || 'null'" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
 
-        <ion-card>
-          <ion-toolbar color="light">
-            <ion-title color="primary">Liegenschaft</ion-title>
-          </ion-toolbar>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Liegenschaftsnummer</ion-label>
-            <ion-input [value]="response?.Customer?.propertyNumber || 'Laden...'" readonly></ion-input>
-          </ion-item>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Name</ion-label>
-            <ion-input [value]="response?.Customer?.lastName || 'kein Wert...'" readonly></ion-input>
-          </ion-item>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Anschrift</ion-label>
-            <ion-input [value]="response?.street || 'null'" readonly></ion-input>
-          </ion-item>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">PLZ</ion-label>
-            <ion-input [value]="response?.zipCode || 'null'" readonly></ion-input>
-          </ion-item>
+<ion-row>
+  <ion-list-header>
+    <ion-title>Kunde</ion-title>
+  </ion-list-header>
+</ion-row>
+<ion-row>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Kundennummer</ion-label>
+      <ion-input [value]="response?.Customer?.id || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Name</ion-label>
+      <ion-input [value]="(response?.Customer?.lastName + ' / ' + response?.Customer?.name) || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Anschrift</ion-label>
+      <ion-input [value]="response?.Customer?.street || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">PLZ</ion-label>
+      <ion-input [value]="response?.Customer?.zipCode || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Ort</ion-label>
+      <ion-input [value]="response?.Customer?.place || 'null'" readonly></ion-input>
+    </ion-item>
+</ion-row>
 
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">ORT</ion-label>
-            <ion-input [value]="response?.place || 'null'" readonly></ion-input>
-          </ion-item>
-
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Land</ion-label>
-            <ion-input [value]="response?.country || 'null'" readonly></ion-input>
-          </ion-item>
-        </ion-card>
-          
-        </ion-col>
-        <ion-col>
-          <ion-card>
-            <ion-toolbar color="light">
-              <ion-title color="primary" class="ion-padding"><ion-icon name="person-outline"></ion-icon> Kunde</ion-title>
-            </ion-toolbar>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Kunden_Nr:</ion-label>
-              <ion-input [value]="response?.Customer?.id|| 'null'" readonly></ion-input>
-            </ion-item>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Name</ion-label>
-              <ion-input [value]="(response?.Customer?.lastName + ' / ' + response?.Customer?.name) || 'null'" readonly></ion-input>
-            </ion-item>
-            <ion-item class="custom-input" lines="none">
-              <ion-label position="floating">Anschrift</ion-label>
-              <ion-input [value]="response?.Customer?.street|| 'null'" readonly></ion-input>
-            </ion-item>
-            <!-- <ion-row>
-              <ion-col>
-  
-              </ion-col>
-              <ion-col>
-  
-              </ion-col>
-            </ion-row> -->
-  
-            <ion-row>
-                <ion-item class="custom-input" lines="none">
-                  <ion-label position="floating">PLZ</ion-label>
-                  <ion-input [value]="response?.Customer?.zipCode || 'null'" readonly></ion-input>
-                </ion-item>
-  
-                <ion-item class="custom-input" lines="none">
-                  <ion-label position="floating">ORT</ion-label>
-                  <ion-input [value]="response?.Customer?.place || 'null'" readonly></ion-input>
-                </ion-item>
-  
-                <ion-item class="custom-input" lines="none">
-                  <ion-label position="floating">Land</ion-label>
-                  <ion-input [value]="response?.Customer?.country|| 'null'" readonly></ion-input>
-                </ion-item>
-            </ion-row>      
-            
-          </ion-card>
-    
-        </ion-col>
-      </ion-row>
-
-      <ion-card class="custom-card"> <!-- Umhüllende Karte -->
-
-        <ion-card-header>
-          <ion-toolbar color="light">
-            <ion-title>Kontakt</ion-title>
-          </ion-toolbar>
-        </ion-card-header>
-        
-        <ion-card-content>
-          <!-- Ihr bestehender Content hier -->
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Name</ion-label>
-            <ion-input value="Mustermann" readonly></ion-input>
-          </ion-item>
-          <ion-item class="custom-input" lines="none">
-            <ion-label position="floating">Telefon</ion-label>
-            <ion-input value="0123456789" readonly></ion-input>
-          </ion-item>
-        </ion-card-content>      
-      </ion-card>
-      Dies sollte die Informationen in einer Karte darstellen. Sie können den Stil der Karte mit der Klasse custom-card und anderen benutzerdefinierten CSS-Klassen weiter anpassen.
-      
-
-    </ion-grid>
-  </ion-card-content>
-</ion-card>
+<ion-row>
+  <ion-list-header>
+    <ion-title>Liegenschaft</ion-title>
+  </ion-list-header>
+</ion-row>
+<ion-row>
+  <ion-col>
+    <ion-row>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Liegenschaftsnummer</ion-label>
+        <ion-input [value]="response?.Customer?.propertyNumber || 'null'" readonly></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Name</ion-label>
+        <ion-input [value]="response?.Customer?.lastName || 'null'" readonly></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Anschrift</ion-label>
+        <ion-input [value]="response?.street || 'null'" readonly></ion-input>
+      </ion-item>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">PLZ</ion-label>
+        <ion-input [value]="response?.zipCode || 'null'" readonly></ion-input>
+      </ion-item>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Ort</ion-label>
+        <ion-input [value]="response?.place || 'null'" readonly></ion-input>
+      </ion-item>
+      <ion-item fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Land</ion-label>
+        <ion-input [value]="response?.country || 'null'" readonly></ion-input>
+      </ion-item>
+    </ion-row>
+  </ion-col>
+  <ion-col>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Zählerstand</ion-label>
+      <ion-input [value]="response?.meterReading || 'null'" readonly></ion-input>
+    </ion-item>
+    <ion-item fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Zählerstand Datum</ion-label>
+      <ion-input [value]="formatDate(response?.meterReadingDate) || 'null'" readonly></ion-input>
+    </ion-item>
+  </ion-col>
+</ion-row>
