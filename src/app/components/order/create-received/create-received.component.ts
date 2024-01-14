@@ -19,6 +19,7 @@ export class CreateReceivedComponent implements OnInit {
   exceptionMessage: any;
   customers: any;
   @Input() orderId: number;
+  showForm = false; // variable to toggle form
 
   getReceivedFormArray(): FormArray {
     return this.orderForm.get('Received') as FormArray;
@@ -32,22 +33,13 @@ export class CreateReceivedComponent implements OnInit {
       actualStatus: [''],
       remarkExternal: [''],
       orderId: Number(this.orderId),  
-      Received: this.fb.array([
-        this.fb.group({
-          orderstatusType: [''],
-          CustomerContacts: this.fb.group([
-            this.fb.group({
-              contactAttemptOn: [''],
-              contactPersonCustomer: [''],
-              agentCP: [''],
-              result: [''],
-              remark: [''],
-            })
-          ])
-        })
-      ])
+      contactAttemptOn: [''],
+      contactPersonCustomer: [''],
+      agentCP: [''],
+      result: [''],
+      remark: ['']
     });
-    
+    this.showForm = true;
   }
 
   async presentToast() {
@@ -62,14 +54,12 @@ export class CreateReceivedComponent implements OnInit {
 
   createReceivedFormGroup(): FormGroup {
     return this.fb.group({
-      orderstatusType: [''],
-      CustomerContacts: this.fb.array([
-        this.createCustomerContactFormGroup()
-      ])
+      orderId: this.orderId,
+      CustomerContacts: this.fb.group([this.createContactFormGroup()])
     });
   }
 
-  createCustomerContactFormGroup(): FormGroup {
+  createContactFormGroup(): FormGroup {
     return this.fb.group({
       contactAttemptOn: [''],
       contactPersonCustomer: [''],
@@ -77,7 +67,7 @@ export class CreateReceivedComponent implements OnInit {
       result: [''],
       remark: ['']
     });
-  } 
+  }
 
   getReceivedArray(): FormArray {
     return this.orderForm.get('Received') as FormArray;
@@ -107,11 +97,10 @@ export class CreateReceivedComponent implements OnInit {
     let headers = new HttpHeaders();
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
-    }
-
+    }    
     console.log(this.orderForm.value);
 
-    this.http.put<any[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
+    this.http.post<any[]>(environment.backend + environment.url.ista.create_received , this.orderForm.value, { headers })
     .pipe(
       catchError((error) => {
         this.exceptionMessage = error.error.message;
@@ -121,13 +110,24 @@ export class CreateReceivedComponent implements OnInit {
     .subscribe(response => {
       console.log(response);
       this.customers = response;
-      this.presentToast(); // Present the toast
-      this.orderForm.disable() // Disable all fields in the form
+      this.orderForm.disable(); // Disable all fields in the form
       this.isSubmitted = true;
+      this.presentToast(); // Present the toast
+
+      setTimeout(() => {
+        // Close the component here
+      }, 5000);
+      this.segmentVisible = false;
     });
   }
 
-  // cancel() {
-  //   this.isVisible = false; // Setzen Sie die Variable auf false, wenn "Abbrechen" geklickt wird
-  // }
+  resetForm() {
+    this.orderForm.reset();
+  }
+
+  updateContactAttemptOnDate(event: any) {
+    this.orderForm.patchValue({
+      contactAttemptOn: event.target.value,
+    });
+  }
 }

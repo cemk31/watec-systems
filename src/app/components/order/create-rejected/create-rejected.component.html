@@ -1,3 +1,35 @@
-<p>
-  create-rejected works!
-</p>
+<form [formGroup]="createRejectedForm" (ngSubmit)="onSubmitRejected()">
+  <ion-row>
+    <ion-list-header>
+      <ion-icon size="large" color="danger" name="close-circle-outline"></ion-icon>
+      <ion-card-title color="danger" style="padding:5px;">Abgelehnt - {{orderId}}</ion-card-title>
+    </ion-list-header>
+  </ion-row>
+  <ion-item [disabled]="true" fill="outline" class="custom-input" lines="none">
+    <ion-label position="floating">Bestellnummer</ion-label>
+    <ion-input [value]="createRejectedForm.get('orderId').value" formControlName="orderId"></ion-input>
+  </ion-item>
+    <!-- </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating"  position="stacked">Storno Grund (Code)</ion-label>
+        <ion-input formControlName="rejectionReason" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating"  position="stacked">Storno Grund (Text)</ion-label>
+        <ion-input formControlName="rejectionReason" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <ion-button  color="success" shape="round" fill="solid"  expand="full" [disabled]="isSubmitted" type="submit">Speichern</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button fill="outline" shape="round" color="danger" expand="full" type="button" (click)="cancel()">Abbrechen
+      </ion-button>
+    </ion-col>
+  </ion-row>
+ </form>

@@ -31,6 +31,7 @@ export class CreatePostponedComponent implements OnInit {
       orderId: Number(this.orderId),
       orderstatusType: [null], // entfernt "disabled: true"
       postponedReason: [null], // entfernt "disabled: true"
+      nextContactAttemptOn: [null], // entfernt "disabled: true"
     });
   }
 
@@ -62,5 +63,11 @@ export class CreatePostponedComponent implements OnInit {
 
   cancel() {
     console.log("cancel()");
+  }
+
+  updateNextContactAttemptOnDate(event: any) {
+    this.createPostponedForm.patchValue({
+      nextContactAttemptOn: event.target.value,
+    });
   }
 }

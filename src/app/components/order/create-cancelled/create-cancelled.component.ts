@@ -35,6 +35,8 @@ export class CreateCancelledComponent implements OnInit {
       cancellationReason: [null],
       statusType: [null],  // entfernt "disabled: true"
     });
+
+    console.log("cancelled: ", this.createCancelledForm.value);
   }
 
   onSubmitCancelled() {

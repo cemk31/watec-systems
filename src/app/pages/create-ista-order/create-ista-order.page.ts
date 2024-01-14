@@ -34,7 +34,7 @@ export class CreateIstaOrderPage implements OnInit {
       Received: this.fb.array([this.createReceivedFormGroup()])
     });
 
-    
+
   }
 
   createObjektFormGroup(): FormGroup {
@@ -78,6 +78,7 @@ export class CreateIstaOrderPage implements OnInit {
   }
 
   ngOnInit(): void {
+    this.customerForm.reset();
   }
 
   async presentToast(orderId: number, message: string = null, duration: number = 3000, color: string = 'success', position: 'top' | 'bottom' | 'middle' = 'top') {

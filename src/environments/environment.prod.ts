@@ -12,6 +12,7 @@ export const environment = {
     ista: {
       url: '/ista',
       received: '/ista/received',
+      create_received:  '/ista/create-received',
       customerOrder: '/ista/customerOrder',
       order: '/ista/order',
       planned: '/ista/planned',

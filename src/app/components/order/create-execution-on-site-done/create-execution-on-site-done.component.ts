@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-create-execution-on-site-done',
@@ -7,8 +8,26 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CreateExecutionOnSiteDoneComponent implements OnInit {
 
-  constructor() { }
+  @Input() orderId: number;
+  createExecutionOnSiteForm: FormGroup;
+  isSubmitted = false;
+  constructor(private fb: FormBuilder) {
 
-  ngOnInit() {}
+  }
 
+  ngOnInit() {
+    this.createExecutionOnSiteForm = this.fb.group({
+      orderId: Number(this.orderId),
+      orderstatusType: [''], // entfernt "disabled: true"
+      executionOnSiteDoneReason: [''], // entfernt "disabled: true"
+    });
+  }
+
+  onExecutionOnSiteDoneSubmit() {
+    console.log(this.createExecutionOnSiteForm.value);
+  }
+
+  cancel() {
+    console.log('Cancel');
+  }
 }
