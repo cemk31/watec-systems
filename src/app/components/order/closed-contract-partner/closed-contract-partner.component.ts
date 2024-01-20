@@ -29,9 +29,11 @@ export class ClosedContractPartnerComponent implements OnInit {
       suppliedDocuments: this.fb.array([]),
       reportOrderStatusRequest: this.fb.array([]),
       contact: this.fb.array([]),
-      property: this.fb.array([]),
-      services: this.fb.array([]),
-    }) as FormGroup;
+      property: this.fb.group({
+        hotwatersupplyType_central: new FormControl({ value: false, disabled: false }),
+        hotwatersupplyType_decentral: new FormControl({ value: false, disabled: false }),
+        }),
+      });
   }
 
   closedContractPartnerFormSubmit() {
