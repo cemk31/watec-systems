@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { OrderService } from '../../../services/order/order.service';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-closed-contract-partner',
@@ -8,49 +9,45 @@ import { OrderService } from '../../../services/order/order.service';
 })
 export class ClosedContractPartnerComponent implements OnInit {
 
-  response: any;
+  closedContractPartnerForm: FormGroup;
+  @Input() orderId: number;
 
-  order_no: string = '12345'; // Beispiel für eine Bestellnummer, ersetzen Sie dies durch tatsächliche Daten.
-  closedContractPartner: any = {
-    order: {
-      number: null,
-      remarkExternal: null,
-      orderstatusType: null,
-      setOn: null
-    },
-    customerContacts: [],
-    deficiencyDescription: null,
-    extraordinaryExpenditureReason: null,
-    suppliedDocuments: [],
-    recordedSystem: [
-      {
-        
-      }
-    ]
-  };
 
-  addDocument() {
-    // Logik zum Hinzufügen eines neuen Dokuments
+  constructor(private orderService: OrderService, private fb: FormBuilder) {
+    console.log("ClosedContractPartnerComponent");
+   }
+
+  ngOnInit() {    
+    this.closedContractPartnerForm = this.fb.group({
+      orderId: new FormControl({ value: this.orderId, disabled: false }),
+      orderstatusType: new FormControl({ value: "", disabled: false }),
+      closedContractPartnerTWAReason: new FormControl({ value: "", disabled: false }),
+      deficiencyDescription: new FormControl({ value: "", disabled: false }),
+      registrationHealthAuthoritiesOn: new FormControl({ value: "", disabled: false }),
+      extraordinaryExpenditureReason: new FormControl({ value: "", disabled: false }),
+      recordedSystem: this.fb.array([]),
+      suppliedDocuments: this.fb.array([]),
+      reportOrderStatusRequest: this.fb.array([]),
+      contact: this.fb.array([]),
+      property: this.fb.array([]),
+      services: this.fb.array([]),
+    }) as FormGroup;
   }
 
-  addDrinkingWaterHeater() {
-    // Logik zum Hinzufügen eines neuen Trinkwassererhitzers
+  closedContractPartnerFormSubmit() {
+    console.log("closedContractParnterFormSubmit0");
   }
 
+  //createRecordedSystem
+  createRecordedSystem() {
+    const recordedSystem = this.closedContractPartnerForm.get('recordedSystem') as FormArray;
+    recordedSystem.push(this.fb.group({
+      recordedSystem: new FormControl({ value: "", disabled: false }),
+      recordedSystemDescription: new FormControl({ value: "", disabled: false }),
+    }));
+  }
+  
   addRecordedSystem() {
-    // Logik zum Hinzufügen eines neuen aufgezeichneten Systems
+    this.createRecordedSystem();
   }
-
-  heater: any;
-
-  constructor(private orderService: OrderService) { }
-
-  ngOnInit() {
-    this.orderService.getData().subscribe((data) => {
-      this.response = data;
-      console.log(this.response);
-    });
-    this.closedContractPartner = {};
-  }
-
 }

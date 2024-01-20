@@ -34,11 +34,11 @@ export class AppComponent implements OnInit {
     //   url: '/app/tabs/about',
     //   icon: 'information-circle'
     // },
-    {
-      title: 'Trinkwasseruntersuchung anlegen (BETA)',
-      url: '/app/tabs/trinkwasseruntersuchung',
-      icon: 'water'
-    },
+    // {
+    //   title: 'Trinkwasseruntersuchung anlegen (BETA)',
+    //   url: '/app/tabs/trinkwasseruntersuchung',
+    //   icon: 'water'
+    // },
     // {
     //   title: 'Untersuchungen',
     //   url: '/app/tabs/untersuchung-list',
@@ -64,12 +64,12 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/auftrage',
       icon: 'person'
     },
-    {
-      title: 'Test Liste',
-      url: '/app/tabs/list',
-      icon: 'person'
-    }
-    ,
+    // {
+    //   title: 'Test Liste',
+    //   url: '/app/tabs/list',
+    //   icon: 'person'
+    // }
+    // ,
     {
       title: 'Bestelldetail (ISTA)',
       url: '/test',

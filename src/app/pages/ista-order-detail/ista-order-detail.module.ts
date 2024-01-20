@@ -43,7 +43,7 @@ import { CreateClosedContractPartnerTWAComponent } from '../../components/order/
   PlannedComponent, PostponedComponent, RejectedComponent, CancelledComponent, 
   // ClosedContractPartnerComponent,
   ReceivedComponent, GeneralComponent, 
-  CreateReceivedComponent, CreateExecutionOnSiteDoneComponent,CreateClosedContractPartnerTWAComponent,
+  CreateReceivedComponent, CreateExecutionOnSiteDoneComponent,CreateClosedContractPartnerTWAComponent, ClosedContractPartnerComponent,
   CreatePlannedComponent, CreatePostponedComponent, CreateCancelledComponent, IstaOrderDetailTwaComponent, IstaOrderDetailStatusComponent, IstaOrderDetailGeneralComponent, CreateRejectedComponent,
   IstaOrderDetailStatusComponent
 ],

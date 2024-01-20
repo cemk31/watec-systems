@@ -74,7 +74,12 @@
             TWA
           </ion-segment-button>
         </ion-col>
-  
+        <ion-col>
+          <ion-segment-button value="closed" color="success" (click)="setStatus('CLOSED')" layout="icon-start">
+            <ion-icon name="checkmark-done-outline"></ion-icon>
+            Abgeschlossen
+          </ion-segment-button>
+        </ion-col>
       <!-- </ion-segment> -->
     </ion-row>
     <ion-grid>
@@ -88,6 +93,7 @@
           <app-create-rejected *ngIf="currentStatus === 'REJECTED'" (formSubmit)="onSubmitRejected()" [orderId]="[orderNumber]"></app-create-rejected>
           <app-create-execution-on-site-done *ngIf="currentStatus === 'EXECUTING'" (formSubmit)="onExecutionOnSiteDoneSubmit()" [orderId]="[orderNumber]"></app-create-execution-on-site-done>
           <app-create-closed-contract-partner-twa *ngIf="currentStatus === 'TWA'" (formSubmit)="onClosedContractPartnerTwaSubmit()" [orderId]="[orderNumber]"></app-create-closed-contract-partner-twa>
+          <app-closed-contract-partner *ngIf="currentStatus === 'CLOSED'" (formSubmit)="onClosedContractPartnerSubmit()" [orderId]="[orderNumber]"></app-closed-contract-partner>
           <!-- </ion-col> -->
         <!-- <ion-col></ion-col> -->
       <!-- </ion-row> -->
