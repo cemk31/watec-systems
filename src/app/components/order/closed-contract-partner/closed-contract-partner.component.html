@@ -48,32 +48,28 @@
               <div *ngFor="recordedSystem of recordedSystemArray.controls; let i = index" [formGroupName]="i">
                 <ion-accordion>
                   <ion-item slot="header" color="light">
-                    <ion-label>Recorded System {{i}}</ion-label>
+                    <ion-label>Recorded System {{i + 1}}</ion-label>
                   </ion-item>
                   <div class="ion-padding" slot="content">
-                    <ion-button (click)="removeRecordedSystem(i)">Remove</ion-button>
+                    <ion-row>
+                      <ion-button (click)="removeRecordedSystem(i)" fill="outline" color="danger" size="medium" sharp="round">Remove System</ion-button>
+                      <ion-button (click)="addDrinkingWaterFacility(i)">TWA +</ion-button>
+                    </ion-row>
                     <ion-accordion-group>
-                      <ion-row>
-                        <ion-button (click)="addDrinkingWaterFacility(i)">TWA +</ion-button>
-                      </ion-row>
                       <div formArrayName="drinkingWaterFacility">
-                        <div *ngFor="drinkingWaterFacility of getDrinkingWaterFacilityArray(i).controls; let j = index" [formGroupName]="j">
+                        <div *ngFor="let drinkingWaterFacility of getDrinkingWaterFacilityArray(i).controls; let j = index" [formGroupName]="j">
                           <ion-accordion>
                             <ion-item slot="header" color="light">
                               <ion-label>Trinkwasseranalyse {{j + 1}}</ion-label>
                             </ion-item>
                             <div class="ion-padding" slot="content">
-                              <ion-button color="danger" shape="round" size="small" fill="outline">-</ion-button>
+                              <ion-button color="danger" shape="round" size="small" fill="outline" (click)="deleteDrinkingWaterFacility(i, j)">-</ion-button>
                               <ion-accordion-group>
                                 <ion-accordion>
                                   <ion-item slot="header" color="primary">
                                     <ion-label>Allgemein</ion-label>
                                   </ion-item>
                                   <div class="ion-padding" slot="content">
-                                    <ion-item>
-                                      <ion-label position="floating">test</ion-label>
-                                      <ion-input formControlName="test" type="text"></ion-input>
-                                    </ion-item>
                                     <ion-item>
                                       <ion-label position="floating">consecutiveNumber</ion-label>
                                       <ion-input formControlName="consecutiveNumber" type="text"></ion-input>
@@ -181,20 +177,23 @@
                                     <ion-label>Trinkwassererhitzer</ion-label>
                                   </ion-item>
                                   <div class="ion-padding" slot="content">
-                                    <ion-button>+</ion-button>
+                                    <ion-button (click)="addDrinkWaterHeater(i, j)">ERHITZER +</ion-button>
                                     <ion-accordion-group>
-                                      <div formArrayName="drinkingWaterHeater">
-                                        <div *ngFor="drinkingWaterHeater of getDrinkingWaterHeaterArray(i, j); let z = index" [formGroupName]="z">
+                                      <div formArrayName="drinkingWaterHeaters">
+                                        <div *ngFor="drinkingWaterHeaters of getDrinkingWaterHeaterArray(i, j); let z = index" [formGroupName]="z">
+
+                                        <!-- <div *ngFor="drinkingWaterHeaters of getDrinkingWaterHeaterArray(i, j); let z = index" [formGroupName]="z"> -->
                                           <ion-accordion>
                                             <ion-item slot="header" color="light">
                                               <ion-label>Trinkwassererhitzer - {{z+1}}</ion-label>
+                                              <ion-label>{{drinkingWaterHeaters}}</ion-label>
                                             </ion-item>
                                             <div class="ion-padding" slot="content">
                                               <ion-button color="danger" shape="round" size="small" fill="outline">-</ion-button>
                                               <ion-accordion-group>
                                                 <ion-accordion>
                                                   <ion-item slot="header" color="light">
-                                                    <ion-label>Einheit</ion-label>
+                                                    <ion-label>Einheit {{z}}</ion-label>
                                                   </ion-item>
                                                   <div class="ion-padding" slot="content">
                                                     <ion-button color="danger" shape="round" size="small" fill="outline">-</ion-button>

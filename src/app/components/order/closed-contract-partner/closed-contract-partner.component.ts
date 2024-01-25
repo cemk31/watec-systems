@@ -20,6 +20,7 @@ export class ClosedContractPartnerComponent implements OnInit {
       street: new FormControl({ value: "ss", disabled: false }),
     }),
   ]);
+  drinkingWaterFacility: FormArray = this.fb.array([]);
   @Input() orderId: number;
 
   constructor(private orderService: OrderService, private fb: FormBuilder) {}
@@ -45,7 +46,41 @@ export class ClosedContractPartnerComponent implements OnInit {
         this.fb.group({
           drinkingWaterFacility: this.fb.array([
             this.fb.group({
-              test: new FormControl({ value: "", disabled: false }),
+              id: [""],
+              consecutiveNumber: new FormControl({ value: "", disabled: false }),
+              usageType: [""],
+              usageTypeOthers: [""],
+              numberSuppliedUnits: [""],
+              numberDrinkingWaterHeater: [""],
+              totalVolumeLitres: [""],
+              pipingSystemType_Circulation: [""],
+              pipingSystemType_Waterbranchline: [""],
+              pipingSystemType_Pipetraceheater: [""],
+        
+              deadPipeKnown: [""],
+              deadPipesPosition: [""],
+              numberAscendingPipes: [""],
+              aerosolformation: [""],
+              explanation: [""],
+              numberSuppliedPersons: [""],
+              pipeworkSchematicsAvailable: [""], //todo: boolean
+              numberColdWaterLegs: [""], //number
+              numberHotWaterLegs: [""], //number
+              temperatureCirculationDWH_A: [""], //number
+              temperatureCirculationDWH_B: [""], //number
+              heatExchangerSystem_central: [""], //boolean
+              heatExchangerSystem_districtheating: [""], //boolean
+              heatExchangerSystem_continuousflowprinciple: [""], //boolean
+              drinkingWaterHeaters: this.fb.array([
+                this.fb.group({
+                  id: [""],
+                  consecutiveNumber: [""],
+                  manufacturer: [""],
+                  model: [""],
+                  serialNumber: [""],
+                  yearOfManufacture: [""],
+                }),
+              ]),
             }),
           ]),
         }),
@@ -104,7 +139,35 @@ export class ClosedContractPartnerComponent implements OnInit {
       this.fb.group({
         drinkingWaterFacility: this.fb.array([
           this.fb.group({
-            test: new FormControl({ value: "", disabled: false }),
+            id: [""],
+            consecutiveNumber: new FormControl({ value: "", disabled: false }),
+            usageType: [""],
+            usageTypeOthers: [""],
+            numberSuppliedUnits: [""],
+            numberDrinkingWaterHeater: [""],
+            totalVolumeLitres: [""],
+            pipingSystemType_Circulation: [""],
+            pipingSystemType_Waterbranchline: [""],
+            pipingSystemType_Pipetraceheater: [""],
+      
+            deadPipeKnown: [""],
+            deadPipesPosition: [""],
+            numberAscendingPipes: [""],
+            aerosolformation: [""],
+            explanation: [""],
+            numberSuppliedPersons: [""],
+            pipeworkSchematicsAvailable: [""], //todo: boolean
+            numberColdWaterLegs: [""], //number
+            numberHotWaterLegs: [""], //number
+            temperatureCirculationDWH_A: [""], //number
+            temperatureCirculationDWH_B: [""], //number
+            heatExchangerSystem_central: [""], //boolean
+            heatExchangerSystem_districtheating: [""], //boolean
+            heatExchangerSystem_continuousflowprinciple: [""], //boolean
+      
+            drinkingWaterHeaters: this.fb.array([
+              
+            ]), //todo
           }),
         ]),
       })
@@ -163,7 +226,33 @@ export class ClosedContractPartnerComponent implements OnInit {
     }
 
     drinkingWaterFacilityArray.push(this.fb.group({
-      test: new FormControl({ value: "", disabled: false }),
+      id: [""],
+      consecutiveNumber: [""],
+      usageType: [""],
+      usageTypeOthers: [""],
+      numberSuppliedUnits: [""],
+      numberDrinkingWaterHeater: [""],
+      totalVolumeLitres: [""],
+      pipingSystemType_Circulation: [""],
+      pipingSystemType_Waterbranchline: [""],
+      pipingSystemType_Pipetraceheater: [""],
+
+      deadPipeKnown: [""],
+      deadPipesPosition: [""],
+      numberAscendingPipes: [""],
+      aerosolformation: [""],
+      explanation: [""],
+      numberSuppliedPersons: [""],
+      pipeworkSchematicsAvailable: [""], //todo: boolean
+      numberColdWaterLegs: [""], //number
+      numberHotWaterLegs: [""], //number
+      temperatureCirculationDWH_A: [""], //number
+      temperatureCirculationDWH_B: [""], //number
+      heatExchangerSystem_central: [""], //boolean
+      heatExchangerSystem_districtheating: [""], //boolean
+      heatExchangerSystem_continuousflowprinciple: [""], //boolean
+
+      drinkingWaterHeaters: this.fb.array([]), //todo
     }));
     console.log(this.closedContractPartnerForm.value);
   }
@@ -183,18 +272,31 @@ export class ClosedContractPartnerComponent implements OnInit {
   }
 
   getDrinkingWaterHeaterArray(recordedSystemIndex: number, facilityIndex: number): FormArray {
-    const drinkingWaterFacilityArray = this.getDrinkingWaterFacilityArray(recordedSystemIndex);
-    if(!drinkingWaterFacilityArray) {
-      console.error(`No FormArray at index ${recordedSystemIndex} in recordedSystemArray`);
-      return;
+    this.drinkingWaterFacility = this.getDrinkingWaterFacilityArray(recordedSystemIndex);
+    if (!this.drinkingWaterFacility) {
+      console.error(`No drinkingWaterFacility FormArray at index ${recordedSystemIndex}`);
+      return null;
     }
-    const drinkingWaterFacilityGroup = drinkingWaterFacilityArray.at(facilityIndex) as FormGroup;
-    if(!drinkingWaterFacilityGroup) {
-      console.error(`No FormGroup at index ${facilityIndex} in drinkingWaterFacilityArray`);
-      
-    }
-    return drinkingWaterFacilityGroup.get('drinkingWaterHeater') as FormArray;
+    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[facilityIndex].get('drinkingWaterHeaters') as FormArray;
+    return drinkingWaterHeatersArray;
   }
+
+  addDrinkWaterHeater(recordedSystemIndex: number, facilityIndex: number) {
+    this.drinkingWaterFacility = this.getDrinkingWaterFacilityArray(recordedSystemIndex);
+    console.log("drinkingWaterFacility", this.drinkingWaterFacility);
+    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[facilityIndex].get('drinkingWaterHeaters') as FormArray;
+    drinkingWaterHeatersArray.push(
+      this.fb.group({
+        id: ["22"],
+        consecutiveNumber: [""],
+        manufacturer: [""],
+        model: [""],
+        serialNumber: [""],
+        yearOfManufacture: [""],
+      })
+    );
+  }
+
 
   //CONTACT
   get contactArray() {
