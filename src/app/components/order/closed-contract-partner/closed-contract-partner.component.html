@@ -180,7 +180,7 @@
                                     <ion-button (click)="addDrinkWaterHeater(i, j)">ERHITZER +</ion-button>
                                     <ion-accordion-group>
                                       <div formArrayName="drinkingWaterHeaters">
-                                        <div *ngFor="drinkingWaterHeaters of getDrinkingWaterHeaterArray(i, j); let z = index" [formGroupName]="z">
+                                        <div *ngFor="drinkingWaterHeaters of getDrinkingWaterHeaterArray(i, j).controls; let z = index" [formGroupName]="z">
 
                                         <!-- <div *ngFor="drinkingWaterHeaters of getDrinkingWaterHeaterArray(i, j); let z = index" [formGroupName]="z"> -->
                                           <ion-accordion>
@@ -189,7 +189,7 @@
                                               <ion-label>{{drinkingWaterHeaters}}</ion-label>
                                             </ion-item>
                                             <div class="ion-padding" slot="content">
-                                              <ion-button color="danger" shape="round" size="small" fill="outline">-</ion-button>
+                                              <ion-button color="danger" shape="round" size="small" fill="outline" (click)="removeDrinkWaterHeater(i,j,z)">-</ion-button>
                                               <ion-accordion-group>
                                                 <ion-accordion>
                                                   <ion-item slot="header" color="light">

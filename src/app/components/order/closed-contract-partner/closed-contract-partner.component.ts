@@ -287,14 +287,30 @@ export class ClosedContractPartnerComponent implements OnInit {
     const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[facilityIndex].get('drinkingWaterHeaters') as FormArray;
     drinkingWaterHeatersArray.push(
       this.fb.group({
-        id: ["22"],
         consecutiveNumber: [""],
-        manufacturer: [""],
-        model: [""],
-        serialNumber: [""],
-        yearOfManufacture: [""],
+        inletTemperatureDisplayPresent: [""],
+        inletTemperature: [""],
+        outletTemperatureDisplayPresent: [""],
+        outletTemperature: [""],
+        pipeDiameterOutlet: [""],
+        pipeMaterialtypeOutlet: [""],
+        volumeLitre: [""],
+        roomType: [""],
+        roomPosition: [""],
+        positionDetail: [""],
+  
+        unit: this.fb.array([]),
       })
     );
+  }
+
+  removeDrinkWaterHeater(recordedSystemIndex: number, facilityIndex: number, heaterIndex: number) {
+    const drinkingWaterHeatersArray = this.getDrinkingWaterHeaterArray(recordedSystemIndex, facilityIndex);
+    if (!drinkingWaterHeatersArray) {
+      console.error(`No drinkingWaterHeaters FormArray at index ${facilityIndex}`);
+      return null;
+    }
+    drinkingWaterHeatersArray.removeAt(heaterIndex);
   }
 
 
