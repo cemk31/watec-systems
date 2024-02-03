@@ -74,6 +74,10 @@ export class CreateCancelledComponent implements OnInit {
       this.presentToast(); // Present the toast
       this.createCancelledForm.disable(); // Disable all fields in the form
       this.isSubmitted = true;
+      
+      setTimeout(() => {
+        location.reload(); // Refresh the page after 5 seconds
+      }, 5000);
     });
   }
 

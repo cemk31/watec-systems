@@ -44,26 +44,26 @@ export class AppComponent implements OnInit {
     //   url: '/app/tabs/untersuchung-list',
     //   icon: 'map'
     // },
-    {
-      title: 'Kunden',
-      url: '/app/tabs/customer',
-      icon: 'person'
-    },
-    {
-      title: 'Kunde anlegen',
-      url: '/app/tabs/create-customer',
-      icon: 'person'
-    },
-    {
-      title: 'WATEC Auftrag anlegen (MASTER)',
-      url: '/app/tabs/auftrag',
-      icon: 'person'
-    },
-    {
-      title: 'WATEC Aufträge (MASTERDATENBANK)',
-      url: '/app/tabs/auftrage',
-      icon: 'person'
-    },
+    // {
+    //   title: 'Kunden',
+    //   url: '/app/tabs/customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Kunde anlegen',
+    //   url: '/app/tabs/create-customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Auftrag anlegen (MASTER)',
+    //   url: '/app/tabs/auftrag',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Aufträge (MASTERDATENBANK)',
+    //   url: '/app/tabs/auftrage',
+    //   icon: 'person'
+    // },
     // {
     //   title: 'Test Liste',
     //   url: '/app/tabs/list',

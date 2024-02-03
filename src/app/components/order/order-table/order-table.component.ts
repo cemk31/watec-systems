@@ -88,6 +88,12 @@ export class OrderTableComponent implements OnInit {
           } else if (order.actualStatus === 'cancelled') {
             order.actualStatus = 'Storno';
             order.actualStatusColor = 'danger';
+          } else if (order.actualStatus === 'rejected') {
+            order.actualStatus = 'Abgelehnt';
+            order.actualStatusColor = 'danger';
+          } else if (order.actualStatus === 'done') {
+            order.actualStatus = 'ERLEDIGT';
+            order.actualStatusColor = 'secondary';
           }
         });
 

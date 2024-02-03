@@ -1,8 +1,8 @@
 <ion-content>
   <ion-grid>
     <ion-row>
-      <ion-toolbar color="primary">
-        <h1>Auftrag #{{orderNumber}}</h1>
+      <ion-toolbar color="light">
+        <h1>Auftrag #{{orderNumber}}</h1> 
       </ion-toolbar>
     </ion-row>
     <ion-row>
@@ -20,18 +20,17 @@
     <ion-row>
       <ion-col size="6">
         <!-- Toggle-Button mit einer kleinen Animation -->
-        <ion-button (click)="toggleSegmentVisibility()" [class.active]="segmentVisible">
+        <ion-button id="segmentButton" fill="outline" (click)="toggleSegmentVisibility()" [class.active]="segmentVisible">
           <ion-icon name="add-outline"></ion-icon>
           Status hinzufügen
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="segmentVisible">
-      <!-- <ion-segment *ngIf="segmentVisible" [ngClass]="{'slide-in': segmentVisible}"> -->
         <ion-col>
           <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')" layout="icon-start">
             <ion-icon name="checkmark-outline"></ion-icon>
-            Kundenkontakt
+            EMPFANGEN
             <!-- (RECEIVED) -->
           </ion-segment-button>
         </ion-col>
@@ -80,12 +79,8 @@
             Abgeschlossen
           </ion-segment-button>
         </ion-col>
-      <!-- </ion-segment> -->
     </ion-row>
     <ion-grid>
-      <!-- <ion-row> -->
-        <!-- <ion-col></ion-col> -->
-        <!-- <ion-col size="6" > -->
           <app-create-received *ngIf="currentStatus === 'RECEIVED'" (formSubmit)="onSubmitReceived()" [orderId]="[orderNumber]" ></app-create-received>
           <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()" [orderId]="[orderNumber]"></app-create-planned>
           <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()" [orderId]="[orderNumber]"></app-create-postponed>
@@ -94,9 +89,7 @@
           <app-create-execution-on-site-done *ngIf="currentStatus === 'EXECUTING'" (formSubmit)="onExecutionOnSiteDoneSubmit()" [orderId]="[orderNumber]"></app-create-execution-on-site-done>
           <app-create-closed-contract-partner-twa *ngIf="currentStatus === 'TWA'" (formSubmit)="onClosedContractPartnerTwaSubmit()" [orderId]="[orderNumber]"></app-create-closed-contract-partner-twa>
           <app-closed-contract-partner *ngIf="currentStatus === 'CLOSED'" (formSubmit)="onClosedContractPartnerSubmit()" [orderId]="[orderNumber]"></app-closed-contract-partner>
-          <!-- </ion-col> -->
-        <!-- <ion-col></ion-col> -->
-      <!-- </ion-row> -->
+          <app-general></app-general>
     </ion-grid>
 
   

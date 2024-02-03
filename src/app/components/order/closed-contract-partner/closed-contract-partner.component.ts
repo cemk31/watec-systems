@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { OrderService } from "../../../services/order/order.service";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { environment } from "../../../../environments/environment";
 
 @Component({
   selector: "app-closed-contract-partner",
@@ -23,7 +25,7 @@ export class ClosedContractPartnerComponent implements OnInit {
   drinkingWaterFacility: FormArray = this.fb.array([]);
   @Input() orderId: number;
 
-  constructor(private orderService: OrderService, private fb: FormBuilder) {}
+  constructor(private orderService: OrderService, private fb: FormBuilder, private http: HttpClient) {}
 
   ngOnInit() {
     this.closedContractPartnerForm = this.fb.group({
@@ -131,6 +133,30 @@ export class ClosedContractPartnerComponent implements OnInit {
   closedContractPartnerFormSubmit() {
     console.log("closedContractParnterFormSubmit0");
     console.log(this.closedContractPartnerForm.value);
+
+    const url = environment.backend +  environment.url.ista.cp; // Replace with your API endpoint
+    const body = this.closedContractPartnerForm.value;
+
+    const accessToken = sessionStorage.getItem("access_token");
+    const authorization = accessToken ? "Bearer " + accessToken : null;
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', "Bearer " + accessToken);
+    }
+
+    this.http.post(url, body, { headers }).subscribe(
+      (response) => {
+        console.log("Post request url:", url);
+        console.log("Post request body:", body);
+        console.log("Post request successful:", response);
+        // Handle the response here
+      },
+      (error) => {
+        console.error("Error in post request:", error);
+        // Handle the error here
+      }
+    );
+    
   }
 
   //RECORDED SYSTEM

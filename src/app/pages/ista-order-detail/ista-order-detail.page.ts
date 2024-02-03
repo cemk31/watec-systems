@@ -176,7 +176,7 @@ export class IstaOrderDetailPage implements OnInit {
     });
   }
 
-  getIstaOrderDetail() {
+    getIstaOrderDetail() {
     // Abrufen der ID aus dem Route-Parameter
     this.id = this.route.snapshot.paramMap.get("id");
     console.log(this.id);
@@ -206,6 +206,7 @@ export class IstaOrderDetailPage implements OnInit {
       )
       .subscribe((data) => {
         this.response = data; // Hier setzen Sie den Wert für 'response'
+        console.log(this.response);
         // this.sortComponentsByDate();  // Sortierung nach dem Erhalten der Daten
         this.orderService.setData(data);
       });
@@ -239,6 +240,7 @@ export class IstaOrderDetailPage implements OnInit {
 
   toggleSegmentVisibility() {
     this.segmentVisible = !this.segmentVisible;
+    const element = document.getElementById("segmentButton");
   }
 
   goBack() {

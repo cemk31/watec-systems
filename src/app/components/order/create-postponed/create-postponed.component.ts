@@ -43,19 +43,20 @@ export class CreatePostponedComponent implements OnInit {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
 
-    console.log(this.orderForm.value);
+    console.log(this.createPostponedForm.value);
 
-    this.http.put<any[]>(environment.backend + environment.url.ista.postponed , this.orderForm.value, { headers })
+    this.http.post<any[]>(environment.backend + environment.url.ista.postponed , this.createPostponedForm.value, { headers })
     .pipe(
       catchError((error) => {
         this.exceptionMessage = error.error.message;
+        this.presentToast("Fehler beim Hinzufügen des Kundenkontakts zur Bestellung " + this.orderId + ". Seite wird in 5 Sekunden erneuert.", 5000, "danger");
         return throwError(error);
       })
     )
     .subscribe(response => {
       console.log(response);
       this.customers = response;
-      this.presentToast(); // Present the toast
+      this.presentToast("Kundenkontakt wurde zur Bestellung " + this.orderId + " hinzugefügt. Seite wird in 5 Sekunden erneuert.", 5000, "success");
       this.orderForm.disable(); // Disable all fields in the form
       this.isSubmitted = true;
     });
@@ -69,5 +70,15 @@ export class CreatePostponedComponent implements OnInit {
     this.createPostponedForm.patchValue({
       nextContactAttemptOn: event.target.value,
     });
+  }
+
+  async presentToast(message: string = null, duration: number = 3000, color: string = 'success', position: 'top' | 'bottom' | 'middle' = 'top') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      color: color,
+      position: position,
+    });
+    toast.present();
   }
 }
