@@ -261,5 +261,15 @@ export class IstaOrderDetailPage implements OnInit {
     console.log('Formular Details: ', details);
     // Hier können Sie weitere Aktionen mit den Formulardetails durchführen
   }
+
+  deletOrder(orderId: number) {
+    console.log('Bestellung gelöscht: ', orderId);
+    // Hier können Sie die Bestellung löschen
+  }
+
+  syncOrder(orderId: number) {
+    console.log('Bestellung synchronisiert: ', orderId);
+    // Hier können Sie die Bestellung synchronisieren
+  }
   
 }

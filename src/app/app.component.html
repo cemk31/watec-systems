@@ -4,7 +4,7 @@
       <ion-header>
         <ion-toolbar>
           <ion-buttons slot="start">
-            <ion-menu-button autoHide="false"></ion-menu-button>
+            <ion-menu-button autoHide="true"></ion-menu-button>
             <img height="50px" width="50px" src="assets/img/watec/watec_logo.png" alt="Ionic logo">
           </ion-buttons>
           <ion-title>ADMIN Dashboard</ion-title>
@@ -56,7 +56,7 @@
           </div>
 
           <ion-item *ngIf="loginValid" (click)="logout()">
-            <ion-icon slot="start" name="moon-outline"></ion-icon>
+            <ion-icon slot="start" name="log-out-outline"></ion-icon>
             <ion-label>
               Logout
             </ion-label>

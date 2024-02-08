@@ -7,13 +7,21 @@
     </ion-row>
     <ion-row>
       <ion-buttons>
-        <ion-button slot="start" (click)="goBack()">
+        <ion-button color="primary" fill="outline" slot="start" (click)="goBack()">
           <ion-icon name="arrow-back-outline"></ion-icon>
           Zurück
         </ion-button>
-        <ion-button slot="end" (click)="refreshData()">
+        <ion-button slot="end" color="success" fill="solid" (click)="refreshData()">
           <ion-icon name="refresh-outline"></ion-icon>
           Aktualisieren
+        </ion-button>
+        <ion-button slot="end" color="secondary" fill="solid" (click)="syncOrder({orderNumber})">
+          <ion-icon name="refresh-outline"></ion-icon>
+          Synchronisieren mit ISTA
+        </ion-button>
+        <ion-button slot="end" color="danger" fill="outline" (click)="deletOrder({orderNumber})">
+          <ion-icon name="trash-outline"></ion-icon>
+          Löschen
         </ion-button>
       </ion-buttons>
     </ion-row>
@@ -67,12 +75,12 @@
             Ausführung erfolgt
           </ion-segment-button>
         </ion-col>
-        <ion-col>
+        <!-- <ion-col>
           <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')" layout="icon-start">
             <ion-icon name="paper-plane-outline"></ion-icon>
             TWA
           </ion-segment-button>
-        </ion-col>
+        </ion-col> -->
         <ion-col>
           <ion-segment-button value="closed" color="success" (click)="setStatus('CLOSED')" layout="icon-start">
             <ion-icon name="checkmark-done-outline"></ion-icon>

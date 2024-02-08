@@ -70,11 +70,11 @@ export class AppComponent implements OnInit {
     //   icon: 'person'
     // }
     // ,
-    {
-      title: 'Bestelldetail (ISTA)',
-      url: '/test',
-      icon: 'document'
-    },
+    // {
+    //   title: 'Bestelldetail (ISTA)',
+    //   url: '/test',
+    //   icon: 'document'
+    // },
   ];
 
   istaPages = [

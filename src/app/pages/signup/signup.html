@@ -1,42 +1,45 @@
-
-<ion-grid>
-  <ion-row>
-    <ion-col></ion-col>
-    <ion-col size="12" size-md="6"> 
-      <ion-card>
-        <ion-card-header>
-          <div class="signup-logo">
-            <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
-          </div>
-          <h1> <ion-icon name="lock-closed-outline"></ion-icon>
-            Registrieren</h1>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col size="12" size-md="6">
+        <ion-card>
+          <ion-card-header>
+            <div class="signup-logo">
+              <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
+            </div>
+            <h1> <ion-icon name="lock-closed-outline"></ion-icon>
+              Registrieren</h1>
             <ion-chip color="primary">
               <h3>Bitte füllen Sie alle notwendigen Felder aus um zu Registrieren!</h3>
             </ion-chip>
             <ion-chip color="success" *ngIf="showSuccessMessage">
               <h3>{{successMessage}}</h3>
             </ion-chip>
-        </ion-card-header>
+          </ion-card-header>
 
           <form class="login-form" #signupForm="ngForm" *ngIf="showRegisterForm">
             <ion-list>
               <ion-item fill="outline">
-                <ion-icon  slot="start" name="person-circle"></ion-icon>
+                <ion-icon slot="start" name="person-circle"></ion-icon>
                 <ion-label position="floating">E-mail</ion-label>
-                <ion-input errorText="{{emailError}}" type="email" [(ngModel)]="signup.email" name="email" required></ion-input>
+                <ion-input errorText="{{emailError}}" type="email" [(ngModel)]="signup.email" name="email"
+                  required></ion-input>
               </ion-item>
-              <ion-note color="danger" *ngIf="emailError" >
+              <ion-note color="danger" *ngIf="emailError">
                 {{emailError}}
               </ion-note>
               <ion-item fill="outline">
-                <ion-icon  slot="start" name="key"></ion-icon>
+                <ion-icon slot="start" name="key"></ion-icon>
                 <ion-label position="floating">Password</ion-label>
-                <ion-input helperText="Helper text" [counter]="true" [minLength]="8"  type="password" [(ngModel)]="signup.password" name="password" required></ion-input>
+                <ion-input helperText="Helper text" [counter]="true" [minLength]="8" type="password"
+                  [(ngModel)]="signup.password" name="password" required></ion-input>
               </ion-item>
               <ion-item fill="outline">
                 <ion-icon slot="start" name="key"></ion-icon>
                 <ion-label position="floating">Password wiederholen</ion-label>
-                <ion-input type="password" [(ngModel)]="signup.passwordConfirm" name="passwordConfirm" required></ion-input>
+                <ion-input type="password" [(ngModel)]="signup.passwordConfirm" name="passwordConfirm"
+                  required></ion-input>
               </ion-item>
               <ion-item fill="outline">
                 <ion-icon slot="start" name="person-circle"></ion-icon>
@@ -64,7 +67,7 @@
                 <ion-label position="floating">Einladungs-Code</ion-label>
                 <ion-input type="text" [(ngModel)]="signup.token" name="inviteCode" required></ion-input>
               </ion-item>
-              <ion-note color="danger" *ngIf="tokenError" >
+              <ion-note color="danger" *ngIf="tokenError">
                 Bitte geben Sie einen gültigen Einladungs-Code ein.
               </ion-note>
             </ion-list>
@@ -77,10 +80,10 @@
               </ion-col>
             </ion-row>
           </form>
-      </ion-card>
-    </ion-col>
-
-    <ion-col>
-    </ion-col>
-  </ion-row>
-</ion-grid>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

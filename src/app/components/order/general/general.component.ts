@@ -75,7 +75,7 @@ import { format } from 'date-fns';
         this.statusColor = 'warning';
         return 'Geplant';
       } else if (actualStatus === 'POSTPONED') {
-        this.statusIcon = 'calendar';
+        this.statusIcon = 'pause-outline';
         this.statusColor = 'warning';
         return 'Verschoben';
       } else if (actualStatus === 'CANCELLED') {
