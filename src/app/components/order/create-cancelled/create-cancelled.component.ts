@@ -35,6 +35,8 @@ export class CreateCancelledComponent implements OnInit {
       cancellationReason: [null],
       statusType: [null],  // entfernt "disabled: true"
     });
+
+    console.log("cancelled: ", this.createCancelledForm.value);
   }
 
   onSubmitCancelled() {
@@ -72,6 +74,10 @@ export class CreateCancelledComponent implements OnInit {
       this.presentToast(); // Present the toast
       this.createCancelledForm.disable(); // Disable all fields in the form
       this.isSubmitted = true;
+      
+      setTimeout(() => {
+        location.reload(); // Refresh the page after 5 seconds
+      }, 5000);
     });
   }
 

@@ -24,6 +24,9 @@ import { CreateCancelledComponent } from '../../components/order/create-cancelle
 import { IstaOrderDetailTwaComponent } from '../../components/ista-order-detail-twa/ista-order-detail-twa.component';
 import { IstaOrderDetailStatusComponent } from '../../components/ista-order-detail-status/ista-order-detail-status.component';
 import { IstaOrderDetailGeneralComponent } from '../../components/ista-order-detail-general/ista-order-detail-general.component';
+import { CreateRejectedComponent } from '../../components/order/create-rejected/create-rejected.component';
+import { CreateExecutionOnSiteDoneComponent } from '../../components/order/create-execution-on-site-done/create-execution-on-site-done.component';
+import { CreateClosedContractPartnerTWAComponent } from '../../components/order/create-closed-contract-partner-twa/create-closed-contract-partner-twa.component';
 
 @NgModule({
   imports: [
@@ -40,8 +43,8 @@ import { IstaOrderDetailGeneralComponent } from '../../components/ista-order-det
   PlannedComponent, PostponedComponent, RejectedComponent, CancelledComponent, 
   // ClosedContractPartnerComponent,
   ReceivedComponent, GeneralComponent, 
-  CreateReceivedComponent, 
-  CreatePlannedComponent, CreatePostponedComponent, CreateCancelledComponent, IstaOrderDetailTwaComponent, IstaOrderDetailStatusComponent, IstaOrderDetailGeneralComponent,
+  CreateReceivedComponent, CreateExecutionOnSiteDoneComponent,CreateClosedContractPartnerTWAComponent, ClosedContractPartnerComponent,
+  CreatePlannedComponent, CreatePostponedComponent, CreateCancelledComponent, IstaOrderDetailTwaComponent, IstaOrderDetailStatusComponent, IstaOrderDetailGeneralComponent, CreateRejectedComponent,
   IstaOrderDetailStatusComponent
 ],
   schemas: [

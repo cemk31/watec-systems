@@ -10,6 +10,7 @@ import { format } from 'date-fns';
     styleUrls: ['./general.component.scss'],
   })
   export class GeneralComponent implements OnInit, OnDestroy {
+    [x: string]: any;
     response: any = {};
     retrievedData: any;
     orderStatus: string = 'received'; // Setzen Sie den Standardstatus hier
@@ -25,6 +26,7 @@ import { format } from 'date-fns';
           this.response = this.orderService.getData();
           console.log('Retrieved data', this.response);
         });
+        console.log("reponse xxx", this.response);
     }
   
     ngOnDestroy() {
@@ -60,4 +62,33 @@ import { format } from 'date-fns';
       this.syncLog += 'Synchronisieren mit ISTA\n';
     }
 
+    statusIcon = 'checkmark-circle-outline';  // Setzen Sie das Standard-Statussymbol hier
+    statusColor = 'success';  // Setzen Sie die Standardfarbe des Statussymbols hier
+    
+    returnOrderStatus(actualStatus: string) {
+      if (actualStatus === 'RECEIVED') {
+        this.statusIcon = 'checkmark-circle-outline';
+        this.statusColor = 'success';
+        return 'Eingegangen';
+      } else if (actualStatus === 'PLANNED') {
+        this.statusIcon = 'calendar';
+        this.statusColor = 'warning';
+        return 'Geplant';
+      } else if (actualStatus === 'POSTPONED') {
+        this.statusIcon = 'pause-outline';
+        this.statusColor = 'warning';
+        return 'Verschoben';
+      } else if (actualStatus === 'CANCELLED') {
+        this.statusIcon = 'calendar';
+        this.statusColor = 'danger';
+        return 'Abgebrochen';
+      } else if (actualStatus === 'DONE') {
+        this.statusIcon = 'checkmark-circle-outline';
+        this.statusColor = 'success';
+        return 'Ausführung vor Ort erledigt';
+      }
+      else {
+        return 'Unbekannt';
+      }
+    }
   }

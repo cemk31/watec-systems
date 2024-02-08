@@ -1,6 +1,6 @@
 export const environment = {
-    production: false,
-    backend: 'https://watec-backend-production.up.railway.app',
+    production: true,
+    backend: 'https://watec-backend-development.up.railway.app/',
     url: {
       login: '/auth/signin',
       register: '/auth/signup',
@@ -12,11 +12,15 @@ export const environment = {
       ista: {
         url: '/ista',
         received: '/ista/received',
+        create_received:  '/ista/create-received',
         customerOrder: '/ista/customerOrder',
         order: '/ista/order',
         planned: '/ista/planned',
         cancelled: '/ista/cancelled',
         postponed: '/ista/postponed',
+        rejected: '/ista/rejected',
+        cp: '/ista/cp',
+        done: '/ista/done',
       },
       resetPassword: '/auth/rese-password',
       forgotPassword: '/auth/forgot-password',

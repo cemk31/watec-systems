@@ -1,3 +1,456 @@
-<p>
-  create-closed-contract-partner-twa works!
-</p>
+<form [formGroup]="createClosedContractPartnerTWAForm" (ngSubmit)="onClosedContractPartnerTWASubmit()" novalidate>
+  <ion-row>
+    <ion-list-header>
+      <ion-icon size="large" color="primary" name="paper-plane-outline"></ion-icon>
+      <ion-card-title color="primary" style="padding:5px;">TWA - {{orderId}}</ion-card-title>
+    </ion-list-header>
+  </ion-row>
+  <ion-item [disabled]="true" fill="outline" class="custom-input" lines="none">
+    <ion-label position="floating">Bestellnummer</ion-label>
+    <ion-input [value]="{orderId}" formControlName="orderId"></ion-input>
+  </ion-item>
+  <ion-row>
+    <ion-col>
+      <ion-accordion-group multiple="true">
+        <ion-accordion value="first">
+          <ion-item slot="header" color="light">
+            <ion-label>Allgemeine Informationen</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">
+            <ion-item>
+              <ion-label position="floating" position="stacked">deficiencyDescription</ion-label>
+              <ion-input formControlName="deficiencyDescription" type="text"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">registrationHealthAuthoritiesOn</ion-label>
+              <ion-input formControlName="registrationHealthAuthoritiesOn" type="date"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">extraordinaryExpenditureReason</ion-label>
+              <ion-input formControlName="extraordinaryExpenditureReason" type="text"></ion-input>
+            </ion-item>
+          </div>
+        </ion-accordion>
+        <h4>Aufgezeichnete Systeme</h4>
+        <ion-row>
+          <ion-button (click)="addRecordedSystem()" fill="outline" shape="round" color="primary" fill="outline"
+            expand="full"><ion-icon name="save-outline"></ion-icon>
+            System hinzufügen</ion-button>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <div class="bordered" formArrayName="recordedSystem"
+              *ngFor="let recordedSystem of recordedSystemFormArray.controls; let i = index" [formGroupName]="i">
+              <ion-accordion-group multiple="true">
+                <ion-accordion value="first">
+                  <ion-item slot="header" color="light">
+                    <ion-label>System </ion-label>
+                    <p><b>{{ i + 1 }}</b></p>
+                  </ion-item>
+
+                  <div class="ion-padding" slot="content">
+                    <ion-row>
+                      <ion-button (click)="addDrinkingWaterFacility(i)" fill="outline" shape="round" color="primary"
+                        fill="outline" expand="full"><ion-icon name="save-outline"></ion-icon>
+                        TWA hinzufügen</ion-button>
+                      <ion-button (click)="removeRecordedSystem(i)" fill="outline" shape="round" color="danger"
+                        fill="outline" expand="full"><ion-icon name="save-outline"></ion-icon>
+                        Remove System </ion-button>
+                      <p>({{ i + 1 }})</p>
+                    </ion-row>
+                    <ion-accordion-group>
+                      <ion-accordion>
+
+                        <ion-item slot="header" value="second" color="light"><ion-label color="primary">Allgemein
+                            (System)</ion-label>
+                          <p>{{ i + 1
+                            }}</p>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <ion-item>
+                            <ion-label position="floating">consecutiveNumber</ion-label>
+                            <ion-input formControlName="consecutiveNumber" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">usageType</ion-label>
+                            <ion-input formControlName="usageType" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">usageTypeOthers</ion-label>
+                            <ion-input formControlName="usageTypeOthers" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberSuppliedUnits</ion-label>
+                            <ion-input formControlName="numberSuppliedUnits" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberDrinkingWaterHeater</ion-label>
+                            <ion-input formControlName="numberDrinkingWaterHeater" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">totalVolumeLitres</ion-label>
+                            <ion-input formControlName="totalVolumeLitres" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Circulation</ion-label>
+                            <ion-input formControlName="pipingSystemType_Circulation" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Waterbranchline</ion-label>
+                            <ion-input formControlName="pipingSystemType_Waterbranchline" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Pipetraceheater</ion-label>
+                            <ion-input formControlName="pipingSystemType_Pipetraceheater" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingVolumeGr3Litres</ion-label>
+                            <ion-input formControlName="pipingVolumeGr3Litres" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">deadPipeKnown</ion-label>
+                            <ion-input formControlName="deadPipeKnown" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberAscendingPipes</ion-label>
+                            <ion-input formControlName="numberAscendingPipes" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">aerosolformation</ion-label>
+                            <ion-input formControlName="aerosolformation" type="text"></ion-input>
+                          </ion-item>
+                        </div>
+
+                      </ion-accordion>
+                      <ion-accordion>
+                        <ion-item slot="header" value="second" color="light"><ion-label
+                            color="primary">Trinkwasseranalyse</ion-label>
+                          <p>{{ i + 1
+                            }}</p>
+                        </ion-item>
+                        <div class="ion-padding" slot="content">
+                          <div class="bordered" formArrayName="drinkingWaterHeaters"
+                            *ngFor="let drinkingWaterHeaterCtrl of getDrinkingWaterHeaterArrayForm(i, y).controls; let z = index"
+                            [formGroupName]="z">
+                          </div>
+                          <ion-row>
+                            <ion-button (click)="removeDrinkingWaterFacility(i,y)" fill="outline" shape="round"
+                              color="danger" fill="outline" expand="full"><ion-icon name="save-outline"></ion-icon>
+                              TWA entfernen</ion-button>
+                            <ion-button (click)="removeDrinkingWaterHeater(i,y, z)" fill="outline" shape="round"
+                              color="primary" fill="outline" expand="full"><ion-icon name="save-outline"></ion-icon>
+                              Trinkwassererhitzer hinzufügen</ion-button>
+                          </ion-row>
+                          <ion-item>
+                            <ion-label position="floating">consecutiveNumber</ion-label>
+                            <ion-input [formControlName]="consecutiveNumber" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">usageType</ion-label>
+                            <ion-input formControlName="usageType" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">usageTypeOthers</ion-label>
+                            <ion-input formControlName="usageTypeOthers" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">numberSuppliedUnits</ion-label>
+                            <ion-input formControlName="numberSuppliedUnits" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">numberDrinkingWaterHeater</ion-label>
+                            <ion-input formControlName="numberDrinkingWaterHeater" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">totalVolumeLitres</ion-label>
+                            <ion-input formControlName="totalVolumeLitres" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Circulation</ion-label>
+                            <ion-input formControlName="pipingSystemType_Circulation" type="text"></ion-input>
+                          </ion-item>
+
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Waterbranchline</ion-label>
+                            <ion-input formControlName="pipingSystemType_Waterbranchline" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingSystemType_Pipetraceheater</ion-label>
+                            <ion-input formControlName="pipingSystemType_Pipetraceheater" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipingVolumeGr3Litres</ion-label>
+                            <ion-input formControlName="pipingVolumeGr3Litres" type="number"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">deadPipeKnown</ion-label>
+                            <ion-input formControlName="deadPipeKnown" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberAscendingPipes</ion-label>
+                            <ion-input formControlName="numberAscendingPipes" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">aerosolformation</ion-label>
+                            <ion-input formControlName="aerosolformation" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">explanation</ion-label>
+                            <ion-input formControlName="explanation" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberSuppliedPersons</ion-label>
+                            <ion-input formControlName="numberSuppliedPersons" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">pipeworkSchematicsAvailable</ion-label>
+                            <ion-input formControlName="pipeworkSchematicsAvailable" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberColdWaterLegs</ion-label>
+                            <ion-input formControlName="numberColdWaterLegs" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">numberHotWaterLegs</ion-label>
+                            <ion-input formControlName="numberHotWaterLegs" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">temperatureCirculationDWH_A</ion-label>
+                            <ion-input formControlName="temperatureCirculationDWH_A" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">temperatureCirculationDWH_B</ion-label>
+                            <ion-input formControlName="temperatureCirculationDWH_B" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">heatExchangerSystem_central</ion-label>
+                            <ion-input formControlName="heatExchangerSystem_central" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">heatExchangerSystem_districtheating</ion-label>
+                            <ion-input formControlName="heatExchangerSystem_districtheating" type="text"></ion-input>
+                          </ion-item>
+                          <ion-item>
+                            <ion-label position="floating">heatExchangerSystem_continuousflowprinciple</ion-label>
+                            <ion-input formControlName="heatExchangerSystem_continuousflowprinciple"
+                              type="text"></ion-input>
+                          </ion-item>
+                          <ion-row>
+                            <ion-button (click)="addDrinkingWaterHeater(i, y)" fill="outline" shape="round"
+                              color="primary" fill="outline" expand="full"><ion-icon name="save-outline"></ion-icon>
+                              Trinkwassererhitzer hinzufügen</ion-button>
+                          </ion-row>
+                          <ion-row>
+                            <ion-col>
+                              <ion-accordion-group>
+                                <ion-accordion>
+                                  <ion-item slot="header" color="light"><ion-label color="primary">Trinkwasserehitzer
+                                    </ion-label>
+                                    <p>{{ i + 1 }}</p>
+                                  </ion-item>
+                                  <div class="ion-padding" slot="content">
+                                    <div class="bordered" formArrayName="drinkingWaterHeaters"
+                                      *ngFor="let drinkingWaterHeaterCtrl of getDrinkingWaterHeaterArrayForm(i, y).controls; let z = index"
+                                      [formGroupName]="z">
+
+                                    </div>
+                                    <ion-item>
+                                      <ion-label position="floating">consecutivNumber</ion-label>
+                                      <ion-input formControlName="consecutivNumber" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">type</ion-label>
+                                      <ion-input formControlName="inletTemperatureDisplayPresent"
+                                        type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">inletTemperature</ion-label>
+                                      <ion-input formControlName="inletTemperature" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">outletTemperatureDisplayPresent</ion-label>
+                                      <ion-input formControlName="outletTemperatureDisplayPresent"
+                                        type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">outletTemperature</ion-label>
+                                      <ion-input formControlName="outletTemperature" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">volumeLitre</ion-label>
+                                      <ion-input formControlName="volumeLitre" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">roomType</ion-label>
+                                      <ion-input formControlName="roomType" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">roomPosition</ion-label>
+                                      <ion-input formControlName="roomPosition" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-item>
+                                      <ion-label position="floating">positionDetail</ion-label>
+                                      <ion-input formControlName="positionDetail" type="text"></ion-input>
+                                    </ion-item>
+                                    <ion-row>
+                                      <ion-button (click)="addUnit(i, y, z)" fill="outline" shape="round"
+                                        color="primary" fill="outline" expand="full"><ion-icon
+                                          name="save-outline"></ion-icon>
+                                        Einheit hinzufügen</ion-button>
+                                    </ion-row>
+
+                                    <ion-accordion-group>
+                                      <ion-accordion>
+                                        <ion-item slot="header" color="light"><ion-label color="primary">Einheit
+                                          </ion-label>
+                                          <p>{{a + 1 }}</p>
+                                        </ion-item>
+                                        <div class="ion-padding" slot="content">
+                                          <div class="bordered" formArrayName="unit"
+                                            *ngFor="let unitCtrl of getUnitArrayForm(i, y, z).controls; let a = index">
+                                            <ion-row>
+                                              <ion-button (click)="addUnit(i, y, z)" fill="outline" shape="round"
+                                                color="primary" fill="outline" expand="full"><ion-icon
+                                                  name="save-outline"></ion-icon>
+                                                Weitere Einheit hinzufügen</ion-button>
+                                              <ion-button (click)="removeUnit(i, y, z, a)" fill="outline" shape="round"
+                                                color="danger" fill="outline" expand="full"><ion-icon
+                                                  name="save-outline"></ion-icon>
+                                                Einheit entfernen</ion-button>
+                                            </ion-row>
+
+                                            <ion-row>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">floor</ion-label>
+                                                  <ion-input formControlName="floor" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">storey</ion-label>
+                                                  <ion-input formControlName="storey" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">position</ion-label>
+                                                  <ion-input formControlName="position" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">userName</ion-label>
+                                                  <ion-input formControlName="userName" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                            </ion-row>
+                                            <ion-row>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">generalUnit</ion-label>
+                                                  <ion-input formControlName="generalUnit" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                              <ion-col>
+                                                <ion-item>
+                                                  <ion-label position="floating">buildingId</ion-label>
+                                                  <ion-input formControlName="buildingId" type="text"></ion-input>
+                                                </ion-item>
+                                              </ion-col>
+                                            </ion-row>
+                                          </div>
+                                        </div>
+                                      </ion-accordion>
+                                    </ion-accordion-group>
+
+                                    <div class="bordered" formArrayName="unit"
+                                      *ngFor="let unitCtrl of getUnitArrayForm(i, y, z).controls; let a = index">
+                                      <h3>Einheit {{ a + 1 }}</h3>
+                                      <ion-row>
+                                        <ion-button (click)="addUnit(i, y, z)" fill="outline" shape="round"
+                                          color="primary" fill="outline" expand="full"><ion-icon
+                                            name="save-outline"></ion-icon>
+                                          Weitere Einheit hinzufügen</ion-button>
+                                        <ion-button (click)="removeUnit(i, y, z, a)" fill="outline" shape="round"
+                                          color="danger" fill="outline" expand="full"><ion-icon
+                                            name="save-outline"></ion-icon>
+                                          Einheit entfernen</ion-button>
+                                      </ion-row>
+
+                                      <ion-row>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">floor</ion-label>
+                                            <ion-input formControlName="floor" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">storey</ion-label>
+                                            <ion-input formControlName="storey" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                      </ion-row>
+                                      <ion-row>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">position</ion-label>
+                                            <ion-input formControlName="position" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">userName</ion-label>
+                                            <ion-input formControlName="userName" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                      </ion-row>
+                                      <ion-row>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">generalUnit</ion-label>
+                                            <ion-input formControlName="generalUnit" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                        <ion-col>
+                                          <ion-item>
+                                            <ion-label position="floating">buildingId</ion-label>
+                                            <ion-input formControlName="buildingId" type="text"></ion-input>
+                                          </ion-item>
+                                        </ion-col>
+                                      </ion-row>
+                                    </div>
+                                  </div>
+                                </ion-accordion>
+                              </ion-accordion-group>
+                            </ion-col>
+
+                          </ion-row>
+                        </div>
+                      </ion-accordion>
+                    </ion-accordion-group>
+                  </div>
+                </ion-accordion>
+              </ion-accordion-group>
+            </div>
+          </ion-col>
+        </ion-row>
+        <ion-accordion value="third">
+          <ion-item slot="header" color="light">
+            <ion-label>Third Accordion</ion-label>
+          </ion-item>
+          <div class="ion-padding" slot="content">Third Content</div>
+          <h2>Test</h2>
+        </ion-accordion>
+      </ion-accordion-group>
+
+    </ion-col>
+  </ion-row>

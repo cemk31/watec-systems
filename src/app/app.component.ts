@@ -34,47 +34,47 @@ export class AppComponent implements OnInit {
     //   url: '/app/tabs/about',
     //   icon: 'information-circle'
     // },
-    {
-      title: 'Trinkwasseruntersuchung anlegen (BETA)',
-      url: '/app/tabs/trinkwasseruntersuchung',
-      icon: 'water'
-    },
+    // {
+    //   title: 'Trinkwasseruntersuchung anlegen (BETA)',
+    //   url: '/app/tabs/trinkwasseruntersuchung',
+    //   icon: 'water'
+    // },
     // {
     //   title: 'Untersuchungen',
     //   url: '/app/tabs/untersuchung-list',
     //   icon: 'map'
     // },
-    {
-      title: 'Kunden',
-      url: '/app/tabs/customer',
-      icon: 'person'
-    },
-    {
-      title: 'Kunde anlegen',
-      url: '/app/tabs/create-customer',
-      icon: 'person'
-    },
-    {
-      title: 'WATEC Auftrag anlegen (MASTER)',
-      url: '/app/tabs/auftrag',
-      icon: 'person'
-    },
-    {
-      title: 'WATEC Aufträge (MASTERDATENBANK)',
-      url: '/app/tabs/auftrage',
-      icon: 'person'
-    },
-    {
-      title: 'Test Liste',
-      url: '/app/tabs/list',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'Bestelldetail (ISTA)',
-      url: '/test',
-      icon: 'document'
-    },
+    // {
+    //   title: 'Kunden',
+    //   url: '/app/tabs/customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Kunde anlegen',
+    //   url: '/app/tabs/create-customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Auftrag anlegen (MASTER)',
+    //   url: '/app/tabs/auftrag',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Aufträge (MASTERDATENBANK)',
+    //   url: '/app/tabs/auftrage',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Test Liste',
+    //   url: '/app/tabs/list',
+    //   icon: 'person'
+    // }
+    // ,
+    // {
+    //   title: 'Bestelldetail (ISTA)',
+    //   url: '/test',
+    //   icon: 'document'
+    // },
   ];
 
   istaPages = [
@@ -147,6 +147,7 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
   loginValid = false;
+
   validateToken() {
     const expires = new Date(sessionStorage.getItem("expires")).getTime();
     const currentTime = new Date().getTime();
@@ -232,16 +233,11 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
-  // openTutorial() {
-  //   // this.menu.enable(false);
-  //   // this.storage.set('ion_did_tutorial', false);
-  //   this.router.navigateByUrl('/tutorial');
-  // }
-
   onToggleDarkMode() {
     console.log("onToggleDarkMode");
     // this.dark = !this.dark;
     // document.body.classList.toggle('dark', this.dark);
   }
 
+  
 }

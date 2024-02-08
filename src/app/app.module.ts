@@ -31,7 +31,6 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
       enabled: environment.production
     }),
   ],
-
   declarations: [AppComponent, CustomerPipe],
   providers: [InAppBrowser, SplashScreen, StatusBar, AuthService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
   bootstrap: [AppComponent],

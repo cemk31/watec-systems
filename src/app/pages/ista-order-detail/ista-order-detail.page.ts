@@ -109,7 +109,7 @@ export class IstaOrderDetailPage implements OnInit {
   }
 
   refreshData() {
-    // Implementiere die Aktualisieren-Funktionalität
+    window.location.reload();
   }
 
   setStatus(status: string) {
@@ -120,11 +120,11 @@ export class IstaOrderDetailPage implements OnInit {
   constructor(private http: HttpClient, private route: ActivatedRoute, private orderService: OrderService, private router: Router, private location: Location) {}
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get("id");
-    this.orderNumber = this.id;
-    console.log(this.id);
-    this.getIstaOrderDetail();
-    this.orderService.signalInit();
+    this.route.params.subscribe((params) => {
+      this.orderNumber = params['id'];
+      this.getIstaOrderDetail();
+      this.orderService.signalInit();
+    });
   }
 
   // Methode zum Hinzufügen von Dokumenten
@@ -176,7 +176,7 @@ export class IstaOrderDetailPage implements OnInit {
     });
   }
 
-  getIstaOrderDetail() {
+    getIstaOrderDetail() {
     // Abrufen der ID aus dem Route-Parameter
     this.id = this.route.snapshot.paramMap.get("id");
     console.log(this.id);
@@ -206,6 +206,7 @@ export class IstaOrderDetailPage implements OnInit {
       )
       .subscribe((data) => {
         this.response = data; // Hier setzen Sie den Wert für 'response'
+        console.log(this.response);
         // this.sortComponentsByDate();  // Sortierung nach dem Erhalten der Daten
         this.orderService.setData(data);
       });
@@ -239,6 +240,7 @@ export class IstaOrderDetailPage implements OnInit {
 
   toggleSegmentVisibility() {
     this.segmentVisible = !this.segmentVisible;
+    const element = document.getElementById("segmentButton");
   }
 
   goBack() {
@@ -258,6 +260,16 @@ export class IstaOrderDetailPage implements OnInit {
   onFormSubmit(details: string) {
     console.log('Formular Details: ', details);
     // Hier können Sie weitere Aktionen mit den Formulardetails durchführen
+  }
+
+  deletOrder(orderId: number) {
+    console.log('Bestellung gelöscht: ', orderId);
+    // Hier können Sie die Bestellung löschen
+  }
+
+  syncOrder(orderId: number) {
+    console.log('Bestellung synchronisiert: ', orderId);
+    // Hier können Sie die Bestellung synchronisieren
   }
   
 }

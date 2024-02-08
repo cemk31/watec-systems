@@ -1,52 +1,43 @@
-<ion-card>
-  <ion-card-header>
-    <!-- warning icon ergänzen -->
-    <ion-row>
-      <ion-icon size="large" color="warning" name="warning-outline"></ion-icon>
-      <ion-card-title color="danger" style="padding:5px;">Bestellung stornieren</ion-card-title>
-    </ion-row>
-
-  </ion-card-header>
-  <ion-card-content>
-    <ion-title color="primary">Allgemeine Informationen</ion-title>
-   <form [formGroup]="createCancelledForm" (ngSubmit)="onSubmitCancelled()">
-    <ion-item>
-      <ion-label position="floating">Bestellnummer</ion-label>
-      <ion-input formControlName="orderId" type="text"  readonly="true"></ion-input>
-    </ion-item>
-      <!-- </ion-col>
-    </ion-row> -->
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating"  position="stacked">Storno Grund</ion-label>
-          <ion-input formControlName="cancellationReason" type="text"></ion-input>
-        </ion-item>
-        <ion-item>
-          <ion-label position="floating" >statusType</ion-label>
-          <ion-input formControlName="statusType" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating" >gesetzt am</ion-label>
-          <ion-input formControlName="setOn" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-     <ion-row>
-      <ion-col>
-        <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Erstellen</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button color="danger"
-          expand="full" 
-          type="button" 
-          (click)="cancel()">Abbrechen
-        </ion-button>
-      </ion-col>
-    </ion-row>  
-   </form>
-
-  </ion-card-content>
-</ion-card>
+<form [formGroup]="createCancelledForm" (ngSubmit)="onSubmitCancelled()">
+  <ion-row>
+    <ion-list-header>
+      <ion-icon size="large" color="danger" name="ban-outline"></ion-icon>
+      <ion-card-title color="danger" style="padding:5px;">Stornieren - {{orderId}}</ion-card-title>
+    </ion-list-header>
+  </ion-row>
+  <ion-item [disabled]="true" fill="outline" class="custom-input" lines="none">
+    <ion-label position="floating">Bestellnummer</ion-label>
+    <ion-input [value]="createCancelledForm.get('orderId').value" formControlName="orderId"></ion-input>
+  </ion-item>
+    <!-- </ion-col>
+  </ion-row> -->
+  <ion-row>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating"  position="stacked">Storno Grund</ion-label>
+        <ion-input formControlName="cancellationReason" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating" >statusType</ion-label>
+        <ion-input formControlName="statusType" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <ion-label position="floating" >gesetzt am</ion-label>
+        <ion-input formControlName="setOn" type="text"></ion-input>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+   <ion-row>
+    <ion-col>
+      <ion-button fill="outline" shape="round" color="success" fill="solid" type="submit" expand="full"><ion-icon  name="save-outline"></ion-icon>
+        Speichern</ion-button>
+    </ion-col>
+    <ion-col>
+      <ion-button fill="outline" color="danger" shape="round" expand="full">
+        <ion-icon name="trash-outline"></ion-icon>Abbrechen
+      </ion-button>
+    </ion-col>
+  </ion-row>  
+ </form>
