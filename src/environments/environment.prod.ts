@@ -12,6 +12,19 @@ export const environment = {
     ista: {
       url: '/ista',
       received: '/ista/received',
-    }
+      create_received:  '/ista/create-received',
+      customerOrder: '/ista/customerOrder',
+      order: '/ista/order',
+      planned: '/ista/planned',
+      cancelled: '/ista/cancelled',
+      postponed: '/ista/postponed',
+      rejected: '/ista/rejected',
+      cp: '/ista/cp',
+      done: '/ista/done',
+    },
+    resetPassword: '/auth/reset-password',
+    forgotPassword: '/auth/forgot-password',
+    submitAccessToken: '/auth/submitAccessToken',
+    verifyEmail: '/auth/verify-email/:confirmationToken',
   }
 };

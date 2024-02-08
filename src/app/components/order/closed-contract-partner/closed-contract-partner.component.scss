@@ -1,0 +1,10 @@
+form {
+    border: 2px solid #3880FF;
+    padding: 1rem;
+    border-radius: 10px;
+    max-width: 100%;
+    width: auto;
+    @media screen and (max-width: 768px) {
+        max-width: 80%;
+    }
+}

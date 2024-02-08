@@ -1,0 +1,55 @@
+
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmitReceived()" *ngIf="showForm">
+    <ion-row>
+      <ion-list-header>
+        <ion-icon size="large" color="success" name="add-circle-outline"></ion-icon>
+        <ion-card-title color="success" style="padding:5px;">Neuer Kundenkontakt für Bestellung {{orderId}}</ion-card-title>
+      </ion-list-header>
+      <ion-item [disabled]="true" fill="outline" class="custom-input" lines="none">
+        <ion-label position="floating">Bestellnummer</ion-label>
+          <ion-input  [value]="orderForm.get('orderId').value" formControlName="orderId"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          <ion-label>Kontaktversuch am</ion-label>
+          <ion-datetime-button datetime="contactAttemptOn"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime (ionChange)="updateContactAttemptOnDate($event)" presentation="date" name="nextContactAttemptOn" formControlName="nextContactAttemptOn"
+                id="contactAttemptOn"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Kontaktperson:</ion-label>
+          <ion-input type="text" formControlName="contactPersonCustomer"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">agentCP:</ion-label>
+          <ion-input type="text" formControlName="agentCP"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Ergebnis:</ion-label>
+          <ion-input type="text" formControlName="result"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Bemerkung:</ion-label>
+          <ion-input type="text" formControlName="remark"></ion-input>
+        </ion-item>
+      </ion-col>
+             
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button fill="outline" shape="round" color="success" fill="solid" type="submit" expand="full"><ion-icon  name="save-outline"></ion-icon>
+          Speichern</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="resetForm()" fill="outline" color="danger" shape="round" expand="full">
+          <ion-icon name="trash-outline"></ion-icon>
+          Abbrechen</ion-button>
+      </ion-col>
+    </ion-row>
+  </form>

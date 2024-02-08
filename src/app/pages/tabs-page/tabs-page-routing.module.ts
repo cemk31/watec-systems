@@ -43,15 +43,15 @@ const routes: Routes = [
           }
         ]
       },
-      {
-        path: 'trinkwasseruntersuchung',
-        children: [
-          {
-            path: '',
-            loadChildren: () => import('../trinkwasseruntersuchung/trinkwasseruntersuchung.module').then(m => m.TrinkwasseruntersuchungPageModule)
-          }
-        ]
-      },
+      // {
+      //   path: 'trinkwasseruntersuchung',
+      //   children: [
+      //     {
+      //       path: '',
+      //       loadChildren: () => import('../trinkwasseruntersuchung/trinkwasseruntersuchung.module').then(m => m.TrinkwasseruntersuchungPageModule)
+      //     }
+      //   ]
+      // },
       {
         path: 'untersuchung-list',
         children: [
@@ -97,7 +97,6 @@ const routes: Routes = [
           }
         ]
       },
-
       {
         path: 'auftrag-detail',
         children: [
@@ -144,7 +143,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'ista-order-detail',
+        path: 'ista-order-detail/:id',
         children: [
           {
             path: '',
@@ -153,7 +152,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'test',
+        path: 'test/:id',
         children: [
           {
             path: '',
@@ -171,11 +170,29 @@ const routes: Routes = [
         ]
       },
       {
+        path: 'ista-order-table',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../ista-order-table/ista-order-table.module').then(m => m.IstaOrderTablePageModule)
+          }
+        ]
+      },
+      {
         path: 'list',
         children: [
           {
             path: '',
             loadChildren: () => import('../list/list.module').then(m => m.ListPageModule)
+          }
+        ]
+      },
+      {
+        path: 'forgotten-password',
+        children: [
+          {
+            path: '',
+            loadChildren: () => import('../forgotten-password-page/forgotten-password-page.module').then(m => m.ForgottenPasswordPageModule)
           }
         ]
       },

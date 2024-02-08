@@ -1,0 +1,406 @@
+<ion-chip color="success" *ngIf="actualStatus === 'DONE'">Success</ion-chip>
+<ion-toolbar color="{{statusColor}}">
+  
+  <ion-title><ion-icon size="medium" [name]="statusIcon"></ion-icon> {{returnOrderStatus(response?.actualStatus)}}</ion-title>
+</ion-toolbar>
+<ion-accordion-group>
+  <ion-accordion [expanded]="true">
+    <ion-item slot="header" color="light"><ion-label color="primary">Allgemeine Informationen</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-row>
+        <ion-col>
+          <ion-item fill="outline" class="custom-input">
+            <ion-label position="floating">Erstellt Am</ion-label>
+            <ion-input [value]="formatDate(response?.createdAt)" readonly></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Auftragsnummer (intern)</ion-label>
+            <ion-input [value]="response?.id" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item fill="outline" class="custom-input">
+            <ion-label position="floating">Geändert</ion-label>
+            <ion-input [value]="formatDate(response?.updatedAt)" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-list-header>
+          <ion-title>Vertrag</ion-title>
+        </ion-list-header>
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Vertragsnummer</ion-label>
+            <ion-input [value]="response?.number || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Rahmenvertrag</ion-label>
+            <ion-input [value]="response?.number || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Vertragsart</ion-label>
+            <ion-input [value]="response?.contractType || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Vertragsstatus</ion-label>
+            <ion-input [value]="response?.contractStatus || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </div>
+  </ion-accordion>
+  <ion-accordion>
+    <ion-item slot="header" color="light"><ion-label color="primary">Kunde</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-row>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Kundennummer</ion-label>
+          <ion-input [value]="response?.Customer?.id || 'null'" readonly></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Nachname</ion-label>
+          <ion-input [value]="response?.Customer?.firstName" readonly></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Vorname</ion-label>
+          <ion-input [value]="response?.Customer?.lastName" readonly></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Anschrift</ion-label>
+          <ion-input [value]="response?.Customer?.street || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">PLZ</ion-label>
+          <ion-input [value]="response?.Customer?.zipCode || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Ort</ion-label>
+          <ion-input [value]="response?.Customer?.place || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Land</ion-label>
+          <ion-input [value]="response?.Customer?.country || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+      </ion-row>
+    </div>
+  </ion-accordion>
+  <ion-accordion>
+    <ion-item slot="header" color="light"><ion-label color="primary">Liegenschaft</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-row>
+        <ion-col>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Liegenschaftsnummer</ion-label>
+            <ion-input [value]="response?.Customer?.propertyNumber || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Name</ion-label>
+            <ion-input [value]="response?.Customer?.lastName || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Anschrift</ion-label>
+            <ion-input [value]="response?.street || 'kein Wert'" readonly></ion-input>
+          </ion-item>
+          <ion-row>
+            <ion-item fill="outline" class="custom-input" lines="none">
+              <ion-label position="floating">PLZ</ion-label>
+              <ion-input [value]="response?.zipCode || 'kein Wert'" readonly></ion-input>
+            </ion-item>
+            <ion-item fill="outline" class="custom-input" lines="none">
+              <ion-label position="floating">Ort</ion-label>
+              <ion-input [value]="response?.place || 'kein Wert'" readonly></ion-input>
+            </ion-item>
+            <ion-item fill="outline" class="custom-input" lines="none">
+              <ion-label position="floating">Land</ion-label>
+              <ion-input [value]="response?.country || 'kein Wert'" readonly></ion-input>
+            </ion-item>
+          </ion-row>
+
+        </ion-col>
+      </ion-row>
+      <ion-col>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Zählerstand</ion-label>
+          <ion-input [value]="response?.meterReading || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Zählerstand Datum</ion-label>
+          <ion-input [value]="formatDate(response?.meterReadingDate) || 'kein Wert'" readonly></ion-input>
+        </ion-item>
+      </ion-col>
+    </div>
+  </ion-accordion>
+
+  <ion-accordion>
+    <ion-item slot="header" color="light"><ion-label color="primary">Kundenkontakt</ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ng-container *ngFor="let customerContact from CustomerContacts">
+        <h2>{{customerContact.id}}</h2>
+      </ng-container>
+      <ng-container *ngIf="!CustomerContacts">
+        <h2>Kein Kundenkontakt vorhanden!</h2>
+      </ng-container>
+    </div>
+  </ion-accordion>
+
+
+  <ion-accordion>
+    <ion-item slot="header" color="light"><ion-label color="secondary "><ion-icon size="medium"
+          name="alarm-outline"></ion-icon><b>Aktivitäten</b></ion-label>
+    </ion-item>
+    <div class="ion-padding" slot="content">
+      <ion-accordion-group>
+        <div *ngFor="let received of response?.Received">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="primary"><ion-icon size="medium"
+                  name="checkmark-circle" color="success"></ion-icon><b>EMPFANGEN</b> -
+                (ID:#{{received?.id}}) / {{formatDate(received.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row>
+                <ion-item>
+                  <ion-label>erstellt am</ion-label>
+                  <ion-datetime-button datetime="createdAt"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime [value]="received?.createdAt" (ionChange)="updateContactAttemptOnDate($event)"
+                        presentation="date" name="createdAt" formControlName="createdAt" id="createdAt"
+                        disabled></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-item>
+                <ion-item>
+                  <ion-label>geändert am</ion-label>
+                  <ion-datetime-button datetime="updatedAt"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime [value]="received?.updatedAt" (ionChange)="updateContactAttemptOnDate($event)"
+                        presentation="date" name="updatedAt" formControlName="updatedAt" id="updatedAt"
+                        readonly></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-item>
+              </ion-row>
+              <div *ngFor="let customerContact of received?.CustomerContact">
+                <ion-item>
+                  <ion-label>contactAttemptOn</ion-label>
+                  <ion-datetime-button datetime="createdAt"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime [value]="customerContact?.contactAttemptOn"
+                        (ionChange)="updateContactAttemptOnDate($event)" presentation="date" name="createdAt"
+                        formControlName="contactAttemptOn" id="createdAt" readonly></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">agentCP:</ion-label>
+                  <ion-input type="text" [value]="customerContact.agentCP" formControlName="agentCP"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Ergebnis:</ion-label>
+                  <ion-input type="text" [value]="customerContact.result" formControlName="result"></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">Bemerkung:</ion-label>
+                  <ion-input type="text" [value]="customerContact.remark" formControlName="remark"></ion-input>
+                </ion-item>
+              </div>
+            </div>
+          </ion-accordion>
+        </div>
+        <div *ngFor="let planned of response?.Planned">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="secondary"><ion-icon size="medium"
+                  name="calendar-outline"></ion-icon><b>IN PLANUNG</b> -
+                (ID: #{{planned?.id}}) / {{formatDate(planned.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-item>
+                <ion-label>Kontaktversuch am</ion-label>
+                <ion-datetime-button datetime="contactAttemptOn"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime (ionChange)="updateContactAttemptOnDate($event)" presentation="date"
+                      name="nextContactAttemptOn" formControlName="nextContactAttemptOn"
+                      id="contactAttemptOn"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt:</ion-label>
+                <ion-input type="date" [value]="planned.createdAt" formControlName="createdAt"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Detailliertes Planungsdatum:</ion-label>
+                <ion-input type="date" [value]="planned.detailedScheduleDate"
+                  formControlName="detailedScheduleDate"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Detailliertes Planungszeit von:</ion-label>
+                <ion-input type="time" [value]="planned.detailedScheduleTimeFrom"
+                  formControlName="detailedScheduleTimeFrom"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Detailliertes Planungszeit bis:</ion-label>
+                <ion-input type="time" [value]="planned.detailedScheduleTimeTo"
+                  formControlName="detailedScheduleTimeTo"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Grund:</ion-label>
+                <ion-input type="text" [value]="planned.detailedScheduleDelayReason"
+                  formControlName="detailedScheduleDelayReason"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">orderstatusType:</ion-label>
+                <ion-input type="text" [value]="planned.orderstatusType" formControlName="orderstatusType"></ion-input>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </div>
+        <div *ngFor="let postponed of response?.Postponed">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="secondary"><ion-icon size="medium"
+                  name="checkmark-done-outline"></ion-icon><b>VERSCHOBEN</b> -
+                (ID:#{{postponed?.id}}) / {{formatDate(postponed.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-row>
+                <ion-item>
+                  <ion-label>erstellt am</ion-label>
+                  <ion-datetime-button datetime="createdAt"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime [value]="postponed?.createdAt" (ionChange)="updateContactAttemptOnDate($event)"
+                        presentation="date" name="createdAt" formControlName="createdAt" id="createdAt"
+                        disabled></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-item>
+                <ion-item>
+                  <ion-label>geändert am</ion-label>
+                  <ion-datetime-button datetime="createdAt"></ion-datetime-button>
+                  <ion-modal [keepContentsMounted]="true">
+                    <ng-template>
+                      <ion-datetime [value]="postponed?.updatedAt" (ionChange)="updateContactAttemptOnDate($event)"
+                        presentation="date" name="createdAt" formControlName="updatedAt" id="createdAt"
+                        readonly></ion-datetime>
+                    </ng-template>
+                  </ion-modal>
+                </ion-item>
+              </ion-row>
+
+              <ion-item>
+                <ion-label position="floating">agentCP:</ion-label>
+                <ion-input type="text" formControlName="agentCP"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Ergebnis:</ion-label>
+                <ion-input type="text" formControlName="result"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Bemerkung:</ion-label>
+                <ion-input type="text" formControlName="remark"></ion-input>
+              </ion-item>
+              <h3>Kundenkontakt</h3>
+              <div *ngFor="let customerContact of received?.customerContact">
+                <h2>{{customerContact.id}}</h2>
+              </div>
+            </div>
+          </ion-accordion>
+        </div>
+        <div *ngFor="let cancelled of response?.Cancelled">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="danger"><ion-icon size="medium"
+                  name="checkmark-done-outline"></ion-icon><b>CANCELLED</b> -
+                (ID: #{{cancelled?.id}}) / {{formatDate(cancelled.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-item>
+                <ion-label>Kontaktversuch am</ion-label>
+                <ion-datetime-button datetime="contactAttemptOn"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime (ionChange)="updateContactAttemptOnDate($event)" presentation="date"
+                      name="nextContactAttemptOn" formControlName="nextContactAttemptOn"
+                      id="contactAttemptOn"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt:</ion-label>
+                <ion-input type="date" [value]="cancelled.createdAt" formControlName="createdAt"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">updatedAt:</ion-label>
+                <ion-input type="date" [value]="cancelled.updatedAt" formControlName="updatedAt"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">cancellationReason:</ion-label>
+                <ion-input type="text" [value]="cancelled.cancellationReason"
+                  formControlName="cancellationReason"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">statusType:</ion-label>
+                <ion-input type="text" [value]="cancelled.statusType" formControlName="statusType"></ion-input>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </div>
+        <div *ngFor="let rejected of response?.Rejected">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="danger"><ion-icon size="medium"
+                  name="checkmark-done-outline"></ion-icon><b>ABGELEHNT</b> -
+                (ID: #{{rejected?.id}}) / {{formatDate(rejected.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-item>
+                <ion-label>Kontaktversuch am</ion-label>
+                <ion-datetime-button datetime="contactAttemptOn"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime (ionChange)="updateContactAttemptOnDate($event)" presentation="date"
+                      name="nextContactAttemptOn" formControlName="nextContactAttemptOn"
+                      id="contactAttemptOn"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt:</ion-label>
+                <ion-input type="date" [value]="rejected.createdAt" formControlName="createdAt"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">updatedAt:</ion-label>
+                <ion-input type="date" [value]="rejected.updatedAt" formControlName="updatedAt"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">reason:</ion-label>
+                <ion-input type="text" [value]="rejected.reason" formControlName="reason"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">reasonText:</ion-label>
+                <ion-input type="text" [value]="rejected.reasonText" formControlName="reasonText"></ion-input>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </div>
+      </ion-accordion-group>
+    </div>
+
+  </ion-accordion>
+</ion-accordion-group>

@@ -1,0 +1,96 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>ISTA Kundenkontakt erstellen</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+
+    <div formGroupName="Customer">
+        <ion-col>
+          <ion-item lines="none">
+            <ion-label position="floating">Liegenschaftsnummer</ion-label>
+            <ion-input formControlName="propertyNumber"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Firma</ion-label>
+            <ion-input formControlName="companyName"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Vorname (Kunde)</ion-label>
+            <ion-input formControlName="firstName"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-label position="floating">Nachname (Kunde)</ion-label>
+            <ion-input formControlName="lastName"></ion-input>
+          </ion-item>
+        </ion-col>
+    </div>
+    
+    <ion-item>
+      <ion-label position="floating">Number</ion-label>
+      <ion-input type="text" formControlName="number"></ion-input>
+    </ion-item>
+    
+    <!-- <ion-list>
+      <ion-select formControlName="actualStatus" placeholder="Status selektieren">
+        <ion-select-option value="RECEIVED">RECEIVED</ion-select-option>
+      </ion-select>
+    </ion-list> -->
+    
+    <ion-item>
+      <ion-label position="floating">Remark External</ion-label>
+      <ion-input type="text" formControlName="remarkExternal"></ion-input>
+    </ion-item>
+    <div formArrayName="Received">
+      <!-- <div *ngFor="let receivedCtrl of orderForm.get('Received'); let i = index" [formGroupName]="i"> -->
+        <ion-item>
+          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
+          <ion-input type="text" formControlName="orderstatusType"></ion-input>
+        </ion-item>
+
+        <ion-toolbar>
+          <ion-title color="primary">Kundenkontakt</ion-title>
+        </ion-toolbar>
+        <div formArrayName="CustomerContacts">
+          <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContacts').controls; let j = index" [formGroupName]="j">
+            <ion-item>
+              <ion-label position="stacked"><strong>contactAttemptOn:</strong></ion-label>
+              <ion-datetime displayFormat="D MMM YYYY" formControlName="contactAttemptOn"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>contactPersonCustomer:</strong></ion-label>
+              <ion-input type="text" formControlName="contactPersonCustomer"></ion-input> 
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>agentCP:</strong></ion-label>
+              <ion-input type="text" formControlName="agentCP"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>result:</strong></ion-label>
+              <ion-input type="text" formControlName="result"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="stacked"><strong>remark:</strong></ion-label>
+              <ion-input type="text" formControlName="remark"></ion-input>
+            </ion-item>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+    <ion-row>
+      <ion-col>
+        <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Submit</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button 
+          expand="full" 
+          [disabled]="!isSubmitted" 
+          type="button" 
+          (click)="transferToIsta()">An Ista übertragen
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-content>

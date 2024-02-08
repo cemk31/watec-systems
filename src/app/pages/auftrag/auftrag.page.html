@@ -1,357 +1,392 @@
 <ion-header color="primary">
-  <ion-toolbar >
-    <ion-title>Auftrag anlegen</ion-title>
-    <ion-row>
-      <ion-button expand="block" type="submit" >
-        Auftrag anlegen
-      </ion-button>
-      <ion-button expand="block" type="submit" >
-        Stornieren
-      </ion-button>
-    </ion-row>
+  <ion-toolbar color="light" class="custom-toolbar">
+    <ion-title color="primary" style="padding:20px">Auftrag anlegen</ion-title>
+
+    <ion-buttons>
+      <ion-button (click)="onEdit()"><ion-icon name="create-outline"></ion-icon> Bearbeiten</ion-button>
+      <ion-button (click)="onDelete()"><ion-icon name="trash-outline"></ion-icon> Löschen</ion-button>
+      <ion-button (click)="onSyncWithIsta()"><ion-icon name="sync"></ion-icon>Synchronisieren mit Ista</ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
   <ion-toolbar color="danger" *ngIf="exceptionMessage">
     <p>{{exceptionMessage}}</p>
-  </ion-toolbar>
+  </ion-toolbar> 
 </ion-header>
 <ion-content>
-  <form #auftragForm="ngForm" (ngSubmit)="onSubmit(auftragForm)">
+  <form [formGroup]="auftragForm" (ngSubmit)="onSubmit()">
     <ion-row>
       <ion-col>
-        <ion-item>
-          <ion-label position="end">Done</ion-label>
-          <ion-checkbox name="done" [(ngModel)]="auftragForm.done"></ion-checkbox>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating" >Email Eingang</ion-label>
-          <ion-datetime name="emailEingang" [(ngModel)]="auftragForm.emailEingang" displayFormat="DD-MM-YYYY HH:mm"></ion-datetime>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Bemerkung</ion-label>
-          <ion-input name="bemerkung" [(ngModel)]="auftragForm.bemerkung" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">Vorgemerkt</ion-label>
-          <ion-input name="vorgemerkt" [(ngModel)]="auftragForm.vorgemerkt" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Auftrag
+            </ion-card-title>  
+          </ion-card-header>
+          <ion-card-content>
+            <ion-item>
+              <ion-label position="end">Done</ion-label>
+              <ion-checkbox formControlName="done"></ion-checkbox>
+            </ion-item>
+            <ion-item>
+              <ion-label>Email Eingang</ion-label>
+              <ion-datetime-button datetime="emailEingang"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime formControlName="emailAnhang" id="emailEingang"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Bemerkung</ion-label>
+              <ion-input name="bemerkung" formControlName="bemerkung" type="text"></ion-input>
+            </ion-item>
 
-    <h2>Objekt</h2>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">LiNr</ion-label>
-          <ion-input name="liNr" [(ngModel)]="auftragForm.liNr" type="text" required></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">AdresseLi</ion-label>
-          <ion-input name="adresseLi" [(ngModel)]="auftragForm.adresseLi" type="text" required></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">PLZLi</ion-label>
-          <ion-input name="plzLi" [(ngModel)]="auftragForm.plzLi" type="text" required></ion-input>
-        </ion-item>
+            <ion-item>
+              <ion-label>Vorgemerkt (Datum)</ion-label>
+              <ion-datetime-button datetime="vorgemerkt"></ion-datetime-button>
+              <ion-modal [keepContentsMounted]="true">
+                <ng-template>
+                  <ion-datetime name="vorgemerkt" id="vorgemerkt"></ion-datetime>
+                </ng-template>
+              </ion-modal>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">OrtLi</ion-label>
-          <ion-input name="ortLi" [(ngModel)]="auftragForm.ortLi" type="text" required></ion-input>
-        </ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Objekt
+            </ion-card-title>  
+          </ion-card-header>
+          <ion-card-content>
+            <div formGroupName="objekt">
+              <ion-item>
+                <ion-label position="floating">LiNr</ion-label>
+                <ion-input name="liNr" formControlName="liNr" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">AdresseLi</ion-label>
+                <ion-input name="adresseLi" formControlName="adresseLi" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">PLZLi</ion-label>
+                <ion-input name="plzLi" formControlName="plzLi" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">OrtLi</ion-label>
+                <ion-input name="ortLi" formControlName="ortLi" type="text" required></ion-input>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
-    </ion-row>
-    
-                                                              
-
-    <h2>Vw (nicht statisch)</h2>
-    
-    <ion-row>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">VwBüro</ion-label>
-          <ion-input name="vwBuro" [(ngModel)]="auftragForm.vwBuro" type="text" required></ion-input>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <ion-label position="floating">VwMa</ion-label>
-          <ion-input name="vwMa" [(ngModel)]="auftragForm.vwMa" type="text" required></ion-input>
-        </ion-item>
-      </ion-col>
-
     </ion-row>
 
     <ion-row>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">MailadresseVw</ion-label>
-          <ion-input name="mailadresseVw" [(ngModel)]="auftragForm.mailadresseVw" type="email" required></ion-input>
-        </ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Vw (nicht statisch)
+            </ion-card-title>
+          </ion-card-header>
+            <ion-card-content>
+              <div formArrayName="vwStatisch">
+                <ion-item>
+                  <ion-label position="floating">VwBüro</ion-label>
+                  <ion-input name="vwBuro" formControlName="vwBuro" type="text" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">VwMa</ion-label>
+                  <ion-input name="vwMa" formControlName="vwMa" type="text" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">MailadresseVw</ion-label>
+                  <ion-input name="mailadresseVw" formControlName="mailadresseVw" type="email" required></ion-input>
+                </ion-item>
+                <ion-item>
+                  <ion-label position="floating">TelVw</ion-label>
+                  <ion-input name="telVw" formControlName="telVw" type="tel" required></ion-input>
+                </ion-item>
+              </div>
+            </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">TelVw</ion-label>
-          <ion-input name="telVw" [(ngModel)]="auftragForm.telVw" type="tel" required></ion-input>
-        </ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Vw (statisch)
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div formArrayName="vwStatisch">
+              <ion-item>
+                <ion-label position="floating">VwBüro</ion-label>
+                <ion-input name="vwBuro" formControla="vwBuro" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">VwMa</ion-label>
+                <ion-input name="vwMa" formControlName="vwMa" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">MailadresseVw</ion-label>
+                <ion-input name="mailadresseVw" formControlName="mailadresseVw" type="email" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">TelVw</ion-label>
+                <ion-input name="telVw" formControlName="telVw" type="tel" required></ion-input>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
-
-    <h2>Hm</h2>
+    
     <ion-row>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">HmName</ion-label>
-          <ion-input name="hmName" [(ngModel)]="auftragForm.hmName" type="text" required></ion-input>
-        </ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              E-Mail
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div formArrayName="email">
+              <ion-item>
+                <ion-label position="floating">Email Betreff</ion-label>
+                <ion-input name="emailBetreff" formControlName="emailBetreff" type="text" required></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Email Anhang</ion-label>
+                <ion-input name="emailAnhang" formControlName="emailAnhang" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="end">Bestätigung versendet</ion-label>
+                <ion-checkbox name="bestatigungVersendet" formControlName="bestatigungVersendet"></ion-checkbox>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Anfrage Thema</ion-label>
+                <ion-input name="anfrageThema" formControlName="anfrageThema" type="text" required></ion-input>
+              </ion-item>
+          
+              <ion-item>
+                <ion-label position="end">Angebot erstellt</ion-label>
+                <ion-checkbox name="angebotErstellt" formControlName="angebotErstellt"></ion-checkbox>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Angebotsnummer</ion-label>
+                <ion-input name="angebotsnummer" formControlName="angebotsnummer" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Angebot</ion-label>
+                <ion-input name="angebot" formControlName="angebot" type="text"></ion-input>
+              </ion-item>
+            </div>
+            
+          </ion-card-content>
+        </ion-card>
       </ion-col>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">HmTel</ion-label>
-          <ion-input name="hmTel" [(ngModel)]="auftragForm.hmTel" type="tel" required></ion-input>
-        </ion-item>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>
+              Auftraggeber
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <div formArrayName="auftraggeber">
+              <ion-item>
+                <ion-label position="floating">Auftraggeber</ion-label>
+                <ion-input name="auftraggeber" formControlName="auftraggeber" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">ap</ion-label>
+                <ion-input name="ap" formControlName="ap" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">strasse</ion-label>
+                <ion-input name="strasse" formControlName="strasse" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">plz</ion-label>
+                <ion-input name="plz" formControlName="plz" type="number"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">ort</ion-label>
+                <ion-input name="ort" formControlName="ort" type="text"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">tel</ion-label>
+                <ion-input name="tel" formControlName="tel" type="tel"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">email</ion-label>
+                <ion-input name="email" formControlName="email" type="email"></ion-input>
+              </ion-item>
+            </div>
+          </ion-card-content>
+        </ion-card>
       </ion-col>
     </ion-row>
-
     
-
-    <h2>E-Mail</h2>
-    <ion-item>
-      <ion-label position="floating">Email Betreff</ion-label>
-      <ion-input name="emailBetreff" [(ngModel)]="auftragForm.emailBetreff" type="text" required></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Email Anhang</ion-label>
-      <ion-input name="emailAnhang" [(ngModel)]="auftragForm.emailAnhang" type="text"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="end">Bestätigung versendet</ion-label>
-      <ion-checkbox name="bestatigungVersendet" [(ngModel)]="auftragForm.bestatigungVersendet"></ion-checkbox>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Anfrage Thema</ion-label>
-      <ion-input name="anfrageThema" [(ngModel)]="auftragForm.anfrageThema" type="text" required></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="end">Angebot erstellt</ion-label>
-      <ion-checkbox name="angebotErstellt" [(ngModel)]="auftragForm.angebotErstellt"></ion-checkbox>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Angebotsnummer</ion-label>
-      <ion-input name="angebotsnummer" [(ngModel)]="auftragForm.angebotsnummer" type="text"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Angebot</ion-label>
-      <ion-input name="angebot" [(ngModel)]="auftragForm.angebot" type="text"></ion-input>
-    </ion-item>
-    <h2>Auftragsbestätigung</h2>
-    <ion-item>
-      <ion-label position="end">Auftragsbestätigung</ion-label>
-      <ion-checkbox name="auftragbestatigung" [(ngModel)]="auftragForm.auftragbestatigung"></ion-checkbox>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">VwBestätigung</ion-label>
-      <ion-input name="vwBestatigung" [(ngModel)]="auftragForm.vwBestatigung" type="text"></ion-input>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Terminiert zum</ion-label>
-      <ion-datetime name="terminiertZum" [(ngModel)]="auftragForm.terminiertZum" display-format="DD.MM.YYYY"></ion-datetime>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Uhrzeit</ion-label>
-      <ion-datetime name="uhrzeit" [(ngModel)]="auftragForm.uhrzeit" display-format="HH:mm" picker-format="HH:mm"></ion-datetime>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="end">Aushang</ion-label>
-      <ion-checkbox name="aushang" [(ngModel)]="auftragForm.aushang"></ion-checkbox>
-    </ion-item>
-    
-    <ion-item>
-      <ion-label position="floating">Datum Aushang</ion-label>
-      <ion-datetime name="datumAushang" [(ngModel)]="auftragForm.datumAushang" display-format="DD.MM.YYYY"></ion-datetime>
-    </ion-item>
-
-    <ion-row>
-      <ion-item>
-        <ion-label position="end">agInformiert</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.agInformiert" name="agInformiert"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">bgb</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.bgb" name="bgb"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">bgbBericht</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.bgbBericht" name="bgbBericht"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">ssa</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.ssa" name="ssa"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">bericht</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.bericht" name="bericht"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">umb</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.umb" name="umb"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">ber</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.ber" name="ber"></ion-checkbox>
-      </ion-item>
-    </ion-row>
-
-    <ion-row>
-      <ion-item>
-        <ion-label label="Outline input" fill="outline" label-placement="floating" position="floating">reNr</ion-label>
-        <ion-input [(ngModel)]="auftragForm.reNr" name="reNr"></ion-input>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="floating">reBetrag</ion-label>
-        <ion-input [(ngModel)]="auftragForm.reBetrag" name="reBetrag" type="number"></ion-input>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">reErhalten</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.reErhalten" name="reErhalten"></ion-checkbox>
-      </ion-item>
-    </ion-row>
-    
-    <ion-row>
-      <ion-item>
-        <ion-label position="floating">reNr2</ion-label>
-        <ion-input [(ngModel)]="auftragForm.reNr2" name="reNr2"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-label position="floating">reBetrag2</ion-label>
-        <ion-input [(ngModel)]="auftragForm.reBetrag2" name="reBetrag2" type="number"></ion-input>
-      </ion-item>
-        
-      <ion-item>
-        <ion-label position="floating">reNr2Erhalten</ion-label>
-        <ion-checkbox [(ngModel)]="auftragForm.reNr2Erhalten" name="reNr2Erhalten"></ion-checkbox>
-      </ion-item>
-    </ion-row>
-    
-    <ion-row>
-      <ion-item>
-        <ion-label label="Outline input" fill="outline" label-placement="floating" position="end">Dateien</ion-label>
-        <ion-input type="file" [(ngModel)]="auftragForm.dateien" (change)="uploadFile($event)" name="dateien"></ion-input>
-      </ion-item>
-    </ion-row>
-    
-    <ion-row>
-      <ion-item>
-        <ion-label position="end">mahnung</ion-label>
-        <ion-checkbox name="mahnung" [(ngModel)]="auftragForm.mahnung"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">mahnung1</ion-label>
-        <ion-checkbox name="mahnung1" [(ngModel)]="auftragForm.mahnung1"></ion-checkbox>
-      </ion-item>
-      
-      <ion-item>
-        <ion-label position="end">mahnungErhalten</ion-label>
-        <ion-checkbox name="mahnungErhaten" [(ngModel)]="auftragForm.mahnungErhalten"></ion-checkbox>
-      </ion-item>
-    </ion-row>
-
-      <h3>Auftraggeber</h3>
-      <ion-button (click)="toggleItems()">NEU</ion-button>
-      <ion-searchbar placeholder="Suche" [(ngModel)]="searchTerm" (ionChange)="setFilteredItems()"></ion-searchbar>
-      <ion-list>
-        <ion-list-header color="secondary">
-          <ion-label>Vorhandene Auftraggeber</ion-label>
-        </ion-list-header>
-        <ion-item *ngFor="let a of auftraggeber">
-          <ion-label>{{a.id}} - {{a.auftraggebername}} - {{a.strasse}}</ion-label>
-          <ion-button (click)="selectAuftraggeber()">selektieren</ion-button>
-        </ion-item>
-      </ion-list>
-      <form #auftraggeberForm="ngForm" (ngSubmit)="createAuftraggeber(auftraggeberForm)">
-        <ng-container *ngIf="showItems">
-          <ion-list-header color="primary">
-            <ion-label>Auftraggeber erstellen</ion-label>
-          </ion-list-header>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Auftragsbestätigung
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div formGroupName="auftragsBestatigung">
           <ion-item>
-            <ion-label position="floating">auftraggeber</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.auftraggeber" type="text"></ion-input>
+            <ion-label position="end">Auftragsbestätigung</ion-label>
+            <ion-checkbox name="auftragbestatigung" formControlName="auftragbestatigung"></ion-checkbox>
           </ion-item>
           
           <ion-item>
-            <ion-label position="floating">ap</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.ap" type="text"></ion-input>
+            <ion-label position="floating">VwBestätigung</ion-label>
+            <ion-input name="vwBestatigung" formControlName="vwBestatigung" type="text"></ion-input>
+          </ion-item>
+
+          <ion-item>
+            <ion-label>Terminiert zum</ion-label>
+            <ion-datetime-button datetime="terminiertZum"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime name="terminiertZum" id="terminiertZum"></ion-datetime>
+              </ng-template>
+            </ion-modal>
+          </ion-item>
+          
+          <!-- <ion-item>
+            <ion-label position="floating">Uhrzeit</ion-label>
+            <ion-datetime name="uhrzeit" formControlName="uhrzeit" display-format="HH:mm" picker-format="HH:mm"></ion-datetime>
+          </ion-item> -->
+          
+          <ion-item>
+            <ion-label position="end">Aushang</ion-label>
+            <ion-checkbox name="aushang" formControlName="aushang"></ion-checkbox>
           </ion-item>
           
           <ion-item>
-            <ion-label position="floating">strasse</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.strasse" type="text"></ion-input>
+            <ion-label>Datum Aushang</ion-label>
+            <ion-datetime-button datetime="datumAushang"></ion-datetime-button>
+            <ion-modal [keepContentsMounted]="true">
+              <ng-template>
+                <ion-datetime presentation="date" name="datumAushang" id="datumAushang"></ion-datetime>
+              </ng-template>
+            </ion-modal>
           </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">plz</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.plz" type="number"></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">ort</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.ort" type="text"></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">tel</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.tel" type="tel"></ion-input>
-          </ion-item>
-          
-          <ion-item>
-            <ion-label position="floating">email</ion-label>
-            <ion-input [(ngModel)]="auftraggeber.email" type="email"></ion-input>
-          </ion-item>
+      
           <ion-row>
-            <ion-button expand="block" type="submit">
-              Auftraggeber anlegen
-            </ion-button>
-            <ion-button expand="block" type="button" (click)="cancel()">
-              Abbrechen
-            </ion-button>
+            <ion-item class="custom-checkbox-item">
+              <ion-label position="end">agInformiert</ion-label>
+              <ion-checkbox slot="start" formControlName="agInformiert" name="agInformiert"></ion-checkbox>
+            </ion-item>
+  
+            <ion-item>
+              <ion-label position="end">bgb</ion-label>
+              <ion-checkbox slot="start" formControlName="bgb" name="bgb"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">bgbBericht</ion-label>
+              <ion-checkbox slot="start" formControlName="bgbBericht" name="bgbBericht"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">ssa</ion-label>
+              <ion-checkbox slot="start" formControlName="ssa" name="ssa"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">bericht</ion-label>
+              <ion-checkbox slot="start" formControlName="bericht" name="bericht"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">umb</ion-label>
+              <ion-checkbox slot="start" formControlName="umb" name="umb"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">ber</ion-label>
+              <ion-checkbox slot="start" formControlName="ber" name="ber"></ion-checkbox>
+            </ion-item>
           </ion-row>
-        </ng-container>
-      </form>       
-    <!-- Weitere Felder hier hinzufügen -->
+      
+          <ion-row>
+            <ion-item>
+              <ion-label label="Outline input" fill="outline" label-placement="floating" position="floating">reNr</ion-label>
+              <ion-input formControlName="reNr" name="reNr"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="floating">reBetrag</ion-label>
+              <ion-input formControlName="reBetrag" name="reBetrag" type="number"></ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">reErhalten</ion-label>
+              <ion-checkbox slot="start" formControlName="reErhalten" name="reErhalten"></ion-checkbox>
+            </ion-item>
+          </ion-row>
+          
+          <ion-row>
+            <ion-item>
+              <ion-label position="floating">reNr2</ion-label>
+              <ion-input formControlName="reNr2" name="reNr2"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">reBetrag2</ion-label>
+              <ion-input formControlName="reBetrag2" name="reBetrag2" type="number"></ion-input>
+            </ion-item>
+              
+            <ion-item>
+              <ion-label position="end">reNr2Erhalten</ion-label>
+              <ion-checkbox slot="start" formControlName="reNr2Erhalten" name="reNr2Erhalten"></ion-checkbox>
+            </ion-item>
+          </ion-row>
+          
+          <ion-row>
+            <!-- <ion-item>
+              <ion-label label="Outline input" fill="outline" label-placement="floating" position="end">Dateien</ion-label>
+              <ion-input type="file" formControlName="dateien" (change)="uploadFile($event)" name="dateien"></ion-input>
+            </ion-item> -->
+          </ion-row>
+          
+          <ion-row>
+            <ion-item>
+              <ion-label position="end">mahnung</ion-label>
+              <ion-checkbox slot="start" name="mahnung" formControlName="mahnung"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">mahnung1</ion-label>
+              <ion-checkbox slot="start" name="mahnung1" formControlName="mahnung1"></ion-checkbox>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="end">mahnungErhalten</ion-label>
+              <ion-checkbox slot="start" name="mahnungErhaten" formControlName="mahnungErhalten"></ion-checkbox>
+            </ion-item>
+          </ion-row>
+        </div>
+      </ion-card-content>
+    </ion-card>
 
     <ion-button expand="block" type="submit" >
       Auftrag anlegen

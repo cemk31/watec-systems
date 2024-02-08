@@ -1,79 +1,97 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <div class="login-logo">
-    <img src="assets/img/watec/watec_logo.png" alt="Ionic logo">
-  </div>
+  <!-- Logo -->
 
-
-  <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
-    <ion-toolbar color="success">
-      <ion-title >Login successful!</ion-title>
-      <ion-title >{{token}}</ion-title>
-    </ion-toolbar>
-  </div>
-  <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
-    <ion-toolbar color="warning">
-      <ion-title >Sie sind schon eingeloggt!</ion-title>
-    </ion-toolbar>
-  </div>
-  <div *ngIf="showLoggedOutMessage" style="background-color: green; text-align: center; color: white;">
-    <ion-toolbar color="success">
-      <ion-title >Erfolgreich ausgeloggt!</ion-title>
-    </ion-toolbar>
-  </div>
-
-  <ion-toolbar color="primary">
-    <ion-title >Test-User</ion-title>
-    <ion-title>cem31@test.de</ion-title>
-    <ion-title>1234</ion-title>
-
-  </ion-toolbar>
-
-  <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate>
-    <ion-list>
-      <ion-item value="cem31@test.de">
-        <ion-label position="stacked" color="primary">E-Mail</ion-label>
-        <ion-input  [(ngModel)]="login.email" name="email" type="email" #email="ngModel" spellcheck="false" autocapitalize="off" required >
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <!-- <p [hidden]="email.valid || submitted == false" class="ion-padding-start">
-          email is required
-        </p> -->
-      </ion-text>
-
-      <ion-item value="1234">
-        <ion-label position="stacked" color="primary">Passwort</ion-label>
-        <ion-input [(ngModel)]="login.password" name="password" type="password" #password="ngModel" required>
-        </ion-input>
-      </ion-item>
-
-      <ion-text color="danger">
-        <!-- <p [hidden]="password.valid || submitted == false" class="ion-padding-start">
-          Password is required
-        </p> -->
-      </ion-text>
-    </ion-list>
+  <ion-grid>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <div class="login-logo">
+          <img src="assets/img/watec/watec_logo.png" alt="Logo">
+        </div>
+      </ion-col>
+      <ion-col></ion-col>
+    </ion-row>
 
     <ion-row>
-      <ion-col>
-        <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+      <ion-col></ion-col>
+      <ion-col size="12" size-md="6">
+        <div class="center-content">
+          <!-- Titel und Untertitel -->
+          <ng-container *ngIf="!showLoggedInWarning">
+            <h1><ion-icon size="large" name="lock-closed-outline"></ion-icon>
+              Login</h1>
+            <p class="info-text">Füllen Sie die Felder unten aus, um sich einzuloggen.</p>
+          </ng-container>
+          <!-- Formular -->
+          <form *ngIf="!showLoggedInWarning" #loginForm="ngForm" novalidate class="login-form">
+            <ion-list>
+              <ion-item fill="outline">
+                <ion-icon color="primary" slot="start" name="person-circle"></ion-icon>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="login.email" name="email" required>
+                </ion-input>
+              </ion-item>
+              <ion-item fill="outline">
+                <ion-icon color="primary" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
+                <ion-label position="floating">Passwort</ion-label>
+                <ion-input type="password" [(ngModel)]="login.password" name="password" required></ion-input>
+              </ion-item>
+            </ion-list>
+
+            <ion-row class="ion-margin-top button-row">
+              <ion-col></ion-col>
+              <ion-col>
+                <ion-button (click)="forgottenPassword()" type="button" fill="outline" expand="block">Passwort
+                  vergessen</ion-button>
+              </ion-col>
+              <ion-col></ion-col>
+            </ion-row>
+            <!-- Buttons -->
+            <ion-row class="ion-margin-top button-row">
+              <ion-col>
+                <ion-button (click)="onSignup()" type="button" fill="outline" expand="block">Registrieren</ion-button>
+              </ion-col>
+              <ion-col>
+                <ion-button (click)="onLogin(loginForm)" type="submit" expand="block">Login</ion-button>
+              </ion-col>
+            </ion-row>
+          </form>
+        </div>
       </ion-col>
-      <ion-col>
-        <ion-button (click)="onSignup()" color="light" expand="block">Registrieren</ion-button>
-      </ion-col>
+      <ion-col></ion-col>
     </ion-row>
-      <ion-button fill="outline" expand="full" color="warning">Passwort vergessen</ion-button>
-  </form>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col>
+        <div *ngIf="showSuccessMessage" style="background-color: green; text-align: center; color: white;">
+          <ion-toolbar color="success">
+            <ion-title>Login successful!</ion-title>
+            <ion-title>{{token}}</ion-title>
+          </ion-toolbar>
+        </div>
+        <div *ngIf="showLoggedInWarning" style="background-color: green; text-align: center; color: white;">
+          <ion-toolbar color="warning">
+            <ion-title>Sie sind schon eingeloggt!</ion-title>
+          </ion-toolbar>
+        </div>
+        <div *ngIf="showLoggedOutMessage" style="background-color: green; text-align: center; color: white;">
+          <ion-toolbar color="success">
+            <ion-title>Erfolgreich ausgeloggt!</ion-title>
+          </ion-toolbar>
+        </div>
+      </ion-col>
+
+      <ion-col></ion-col>
+
+    </ion-row>
+    <ion-row>
+      <ion-col></ion-col>
+      <ion-col></ion-col>
+
+    </ion-row>
+  </ion-grid>
+
+
+
 
 </ion-content>

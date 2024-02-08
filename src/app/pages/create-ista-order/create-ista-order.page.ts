@@ -1,10 +1,11 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, NgForm } from '@angular/forms';
 import { throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-ista-order',
@@ -12,48 +13,47 @@ import { ToastController } from '@ionic/angular';
   styleUrls: ['./create-ista-order.page.scss'],
 })
 export class CreateIstaOrderPage implements OnInit {
-  [x: string]: any;
+  customerForm: FormGroup;
 
-  orderForm: FormGroup;
-  exceptionMessage: string = null;
-  customers: any; 
-  isSubmitted = false;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController) {
-    this.orderForm = this.fb.group({
-      number: [''],
-      remarkExternal: [''],
-      actualStatus: [''],
-      // Änderung hier: von 'received' zu 'Received'
-      Received: this.fb.array([
-        this.createReceivedFormGroup()
-      ])
-    });
-  }
-  ngOnInit(): void {
-
+  onSubmitCreateNewCustomer(customerForm: FormGroup) {
+    console.log(customerForm.value);
   }
 
-  async presentToast() {
-    const toast = await this.toastController.create({
-      message: 'Order created successfully.',
-      duration: 2000,
-      color: 'success',
-      position: 'top'
+  constructor(private fb: FormBuilder, private http: HttpClient, public toastController: ToastController, private router: Router) {
+    this.customerForm = this.fb.group({
+      Customer: this.fb.group({
+        customerNumber: [''],
+        firstName: [''],
+        lastName: [''],
+        street: [''],
+        zipCode: [''],
+        city: ['']
+      }),
+      Objekt: this.fb.array([this.createObjektFormGroup()]),
+      Received: this.fb.array([this.createReceivedFormGroup()])
     });
-    toast.present();
+
+
+  }
+
+  createObjektFormGroup(): FormGroup {
+    return this.fb.group({
+      liNr: [''],
+      street: [''],
+      zipCode: [''],
+      city: ['']
+    });
   }
 
   createReceivedFormGroup(): FormGroup {
     return this.fb.group({
-      orderstatusType: [''],
-      CustomerContacts: this.fb.array([
-        this.createCustomerContactFormGroup()
-      ])
+      orderId: [''],
+      CustomerContacts: this.fb.array([this.createContactFormGroup()])
     });
   }
 
-  createCustomerContactFormGroup(): FormGroup {
+  createContactFormGroup(): FormGroup {
     return this.fb.group({
       contactAttemptOn: [''],
       contactPersonCustomer: [''],
@@ -61,53 +61,76 @@ export class CreateIstaOrderPage implements OnInit {
       result: [''],
       remark: ['']
     });
-  } 
+  }
+
+  
+
+  get objekteFormArray(): FormArray {
+    return this.customerForm.get('Objekt') as FormArray;
+  }
 
   getReceivedArray(): FormArray {
-    // Änderung hier: von 'received' zu 'Received'
-    return this.orderForm.get('Received') as FormArray;
+    return this.customerForm.get('Received') as FormArray;
+  }
+  
+  addNewObjekt() {
+    this.objekteFormArray.push(this.createObjektFormGroup());
   }
 
-  addReceived() {
-    this.receivedArray.push(this.createReceivedFormGroup());
+  ngOnInit(): void {
+    this.customerForm.reset();
   }
 
-  getCustomerContactArray(receivedIndex: number): FormArray {
-    // Änderung hier: von 'customerContacts' zu 'CustomerContacts'
-    return this.receivedArray.at(receivedIndex).get('CustomerContacts') as FormArray;
+  async presentToast(orderId: number, message: string = null, duration: number = 3000, color: string = 'success', position: 'top' | 'bottom' | 'middle' = 'top') {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: duration,
+      color: color,
+      position: position,
+      buttons: [{ text: 'schliessen', role: 'cancel' },
+                { text: 'öffnen', role: 'end', 
+                handler: () => {
+                  this.navigateToProductDetails(orderId);
+                }
+                },],
+    });
+    toast.present();
   }
 
-  addCustomerContact(receivedIndex: number) {
-    this.getCustomerContactArray(receivedIndex).push(this.createCustomerContactFormGroup());
+  navigateToProductDetails(orderId: number) {
+    this.router.navigateByUrl('/ista-order-detail/' + orderId);
   }
-
-  onSubmit() {
-    console.log(this.orderForm.value);
+  
+  async onSubmit(form: FormGroup) {
+    console.log(form.value);
     const accessToken = sessionStorage.getItem("access_token");
     const authorization = accessToken ? "Bearer " + accessToken : null;
     let headers = new HttpHeaders();
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
     }
-    this.http.post<any[]>(environment.backend + environment.url.ista.received , this.orderForm.value, { headers })
+    this.http.post<Response[]>(environment.backend + environment.url.ista.received , this.customerForm.value, { headers })
     .pipe(
       catchError((error) => {
-        this.exceptionMessage = error.error.message;
+        // this.exceptionMessage = error.error.message;
         return throwError(error);
       })
     )
-    .subscribe(response => {
-      console.log(response);
-      this.customers = response;
-      this.presentToast(); // Present the toast
-      this.orderForm.disable(); // Disable all fields in the form
-      this.isSubmitted = true;
+    .subscribe((response: any) => {
+      try {
+        console.log("response", response);
+        console.log("responseID: ", response.id); // Access the id property of each element
+        this.presentToast(response.id, 'Auftrag wurde erfolgreich erstellt!', 3000, 'success', 'top'); // Present the toast
+        this.customerForm.disable();
+      } catch (error) {
+        this.presentToast(null, 'Auftrag konnte nicht erstellt werden!', 3000, 'danger', 'top'); // Present the toast
+      }
     });
   }
+}
 
-  transferToIsta() {
-    console.log("Data transferred to Ista");
-    // Your logic to transfer data to Ista goes here
-  }
+//Interface
+export interface Response {
+  id: number;
 }
 

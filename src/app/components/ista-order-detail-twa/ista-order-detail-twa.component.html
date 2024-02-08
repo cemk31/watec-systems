@@ -1,0 +1,225 @@
+<ion-card>
+  <ion-card-header>
+    <ion-card-title>Bestellstatusbericht</ion-card-title>
+    <ion-buttons slot="end">
+      <ion-button color="primary">Speichern</ion-button>
+      <ion-button color="danger">Löschen</ion-button>
+    </ion-buttons>
+  </ion-card-header>
+
+  <ion-card-content>
+    <!-- ClosedContractPartner -->
+    <!-- <ion-item-divider> -->
+      <strong>Geschlossener Vertragspartner</strong>
+    <!-- </ion-item-divider> -->
+
+    <!-- Order -->
+    <ion-item>
+      <ion-label position="stacked">Bestellnummer</ion-label>
+      <ion-input type="text" [(ngModel)]="closedContractPartner?.order.number" placeholder="{{order_no}}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="stacked">Externe Bemerkung</ion-label>
+      <ion-textarea [(ngModel)]="closedContractPartner?.order.remarkExternal" placeholder="remark"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Order Status Typ</ion-label>
+      <ion-input type="text" [(ngModel)]="closedContractPartner.orderstatusType"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Gesetzt am</ion-label>
+      <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="closedContractPartner.setOn"></ion-datetime>
+    </ion-item>
+
+    <!-- Customer Contacts -->
+    <ion-item-divider><strong>Kundenkontakte</strong></ion-item-divider>
+
+    <div *ngFor="let contact of closedContractPartner?.customerContacts">
+      <ion-item>
+        <ion-label position="stacked">Kontaktversuch am</ion-label>
+        <ion-datetime displayFormat="DD.MM.YYYY" [(ngModel)]="contact.customerContactAttemptOn"></ion-datetime>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Ansprechpartner Kunde</ion-label>
+        <ion-input type="text" [(ngModel)]="contact.contactPersonCustomer"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Agent CP</ion-label>
+        <ion-input type="text" [(ngModel)]="contact.agentCP"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Ergebnis</ion-label>
+        <ion-input type="text" [(ngModel)]="contact.result"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Bemerkung</ion-label>
+        <ion-textarea [(ngModel)]="contact.remark"></ion-textarea>
+      </ion-item>
+    </div>
+
+    <!-- Additional Fields for ClosedContractPartner -->
+    <ion-item-divider><strong>Deficiency Description</strong></ion-item-divider>
+    <ion-item>
+      <ion-label position="stacked">Deficiency Description</ion-label>
+      <ion-input type="text" [(ngModel)]="closedContractPartner.deficiencyDescription"></ion-input>
+    </ion-item>
+
+    <ion-item-divider><strong>Extraordinary Expenditure Reason</strong></ion-item-divider>
+    <ion-item>
+      <ion-label position="stacked">Extraordinary Expenditure Reason</ion-label>
+      <ion-input type="text" [(ngModel)]="closedContractPartner.extraordinaryExpenditureReason"></ion-input>
+    </ion-item>
+
+    <!-- Supplied Documents -->
+    <ion-item-divider><strong>Gelieferte Dokumente</strong></ion-item-divider>
+    <div *ngFor="let doc of closedContractPartner?.suppliedDocuments; let i = index">
+      <ion-item>
+        <ion-label position="stacked">Dokumenttyp (Index: {{i+1}})</ion-label>
+        <ion-input type="text" [(ngModel)]="doc.type"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="stacked">Inhalt (Index: {{i+1}})</ion-label>
+        <ion-input type="text" [(ngModel)]="doc.content"></ion-input>
+      </ion-item>
+    </div>
+    <ion-button (click)="addDocument()">Dokument hinzufügen</ion-button>
+
+    <ion-item-divider><strong>Aufgezeichnetes System</strong></ion-item-divider>
+    <div *ngFor="let system of closedContractPartner?.recordedSystem; let i = index">
+      <ion-item-divider><strong>Trinkwassereinrichtung (Index: {{i+1}})</strong></ion-item-divider>
+
+      <ion-item>
+        <ion-label position="stacked">Lfd. Nr.</ion-label>
+        <ion-input type="number" [(ngModel)]="system.drinkingWaterFacility.consecutiveNumber"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Verwendungstyp</ion-label>
+        <ion-input type="text" [(ngModel)]="system.drinkingWaterFacility.usageType"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Wärmetauschersystem (zentral)</ion-label>
+        <ion-checkbox [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_central"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Wärmetauschersystem (Fernheizung)</ion-label>
+        <ion-checkbox [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_districtheating"></ion-checkbox>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Wärmetauschersystem (Durchflussprinzip)</ion-label>
+        <ion-checkbox
+          [(ngModel)]="system.drinkingWaterFacility.heatExchangerSystem_continuousflowprinciple"></ion-checkbox>
+      </ion-item>
+
+      <ion-item-divider><strong>Trinkwassererhitzer</strong></ion-item-divider>
+      <div *ngFor="let heater of system.drinkingWaterFacility.drinkingWaterHeaters; let h = index">
+        <ion-item-divider><strong>Trinkwassererhitzer (Index: {{h+1}})</strong></ion-item-divider>
+
+        <ion-item>
+          <ion-label position="stacked">Lfd. Nr.</ion-label>
+          <ion-input type="number" [(ngModel)]="heater.consecutiveNumber"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Einlauftemperaturanzeige vorhanden</ion-label>
+          <ion-checkbox [(ngModel)]="heater.inletTemperatureDisplayPresent"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Einlauftemperatur</ion-label>
+          <ion-input type="number" [(ngModel)]="heater.inletTemperature"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Auslauftemperaturanzeige vorhanden</ion-label>
+          <ion-checkbox [(ngModel)]="heater.outletTemperatureDisplayPresent"></ion-checkbox>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Auslauftemperatur</ion-label>
+          <ion-input type="number" [(ngModel)]="heater.outletTemperature"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Volumen (Liter)</ion-label>
+          <ion-input type="number" [(ngModel)]="heater.volumeLitre"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Raumtyp</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.roomType"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Raumposition</ion-label>
+          <ion-input type="number" [(ngModel)]="heater.roomPosition"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Positionsbeschreibung</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.positionDetail"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Rohrdurchmesser (Auslauf)</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.pipeDiameterOutlet"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Rohrmaterial (Auslauf)</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.pipeMaterialtypeOutlet"></ion-input>
+        </ion-item>
+
+        <!-- Gebäudeeinheit -->
+        <ion-item-divider><strong>Einheit</strong></ion-item-divider>
+        <ion-item>
+          <ion-label position="stacked">Etage</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.unit.floor"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Geschoss</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.unit.storey"></ion-input>
+        </ion-item>
+
+        <!-- ... und so weiter für alle Felder innerhalb der Gebäudeeinheit ... -->
+
+        <!-- Adresse des Gebäudes -->
+        <ion-item-divider><strong>Gebäudeadresse</strong></ion-item-divider>
+        <ion-item>
+          <ion-label position="stacked">Straße</ion-label>
+          <ion-input type="text" [(ngModel)]="heater.unit.building.address.street"></ion-input>
+        </ion-item>
+
+        <!-- ... und so weiter für alle Felder innerhalb der Gebäudeadresse ... -->
+      </div>
+    </div>
+
+
+
+    <ion-button (click)="addDrinkingWaterHeater()">Erhitzer hinzufügen</ion-button>
+
+
+    <ion-button (click)="addRecordedSystem()">System hinzufügen</ion-button>
+
+
+    <!-- <ion-item-divider><strong>Eigenschaft</strong></ion-item-divider>
+
+    <ion-item>
+      <ion-label position="stacked">Warmwasserversorgung (zentral)</ion-label>
+      <ion-checkbox [(ngModel)]="property.hotwatersupplyType_central"></ion-checkbox>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Warmwasserversorgung (dezentral)</ion-label>
+      <ion-checkbox [(ngModel)]="property.hotwatersupplyType_decentral"></ion-checkbox>
+    </ion-item> -->
+
+
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,74 @@
+<ion-row *ngIf="showForm">
+  <form [formGroup]="createPlannedForm" (ngSubmit)="onSubmitPlanned()">
+    <ion-row>
+      <ion-list-header>
+        <ion-icon size="large" color="secondary" name="calendar-outline"></ion-icon>
+        <ion-card-title color="primary" style="padding:5px;">In Planung - {{orderId}}</ion-card-title>
+      </ion-list-header>
+    </ion-row>
+    <ion-item [disabled]="true" fill="outline" class="custom-input" lines="none">
+      <ion-label position="floating">Bestellnummer</ion-label>
+      <ion-input [value]="createPlannedForm.get('orderId').value" formControlName="orderId"></ion-input>
+    </ion-item>
+    <!-- </ion-col>
+       </ion-row> -->
+    <ion-list-header>
+      <ion-title color="primary">Planung</ion-title>
+    </ion-list-header>
+    <ion-row>
+      <ion-col>
+        <!-- <ion-item>
+             <ion-label position="floating">Detailliertes Planungsdatum</ion-label>
+             <ion-datetime formControlName="detailedScheduleDate" display-format="DD.MM.YYYY"></ion-datetime>
+           </ion-item> -->
+        <ion-item>
+          <ion-label>Detailliertes Planungsdatum</ion-label>
+          <ion-datetime-button datetime="detailedScheduleDate"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime (ionChange)="updateDetailedScheduleDate($event)" presentation="date" name="detailedScheduleDate" formControlName="detailedScheduleDate"
+                id="detailedScheduleDate"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-label>Detaillierte Planungszeit von</ion-label>
+          <ion-datetime-button datetime="detailedScheduleTimeFrom"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime color="primary" (ionChange)="updateDetailedScheduleTimeFrom($event)" formControlName="detailedScheduleTimeFrom" presentation="time"
+                name="detailedScheduleTimeFrom" id="detailedScheduleTimeFrom"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-label>Detaillierte Planungszeit bis</ion-label>
+          <ion-datetime-button datetime="detailedScheduleTimeTo"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime (ionChange)="updateDetailedScheduleTimeTo($event)" formControlName="detailedScheduleTimeTo" presentation="time" name="detailedScheduleTimeTo"
+                id="detailedScheduleTimeTo"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Anfrage ID</ion-label>
+          <ion-input type="text" formControlName="requestId"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating">Grund für die detaillierte Planungsverzögerung</ion-label>
+          <ion-input type="text" formControlName="detailedScheduleDelayReason"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-button  color="success" shape="round" fill="solid"  expand="full" [disabled]="isSubmitted" type="submit">Speichern</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button fill="outline" shape="round" color="danger" expand="full" type="button" (click)="cancel()">Abbrechen
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </form>
+</ion-row>

@@ -1,0 +1,74 @@
+
+
+/* Status-Farbcode */
+.status-red {
+  background-color: rgba(255, 0, 0, 0.1);
+  color: red;
+}
+.status-green {
+  // background-color: rgba(0, 255, 0, 0.1);
+  color: green;
+  font-weight: bold;
+}
+
+/* Filter-Ausklappbutton */
+.filter-collapse {
+  display: none;
+  transition: all 0.3s ease;
+}
+.filter-collapse.show {
+  display: block;
+  opacity: 1;
+}
+
+/* Andere nützliche Styles */
+/* Animation für die Eingabe von Suchtermen */
+.filterTerm-entering,
+.filterTerm-exiting,
+.filterTerm-exited {
+  opacity: 0;
+}
+.filterTerm-entered {
+  opacity: 1;
+  transition: opacity 300ms;
+}
+
+
+ion-item {
+  --inner-padding-end: 0;
+  --inner-padding-start: 0;
+}
+
+// ion-card-title {
+//   font-size: 1.2rem;
+//   font-weight: 600;
+//   padding: 10px;
+//   color: var(--ion-color-primary);
+//   border-bottom: var(--ion-color-primary) 1px solid;
+// }
+
+.edit-link,
+ion-input {
+  color: var(--ion-color-primary);
+  font-size: 1.2rem;
+}
+
+.remove-link {
+  color: var(--ion-color-danger);
+  font-size: 1.2rem;
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  --color: var(--ion-color-light);
+  --padding-start: 20px;
+  --padding-end: 20px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+ion-searchbar {
+  margin: 10px;
+}

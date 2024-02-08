@@ -1,0 +1,271 @@
+<ion-grid>
+<ion-content [fullscreen]="true">
+  <ion-card-header>
+    <h2>ISTA Bestellungen</h2>
+    <p>Übersicht aller ISTA Bestellungen!</p>
+    <ion-searchbar  color="light" (ionChange)="search($event)" showCancelButton="focus" placeholder="Suche..." [(ngModel)]="filterTerm"
+    animated="true"></ion-searchbar>
+    <ion-buttons>
+      <ion-button href="/app/tabs/create-ista-order" fill="solid" color="primary" (click)="createOrder()">
+        <ion-icon name="create-outline"></ion-icon>
+        Neu
+      </ion-button>
+      <!-- <ion-button fill="outline" (click)="quickEdit()">
+        <ion-icon name="create-outline"></ion-icon>
+        QuickEdit
+      </ion-button> -->
+      <ion-button fill="solid" disabled={{disableDocumentExport}} color="danger" (click)="delete()">
+        <ion-icon name="create-outline"></ion-icon>
+        Löschen
+      </ion-button>
+      <ion-button color="danger" disabled={{disableDocumentExport}} slot="end" fill="outline" (click)="exportSelectedToPdf()">
+        <ion-icon name="document"></ion-icon>
+        Export to PDF
+      </ion-button>
+      <ion-button color="success" disabled={{disableDocumentExport}} slot="end" fill="outline" (click)="exportSelectedToExcel()">
+        <ion-icon name="document"></ion-icon>
+        Export to Excel
+      </ion-button>
+    </ion-buttons>
+  </ion-card-header>
+
+  <ion-list>
+    <ion-item>
+      <ion-item>
+        <ion-checkbox slot="start" (ionChange)="selectAllOrders()"></ion-checkbox>
+      </ion-item>
+      <ion-label><a (click)="sortById()">ID</a></ion-label>
+      <ion-label><a (click)="sortById()">Status</a></ion-label>
+      <ion-label><a (click)="sortByCreatedDate()">erstellt</a></ion-label>
+      <ion-label><a (click)="sortByPropertyNumber()">Liegenschaft</a></ion-label>
+      <ion-label><a (click)="sortByCustomerContact()">Kunde</a></ion-label>
+
+      <!-- <ion-label>Ansprechpartner Kunde</ion-label> -->
+      <ion-label>Ort</ion-label>
+      <!-- <ion-label>Telefon</ion-label> -->
+      <!-- <ion-label>E-Mail</ion-label> -->
+    </ion-item>
+  </ion-list>
+
+  <ng-container *ngIf="filterTerm; else showAllOrders">
+    <ng-container *ngFor="let data of filteredOrders">
+      <ion-list lines="inset">
+        <ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" checked="{{setCheckboxState(data.id)}}" (ionChange)="checkBoxOrder(data.id)"></ion-checkbox>
+          </ion-item>
+          <ion-label>
+            <ion-badge color="success">
+              {{ data.id }}
+            </ion-badge>
+          </ion-label>
+            <ion-label>
+              <ion-badge color="{{data.actualStatusColor}}">{{ data.actualStatus }}</ion-badge>
+            </ion-label>
+          <ion-label>{{ formatDate(data?.createdAt) }}</ion-label>
+          <ion-label>{{ data.Customer.propertyNumber }}</ion-label>
+          <ion-label>{{ data.Customer.companyName }}</ion-label>
+          <!-- <ion-label>{{ data.Customer.lastName }}</ion-label> -->
+          <ion-label>{{ data.Customer.place }}</ion-label>
+          <!-- <ion-label>{{ data.Customer.phoneNumber }}</ion-label> -->
+          <!-- <ion-label>{{ data.Customer.email }}</ion-label> -->
+          <ion-button (click)="openDetails(data.id)">mehr</ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="selectedId === data.id">
+        <ion-buttons>
+          <ion-button fill="solid" color="primary" [href]="'/app/tabs/ista-order-detail/' + data.id">
+            <ion-icon name="create-outline"></ion-icon>
+            Bearbeiten
+          </ion-button>
+          <ion-button fill="solid" color="primary" (click)="exportToPDF(data.id)">
+            <ion-icon name="create-outline"></ion-icon>
+            PDF Export
+          </ion-button>
+          <ion-button fill="outline" (click)="closeDetails(selectedId)">
+            <ion-icon name="close-outline"></ion-icon>
+            Schliessen</ion-button>
+        </ion-buttons>
+        <ion-list>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Bestellinformationen</ion-card-title>
+            </ion-card-header>
+            <ion-item>
+              <ion-item position="floating">
+                <ion-label>Aktueller Status</ion-label>
+                <ion-input  color="success" type="text" [(ngModel)]="data.actualStatus" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Aktualisiert</ion-label>
+                <ion-input [value]="formatDate(data?.updatedAt) " disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt</ion-label>
+                <ion-input [value]="formatDate(data?.createdAt)" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Bemerkung (Extern)</ion-label>
+                <ion-input type="text" [(ngModel)]="data.remarkExternal" disabled="true"></ion-input>
+              </ion-item>
+            </ion-item>
+          </ion-card>
+          <ion-card>
+            <ion-list>
+              <ion-card-header>
+                <ion-card-title>Kunde</ion-card-title>
+              </ion-card-header>           
+              <ion-item>
+                <ion-label position="floating">Unternehmen</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.companyName" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.name" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Telefonnummer</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.phoneNumber" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="data.Customer.email" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Ort</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.place" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Land</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.country" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">PLZ</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.zipCode" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Fax</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.fax" disabled="true"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+        </ion-list>
+      </ion-list>
+    </ng-container>
+  </ng-container>
+  <ng-template #showAllOrders>
+    <ng-container *ngFor="let data of orders">
+      <ion-list lines="inset">
+        <ion-item>
+          <ion-item>
+            <ion-checkbox slot="start" checked="{{setCheckboxState(data.id)}}" (ionChange)="checkBoxOrder(data.id)"></ion-checkbox>
+          </ion-item>
+          <ion-label>
+            <a [href]="'/app/tabs/ista-order-detail/' + data.id">
+              <ion-label style="font-weight: bold;text-decoration-line: none;">{{ data.id }}</ion-label>
+            </a>
+          </ion-label>
+            <ion-label>
+              <ion-badge color="{{data.actualStatusColor}}">{{ data.actualStatus }}</ion-badge>
+            </ion-label>
+          <ion-label>{{ formatDate(data?.createdAt) }}</ion-label>
+          <ion-label>{{ data.Customer.propertyNumber }}</ion-label>
+          <ion-label>{{ data.Customer.companyName }}</ion-label>
+          <!-- <ion-label>{{ data.Customer.lastName }}</ion-label> -->
+          <ion-label>{{ data.Customer.place }}</ion-label>
+          <!-- <ion-label>{{ data.Customer.phoneNumber }}</ion-label> -->
+          <!-- <ion-label>{{ data.Customer.email }}</ion-label> -->
+          <ion-button (click)="openDetails(data.id)">mehr</ion-button>
+        </ion-item>
+      </ion-list>
+      <ion-list *ngIf="selectedId === data.id">
+        <ion-buttons>
+          <ion-button fill="solid" color="primary" [href]="'/app/tabs/ista-order-detail/' + data.id">
+            <ion-icon name="create-outline"></ion-icon>
+            Bearbeiten
+          </ion-button>
+          <ion-button fill="solid" color="danger" (click)="exportToPDF(data.id)">
+            <ion-icon name="create-outline"></ion-icon>
+            PDF Export
+          </ion-button>
+          <ion-button fill="outline" (click)="closeDetails(selectedId)">
+            <ion-icon name="close-outline"></ion-icon>
+            Schliessen</ion-button>
+        </ion-buttons>
+        <ion-list>
+          <ion-card>
+            <ion-card-header>
+              <ion-card-title>Bestellinformationen</ion-card-title>
+            </ion-card-header>
+            <ion-item>
+              <ion-item position="floating">
+                <ion-label>Aktueller Status</ion-label>
+                <ion-input  color="success" type="text" [(ngModel)]="data.actualStatus" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Aktualisiert</ion-label>
+                <ion-input [value]="formatDate(data?.updatedAt) " disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Erstellt</ion-label>
+                <ion-input [value]="formatDate(data?.createdAt)" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Bemerkung (Extern)</ion-label>
+                <ion-input type="text" [(ngModel)]="data.remarkExternal" disabled="true"></ion-input>
+              </ion-item>
+            </ion-item>
+          </ion-card>
+          <ion-card>
+            <ion-list>
+              <ion-card-header>
+                <ion-card-title>Kunde</ion-card-title>
+              </ion-card-header>           
+              <ion-item>
+                <ion-label position="floating">Unternehmen</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.companyName" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Name</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.name" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Telefonnummer</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.phoneNumber" disabled="true"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">E-Mail</ion-label>
+                <ion-input type="email" [(ngModel)]="data.Customer.email" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Ort</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.place" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Land</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.country" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">PLZ</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.zipCode" disabled="true"></ion-input>
+              </ion-item>
+      
+              <ion-item>
+                <ion-label position="floating">Fax</ion-label>
+                <ion-input type="text" [(ngModel)]="data.Customer.fax" disabled="true"></ion-input>
+              </ion-item>
+            </ion-list>
+          </ion-card>
+        </ion-list>
+      </ion-list>
+    </ng-container>
+  </ng-template>
+</ion-content>
+</ion-grid>

@@ -28,6 +28,13 @@ export class IstaOrderListPage implements OnInit {
   keysToDisplay = ['id', 'createdAt', 'updatedAt', 'actualStatus'];
   editMode = false;
 
+  userRecords = [
+    { id: '1', propertyNumber: '12345', company: 'Firma A', customerContact: 'Herr Müller', address: 'Musterstraße 12', zipCode: '10115', city: 'Berlin', phone: '030 12345678', mobile: '0170 1234567', fax: '030 9876543', email: 'info@firma-a.de' },
+    { id: '2', propertyNumber: '67890', company: 'Firma B', customerContact: 'Frau Schmidt', address: 'Bahnhofstraße 34', zipCode: '20257', city: 'Hamburg', phone: '040 12345678', mobile: '0171 1234567', fax: '040 9876543', email: 'info@firma-b.de' },
+    // ...weitere Datensätze
+  ];
+  
+
   statusForm: FormGroup;
   
   showForm = false; // variable to toggle form
@@ -90,32 +97,7 @@ export class IstaOrderListPage implements OnInit {
 
   ngOnInit() {
     const response = this.getIstaOrders();
-
-    // list attributes
-    // ID, Status, contactPersonCustomer, agentCP, result, remark
     
-    //fill 
-  }
-
-  getIstaOrders() {
-    const accessToken = sessionStorage.getItem("access_token");
-    let headers = new HttpHeaders();
-    if (accessToken) {
-      headers = headers.append('Authorization', `Bearer ${accessToken}`);
-    }
-    this.http.get<any[]>(environment.backend + environment.url.ista.url, { headers })
-    .pipe(
-      map(response => {
-        console.log(response);
-        this.orders = response;
-        return response;
-      }),
-      catchError((error) => {
-        this.exceptionMessage = error.error.message;
-        return throwError(error);
-      })
-    )
-    .subscribe();
   }
 
   filterItems() {
@@ -245,5 +227,25 @@ export class IstaOrderListPage implements OnInit {
     this.selectedContent = this.segments[selectedIndex].content;
   }
   
+  getIstaOrders() {
+    const accessToken = sessionStorage.getItem("access_token");
+    let headers = new HttpHeaders();
+    if (accessToken) {
+      headers = headers.append('Authorization', `Bearer ${accessToken}`);
+    }
+    this.http.get<any[]>(environment.backend + environment.url.ista.url, { headers })
+    .pipe(
+      map(response => {
+        console.log(response);
+        this.orders = response;
+        return response;
+      }),
+      catchError((error) => {
+        this.exceptionMessage = error.error.message;
+        return throwError(error);
+      })
+    )
+    .subscribe();
+  }
 
 }

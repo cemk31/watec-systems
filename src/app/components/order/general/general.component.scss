@@ -1,0 +1,65 @@
+// /* Globale Änderungen für ion-card */
+// ion-card {
+//     margin-bottom: 20px;  /* Abstand unten für alle Karten */
+
+// }
+  
+//   /* Ion-Title innen ion-toolbar */
+//   ion-toolbar ion-title {
+//     font-size: 1.2rem;  /* Schriftgröße anpassen */
+//   }
+  
+//   /* Ion-Buttons innerhalb der Toolbar */
+//   ion-toolbar ion-buttons {
+//     margin-left: 10px;  /* Abstand zu den Buttons in der Toolbar */
+//     border-radius: 6px;
+//     margin-bottom: 2px;
+//   }
+  
+//   /* Ion-Item Styling */
+//   ion-item {
+//     --padding-start: 20px;  /* Linker Abstand für ion-item */
+//     --padding-end: 20px;    /* Rechter Abstand für ion-item */
+//   }
+  
+//   /* Ion-Input Styling */
+//   ion-input {
+//     --padding-start: 10px;  /* Linker Abstand für ion-input */
+//     --padding-end: 10px;    /* Rechter Abstand für ion-input */
+//   }
+  
+//   /* Ion-Label Styling */
+//   ion-label {
+//     --ion-text-color: var(--ion-color-primary);  /* Textfarbe für ion-label */
+//   }
+  
+//   /* Flexbox für ion-row */
+//   ion-row {
+//     display: flex;
+//     justify-content: space-between;  /* Verteilung der Spalten */
+//   }
+  
+//   /* Ion-Col Styling */
+//   ion-col {
+//     padding: 10px;  /* Padding für ion-col */
+//     border-radius: 10px;
+//     box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+//     border: 1px solid var(--ion-color-step-50);  /* Rahmen für ion-col */
+//     // background-color: var(--ion-color-primary-tint);  /* Hintergrundfarbe für ion-col */
+//   }
+
+//   ion-titel {
+//     font-size: 1.2rem;
+//     font-weight: 600;
+//     padding: 20px;
+//     color: var(--ion-color-primary);
+//     border-bottom: var(--ion-color-primary) 1px solid;
+//   }
+
+//   ion-button {
+//     padding: 5px 20px 5px 20px;
+//     border-radius: 6px;
+//     margin: 5px;
+//     border: 1px solid var(--ion-color-primary);
+//     color: var(--ion-color-primary);
+//   }

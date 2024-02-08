@@ -1,79 +1,138 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>ISTA Kundenkontakt erstellen</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
-    <ion-toolbar color="success">
-      <ion-title>Status</ion-title>
-    </ion-toolbar>
-    
-    <ion-item>
-      <ion-label position="floating">Number</ion-label>
-      <ion-input type="text" formControlName="number"></ion-input>
-    </ion-item>
-    
-    <ion-list>
-      <ion-select formControlName="actualStatus" placeholder="Status selektieren">
-        <ion-select-option value="RECEIVED">RECEIVED</ion-select-option>
-      </ion-select>
-    </ion-list>
-    
-    <ion-item>
-      <ion-label position="floating">Remark External</ion-label>
-      <ion-input type="text" formControlName="remarkExternal"></ion-input>
-    </ion-item>
-
-    <div formArrayName="Received">
-      <div *ngFor="let receivedCtrl of orderForm.get('Received').controls; let i = index" [formGroupName]="i">
-        <ion-item>
-          <ion-label position="stacked"><strong>Status Type:</strong></ion-label>
-          <ion-input type="text" formControlName="orderstatusType"></ion-input>
+  <ion-grid>
+    <!-- <ion-content> -->
+    <ion-row>
+      <ion-card-header>
+        <ion-card-title>
+          <ion-label>ISTA Kundenkontakt erstellen</ion-label>
+        </ion-card-title>
+      </ion-card-header>
+    </ion-row>
+    <ion-row>
+      <ion-list-header>
+        <ion-title>Kunde</ion-title>
+      </ion-list-header>
+    </ion-row>
+  
+    <!-- <ion-row> -->
+    <!-- <ion-card> -->
+    <form [formGroup]="customerForm">
+      <div formGroupName="Customer">
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Kundennummer</ion-label>
+          <ion-input formControlName="customerNumber"></ion-input>
         </ion-item>
+        <ion-row>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Vorname</ion-label>
+            <ion-input formControlName="firstName"></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Nachname</ion-label>
+            <ion-input formControlName="lastName"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Straße</ion-label>
+          <ion-input formControlName="street"></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">PLZ</ion-label>
+          <ion-input formControlName="zipCode"></ion-input>
+        </ion-item>
+        <ion-item fill="outline" class="custom-input" lines="none">
+          <ion-label position="floating">Ort</ion-label>
+          <ion-input formControlName="city"></ion-input>
+        </ion-item>
+        <ion-row>
+          <!-- <ion-button color="secondary" (click)="addNewObjekt()">+ Kundenkontakt hinzufügen</ion-button> -->
+        </ion-row>
+      </div>
 
-        <ion-toolbar>
-          <ion-title color="primary">Kundenkontakt</ion-title>
-        </ion-toolbar>
-        <div formArrayName="CustomerContacts">
-          <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContacts').controls; let j = index" [formGroupName]="j">
-            <ion-item>
-              <ion-label position="stacked"><strong>contactAttemptOn:</strong></ion-label>
-              <ion-datetime displayFormat="D MMM YYYY" formControlName="contactAttemptOn"></ion-datetime>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>contactPersonCustomer:</strong></ion-label>
-              <ion-input type="text" formControlName="contactPersonCustomer"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>agentCP:</strong></ion-label>
-              <ion-input type="text" formControlName="agentCP"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>result:</strong></ion-label>
-              <ion-input type="text" formControlName="result"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label position="stacked"><strong>remark:</strong></ion-label>
-              <ion-input type="text" formControlName="remark"></ion-input>
-            </ion-item>
+
+
+      <div formArrayName="Objekt">
+        <div *ngFor="let objekt of objekteFormArray.controls; let i = index" [formGroupName]="i">
+          <ion-list-header>
+            <ion-title>Objekt (LI) - {{ i + 1 }}</ion-title>
+          </ion-list-header>
+          <ion-row>
+            <ion-button color="danger" fill="outline" shape="round" (click)="removeObjekt(i)" expand="full"><ion-icon slot="start" name="close-circle-outline"></ion-icon>Objekt entfernen</ion-button>
+            <ion-button color="success" fill="solid" shape="round" (click)="addNewObjekt()" expand="full"><ion-icon slot="start" name="add-circle-outline"></ion-icon>Objekt hinzufügen</ion-button>
+          </ion-row>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Liegenschafts. - Nr</ion-label>
+            <ion-input formControlName="liNr"></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Straße (LI)</ion-label>
+            <ion-input formControlName="street"></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">PLZ (LI)</ion-label>
+            <ion-input formControlName="street"></ion-input>
+          </ion-item>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Ort (LI)</ion-label>
+            <ion-input formControlName="street"></ion-input>
+          </ion-item>
+        </div>
+      </div>
+
+      <div formArrayName="Received">
+        <div *ngFor="let receivedCtrl of getReceivedArray().controls; let i = index" [formGroupName]="i">
+          <ion-list-header>
+            <ion-title>Bestellung (LI)</ion-title>
+          </ion-list-header>
+          <ion-item fill="outline" class="custom-input" lines="none">
+            <ion-label position="floating">Bestellnummer</ion-label>
+            <ion-input formControlName="orderId"></ion-input>
+          </ion-item>
+          <h2>Auftragsinformationen</h2>
+          <div formArrayName="CustomerContacts">
+            <div *ngFor="let contactCtrl of receivedCtrl.get('CustomerContacts').controls; let y = index" [formGroupName]="y">
+              <h3>Kundenkontakt</h3>
+              <ion-item>
+                <ion-label>Kontaktversuch am</ion-label>
+                <ion-datetime-button datetime="contactAttemptOn"></ion-datetime-button>
+                <ion-modal [keepContentsMounted]="true">
+                  <ng-template>
+                    <ion-datetime presentation="date-time" name="contactAttemptOn" id="contactAttemptOn"></ion-datetime>
+                  </ng-template>
+                </ion-modal>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Kontaktperson:</ion-label>
+                <ion-input type="text" formControlName="contactPersonCustomer"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">agentCP:</ion-label>
+                <ion-input type="text" formControlName="agentCP"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Ergebnis:</ion-label>
+                <ion-input type="text" formControlName="result"></ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-label position="floating">Bemerkung:</ion-label>
+                <ion-input type="text" formControlName="remark"></ion-input>
+              </ion-item>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <ion-row>
-      <ion-col>
-        <ion-button expand="full"  [disabled]="isSubmitted" type="submit">Submit</ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button 
-          expand="full" 
-          [disabled]="!isSubmitted" 
-          type="button" 
-          (click)="transferToIsta()">An Ista übertragen
-        </ion-button>
-      </ion-col>
-    </ion-row>
-  </form>
+      <ion-row>
+        <ion-col>
+          <ion-button fill="outline" color="danger" shape="round" expand="full">
+            <ion-icon name="trash-outline"></ion-icon>
+            Formular zurücksetzen</ion-button>
+        </ion-col>
+        <ion-col>
+          <ion-button fill="outline" shape="round" color="success" fill="solid" (click)="onSubmit(customerForm)" expand="full"><ion-icon  name="save-outline"></ion-icon>
+            Speichern</ion-button>
+        </ion-col>
+      </ion-row>
+      
+    </form>
+  </ion-grid>
 </ion-content>

@@ -7,10 +7,12 @@ import { MenuController, Platform, ToastController } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Storage } from '@ionic/storage';
+import { Storage } from '@ionic/storage-angular';
 
 import { UserData } from './providers/user-data';
-import { LoginPage } from './pages/login/login';
+import { register } from 'swiper/element/bundle';
+
+register();
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,7 @@ import { LoginPage } from './pages/login/login';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent implements OnInit {
+  light = false; // Die Eigenschaft muss definiert sein
   isUserLoggedIn = localStorage.getItem('isUserLoggedIn');
   appPages = [
     {
@@ -26,81 +29,84 @@ export class AppComponent implements OnInit {
       url: '/app/tabs/home',
       icon: 'home'
     },
+    // {
+    //   title: 'Informationen',
+    //   url: '/app/tabs/about',
+    //   icon: 'information-circle'
+    // },
+    // {
+    //   title: 'Trinkwasseruntersuchung anlegen (BETA)',
+    //   url: '/app/tabs/trinkwasseruntersuchung',
+    //   icon: 'water'
+    // },
+    // {
+    //   title: 'Untersuchungen',
+    //   url: '/app/tabs/untersuchung-list',
+    //   icon: 'map'
+    // },
+    // {
+    //   title: 'Kunden',
+    //   url: '/app/tabs/customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Kunde anlegen',
+    //   url: '/app/tabs/create-customer',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Auftrag anlegen (MASTER)',
+    //   url: '/app/tabs/auftrag',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'WATEC Aufträge (MASTERDATENBANK)',
+    //   url: '/app/tabs/auftrage',
+    //   icon: 'person'
+    // },
+    // {
+    //   title: 'Test Liste',
+    //   url: '/app/tabs/list',
+    //   icon: 'person'
+    // }
+    // ,
+    // {
+    //   title: 'Bestelldetail (ISTA)',
+    //   url: '/test',
+    //   icon: 'document'
+    // },
+  ];
+
+  istaPages = [
+    // {
+    //   title: 'ISTA Bestellungen (Liste)',
+    //   url: '/app/tabs/ista',
+    //   icon: 'document'
+    // }
+    // ,
     {
-      title: 'Informationen',
-      url: '/app/tabs/about',
-      icon: 'information-circle'
-    },
-    {
-      title: 'Trinkwasseruntersuchung anlegen',
-      url: '/app/tabs/trinkwasseruntersuchung',
-      icon: 'water'
-    },
-    {
-      title: 'Untersuchungen',
-      url: '/app/tabs/untersuchung-list',
-      icon: 'map'
-    },
-    {
-      title: 'Kunden',
-      url: '/app/tabs/customer',
-      icon: 'person'
-    },
-    {
-      title: 'Kunde anlegen',
-      url: '/app/tabs/create-customer',
-      icon: 'person'
-    },
-    {
-      title: 'Auftrag anlegen',
-      url: '/app/tabs/auftrag',
-      icon: 'person'
-    },
-    {
-      title: 'Aufträge',
-      url: '/app/tabs/auftrage',
-      icon: 'person'
-    },
-    {
-      title: 'Auftrag Detail',
-      url: '/app/tabs/auftrag-detail',
-      icon: 'person'
-    },
-    {
-      title: 'ISTA',
-      url: '/app/tabs/ista',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA LIST',
-      url: '/app/tabs/ista-order-list',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'ISTA DETAIL',
-      url: '/app/tabs/ista-order-detail',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'Test Liste',
-      url: '/app/tabs/list',
-      icon: 'person'
-    }
-    ,
-    {
-      title: 'Test 2',
-      url: '/app/tabs/test',
-      icon: 'person'
-    },
-    {
-      title: 'ISTA Kundenkontakt erstellen',
+      title: 'Kundenkontakt erstellen',
       url: '/app/tabs/create-ista-order',
       icon: 'water'
+    },
+    {
+      title: 'ISTA Bestellungen (Tabelle)',
+      url: '/app/tabs/ista-order-table',
+      icon: 'water'
     }
+    ,
+    {
+      title: 'ISTA INFO AUFTRAG',
+      url: 'app/tabs/ista-order-detail/:id',
+      icon: 'water'
+    },
+    // {
+    //   title: 'Auftrag Erstellen (Testkomponente)',
+    //   url: '/app/tabs/auftrag-detail',
+    //   icon: 'person'
+    // },
   ];
+
   personalPages = [
     {
       title: 'Einstellungen',
@@ -119,6 +125,11 @@ export class AppComponent implements OnInit {
       url: '/signup',
       icon: 'person'
     },
+    {
+      title: 'Passwort vergessen',
+      url: '/forgotten-password',
+      icon: 'person'
+    },
   ];
   dark = true;
 
@@ -135,11 +146,26 @@ export class AppComponent implements OnInit {
   ) {
     this.initializeApp();
   }
+  loginValid = false;
 
-  async ngOnInit() {
-    if (!sessionStorage.getItem("access_token")) {
-      this.router.navigateByUrl("login");
+  validateToken() {
+    const expires = new Date(sessionStorage.getItem("expires")).getTime();
+    const currentTime = new Date().getTime();
+    console.log("currentTime: " + currentTime);
+    console.log("expires: " + expires);
+    console.log("expiresTrue: ",  currentTime < expires);
+    
+    if (sessionStorage.getItem("access_token") && currentTime < expires) {
+      sessionStorage.setItem("loggedIn", "true"); // Convert boolean value to string
+      this.loginValid = true;
+    } else {
+      sessionStorage.clear();
+      this.router.navigateByUrl('/login');
+      this.loginValid = false;
     }
+  }
+  async ngOnInit() {
+    this.validateToken();
     this.checkLoginStatus();
     this.listenForLoginEvents();
 
@@ -162,6 +188,7 @@ export class AppComponent implements OnInit {
         .then(() => this.swUpdate.activateUpdate())
         .then(() => window.location.reload());
     });
+    await this.storage.create();
   }
 
   initializeApp() {
@@ -206,9 +233,11 @@ export class AppComponent implements OnInit {
     this.router.navigateByUrl('/login').then(() => window.location.reload());;
   }
 
-  openTutorial() {
-    // this.menu.enable(false);
-    // this.storage.set('ion_did_tutorial', false);
-    this.router.navigateByUrl('/tutorial');
+  onToggleDarkMode() {
+    console.log("onToggleDarkMode");
+    // this.dark = !this.dark;
+    // document.body.classList.toggle('dark', this.dark);
   }
+
+  
 }
