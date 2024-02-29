@@ -35,13 +35,10 @@ export class CreateCancelledComponent implements OnInit {
       cancellationReason: [null],
       statusType: [null],  // entfernt "disabled: true"
     });
-
-    console.log("cancelled: ", this.createCancelledForm.value);
   }
 
   onSubmitCancelled() {
     const accessToken = sessionStorage.getItem("access_token");
-    const authorization = accessToken ? "Bearer " + accessToken : null;
     let headers = new HttpHeaders();
     if (accessToken) {
       headers = headers.append('Authorization', "Bearer " + accessToken);
@@ -69,7 +66,6 @@ export class CreateCancelledComponent implements OnInit {
       })
     )
     .subscribe(response => {
-      console.log(response);
       this.customers = response;
       this.presentToast(); // Present the toast
       this.createCancelledForm.disable(); // Disable all fields in the form

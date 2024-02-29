@@ -3,6 +3,8 @@ import { OrderService } from "../../../services/order/order.service";
 import { FormArray, FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { environment } from "../../../../environments/environment";
+import { ToastService } from "../../../services/toast/toast.service";
+import { ToastController } from "@ionic/angular";
 
 @Component({
   selector: "app-closed-contract-partner",
@@ -10,6 +12,7 @@ import { environment } from "../../../../environments/environment";
   styleUrls: ["./closed-contract-partner.component.scss"],
 })
 export class ClosedContractPartnerComponent implements OnInit {
+  @Input() orderId: number;
   closedContractPartnerForm: FormGroup;
   services: FormArray = this.fb.array([
     this.fb.group({
@@ -23,14 +26,18 @@ export class ClosedContractPartnerComponent implements OnInit {
     }),
   ]);
   drinkingWaterFacility: FormArray = this.fb.array([]);
-  @Input() orderId: number;
 
-  constructor(private orderService: OrderService, private fb: FormBuilder, private http: HttpClient) {}
+  constructor(
+    private orderService: OrderService,
+    private fb: FormBuilder,
+    private http: HttpClient,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {
     this.closedContractPartnerForm = this.fb.group({
-      orderId: new FormControl({ value: this.orderId, disabled: false }),
-      orderstatusType: new FormControl({ value: "", disabled: false }),
+      orderId: Number(this.orderId),  
+      // orderstatusType: new FormControl({ value: "", disabled: false }),
       closedContractPartnerTWAReason: new FormControl({
         value: "",
         disabled: false,
@@ -48,8 +55,11 @@ export class ClosedContractPartnerComponent implements OnInit {
         this.fb.group({
           drinkingWaterFacility: this.fb.array([
             this.fb.group({
-              id: [""],
-              consecutiveNumber: new FormControl({ value: "", disabled: false }),
+              // id: [""],
+              consecutiveNumber: new FormControl({
+                value: "",
+                disabled: false,
+              }),
               usageType: [""],
               usageTypeOthers: [""],
               numberSuppliedUnits: [""],
@@ -58,7 +68,7 @@ export class ClosedContractPartnerComponent implements OnInit {
               pipingSystemType_Circulation: [""],
               pipingSystemType_Waterbranchline: [""],
               pipingSystemType_Pipetraceheater: [""],
-        
+
               deadPipeKnown: [""],
               deadPipesPosition: [""],
               numberAscendingPipes: [""],
@@ -131,33 +141,41 @@ export class ClosedContractPartnerComponent implements OnInit {
 
   //CLOSED CONTRACT PARTNER FORM
   closedContractPartnerFormSubmit() {
-    console.log("closedContractParnterFormSubmit0");
-    console.log(this.closedContractPartnerForm.value);
-
-    const url = environment.backend +  environment.url.ista.cp; // Replace with your API endpoint
+    const url = environment.backend + environment.url.ista.cp;
     const body = this.closedContractPartnerForm.value;
-
     const accessToken = sessionStorage.getItem("access_token");
-    const authorization = accessToken ? "Bearer " + accessToken : null;
     let headers = new HttpHeaders();
     if (accessToken) {
-      headers = headers.append('Authorization', "Bearer " + accessToken);
+      headers = headers.append("Authorization", "Bearer " + accessToken);
     }
 
     this.http.post(url, body, { headers }).subscribe(
       (response) => {
-        console.log("Post request url:", url);
-        console.log("Post request body:", body);
-        console.log("Post request successful:", response);
-        // Handle the response here
+        if (response) {
+          this.presentToast("Successfully submitted the form");
+          this.closedContractPartnerForm.disable();
+          location.reload(); // Reload the page
+        } else {
+          this.presentToast("Failed to submit the form", 5000, "danger");
+        }
       },
       (error) => {
         console.error("Error in post request:", error);
-        // Handle the error here
+        let message = error.error.message;
+        this.presentToast("Failed to submit the form: " + message , 5000, "danger");
       }
     );
-    
   }
+
+  async presentToast(message: string, duration: number = 3000, color: string = 'success') {
+    const toast = await this.toastController.create({
+        message: message,
+        duration: duration,
+        position: 'top',
+        color: color
+    });
+    toast.present();
+}
 
   //RECORDED SYSTEM
   addRecordedSystem() {
@@ -175,7 +193,7 @@ export class ClosedContractPartnerComponent implements OnInit {
             pipingSystemType_Circulation: [""],
             pipingSystemType_Waterbranchline: [""],
             pipingSystemType_Pipetraceheater: [""],
-      
+
             deadPipeKnown: [""],
             deadPipesPosition: [""],
             numberAscendingPipes: [""],
@@ -190,10 +208,8 @@ export class ClosedContractPartnerComponent implements OnInit {
             heatExchangerSystem_central: [""], //boolean
             heatExchangerSystem_districtheating: [""], //boolean
             heatExchangerSystem_continuousflowprinciple: [""], //boolean
-      
-            drinkingWaterHeaters: this.fb.array([
-              
-            ]), //todo
+
+            drinkingWaterHeaters: this.fb.array([]), //todo
           }),
         ]),
       })
@@ -219,23 +235,37 @@ export class ClosedContractPartnerComponent implements OnInit {
   }
 
   getDrinkingWaterFacilityArray(recordedSystemIndex: number): FormArray | null {
-    if (!this.recordedSystemArray || recordedSystemIndex < 0 || recordedSystemIndex >= this.recordedSystemArray.length) {
-      console.error(`recordedSystemArray is null or index ${recordedSystemIndex} is out of bounds for recordedSystemArray`);
+    if (
+      !this.recordedSystemArray ||
+      recordedSystemIndex < 0 ||
+      recordedSystemIndex >= this.recordedSystemArray.length
+    ) {
+      console.error(
+        `recordedSystemArray is null or index ${recordedSystemIndex} is out of bounds for recordedSystemArray`
+      );
       return null;
     }
-    
-    const recordedSystemGroup = this.recordedSystemArray.at(recordedSystemIndex) as FormGroup;
+
+    const recordedSystemGroup = this.recordedSystemArray.at(
+      recordedSystemIndex
+    ) as FormGroup;
     if (!recordedSystemGroup) {
-      console.error(`No FormGroup at index ${recordedSystemIndex} in recordedSystemArray`);
+      console.error(
+        `No FormGroup at index ${recordedSystemIndex} in recordedSystemArray`
+      );
       return null;
     }
-    
-    const drinkingWaterFacilityArray = recordedSystemGroup.get('drinkingWaterFacility') as FormArray;
+
+    const drinkingWaterFacilityArray = recordedSystemGroup.get(
+      "drinkingWaterFacility"
+    ) as FormArray;
     if (!drinkingWaterFacilityArray) {
-      console.error(`No drinkingWaterFacility FormArray in FormGroup at index ${recordedSystemIndex}`);
+      console.error(
+        `No drinkingWaterFacility FormArray in FormGroup at index ${recordedSystemIndex}`
+      );
       return null;
     }
-    
+
     return drinkingWaterFacilityArray;
   }
 
@@ -246,71 +276,100 @@ export class ClosedContractPartnerComponent implements OnInit {
       return;
     }
 
-    const drinkingWaterFacilityArray = recordedSystemGroup.get('drinkingWaterFacility') as FormArray;
+    const drinkingWaterFacilityArray = recordedSystemGroup.get(
+      "drinkingWaterFacility"
+    ) as FormArray;
     if (!drinkingWaterFacilityArray) {
-      recordedSystemGroup.addControl('drinkingWaterFacility', this.fb.array([]));
+      recordedSystemGroup.addControl(
+        "drinkingWaterFacility",
+        this.fb.array([])
+      );
     }
 
-    drinkingWaterFacilityArray.push(this.fb.group({
-      id: [""],
-      consecutiveNumber: [""],
-      usageType: [""],
-      usageTypeOthers: [""],
-      numberSuppliedUnits: [""],
-      numberDrinkingWaterHeater: [""],
-      totalVolumeLitres: [""],
-      pipingSystemType_Circulation: [""],
-      pipingSystemType_Waterbranchline: [""],
-      pipingSystemType_Pipetraceheater: [""],
+    drinkingWaterFacilityArray.push(
+      this.fb.group({
+        id: [""],
+        consecutiveNumber: [""],
+        usageType: [""],
+        usageTypeOthers: [""],
+        numberSuppliedUnits: [""],
+        numberDrinkingWaterHeater: [""],
+        totalVolumeLitres: [""],
+        pipingSystemType_Circulation: [""],
+        pipingSystemType_Waterbranchline: [""],
+        pipingSystemType_Pipetraceheater: [""],
 
-      deadPipeKnown: [""],
-      deadPipesPosition: [""],
-      numberAscendingPipes: [""],
-      aerosolformation: [""],
-      explanation: [""],
-      numberSuppliedPersons: [""],
-      pipeworkSchematicsAvailable: [""], //todo: boolean
-      numberColdWaterLegs: [""], //number
-      numberHotWaterLegs: [""], //number
-      temperatureCirculationDWH_A: [""], //number
-      temperatureCirculationDWH_B: [""], //number
-      heatExchangerSystem_central: [""], //boolean
-      heatExchangerSystem_districtheating: [""], //boolean
-      heatExchangerSystem_continuousflowprinciple: [""], //boolean
+        deadPipeKnown: [""],
+        deadPipesPosition: [""],
+        numberAscendingPipes: [""],
+        aerosolformation: [""],
+        explanation: [""],
+        numberSuppliedPersons: [""],
+        pipeworkSchematicsAvailable: [""], //todo: boolean
+        numberColdWaterLegs: [""], //number
+        numberHotWaterLegs: [""], //number
+        temperatureCirculationDWH_A: [""], //number
+        temperatureCirculationDWH_B: [""], //number
+        heatExchangerSystem_central: [""], //boolean
+        heatExchangerSystem_districtheating: [""], //boolean
+        heatExchangerSystem_continuousflowprinciple: [""], //boolean
 
-      drinkingWaterHeaters: this.fb.array([]), //todo
-    }));
+        drinkingWaterHeaters: this.fb.array([]), //todo
+      })
+    );
     console.log(this.closedContractPartnerForm.value);
   }
 
-  deleteDrinkingWaterFacility(recordedSystemIndex: number, facilityIndex: number) {
-    const recordedSystemGroup = this.recordedSystemArray.at(recordedSystemIndex) as FormGroup;
-    if(!recordedSystemGroup) {
-      console.error(`No FormGroup at index ${recordedSystemIndex} in recordedSystemArray`);
+  deleteDrinkingWaterFacility(
+    recordedSystemIndex: number,
+    facilityIndex: number
+  ) {
+    const recordedSystemGroup = this.recordedSystemArray.at(
+      recordedSystemIndex
+    ) as FormGroup;
+    if (!recordedSystemGroup) {
+      console.error(
+        `No FormGroup at index ${recordedSystemIndex} in recordedSystemArray`
+      );
       return;
     }
-    const drinkingWaterFacilityArray = recordedSystemGroup.get('drinkingWaterFacility') as FormArray;
-    if(!drinkingWaterFacilityArray) {
-      console.error(`No drinkingWaterFacility FormArray in FormGroup at index ${recordedSystemIndex}`);
+    const drinkingWaterFacilityArray = recordedSystemGroup.get(
+      "drinkingWaterFacility"
+    ) as FormArray;
+    if (!drinkingWaterFacilityArray) {
+      console.error(
+        `No drinkingWaterFacility FormArray in FormGroup at index ${recordedSystemIndex}`
+      );
       return;
     }
     drinkingWaterFacilityArray.removeAt(facilityIndex);
   }
 
-  getDrinkingWaterHeaterArray(recordedSystemIndex: number, facilityIndex: number): FormArray {
-    this.drinkingWaterFacility = this.getDrinkingWaterFacilityArray(recordedSystemIndex);
+  getDrinkingWaterHeaterArray(
+    recordedSystemIndex: number,
+    facilityIndex: number
+  ): FormArray {
+    this.drinkingWaterFacility =
+      this.getDrinkingWaterFacilityArray(recordedSystemIndex);
     if (!this.drinkingWaterFacility) {
-      console.error(`No drinkingWaterFacility FormArray at index ${recordedSystemIndex}`);
+      console.error(
+        `No drinkingWaterFacility FormArray at index ${recordedSystemIndex}`
+      );
       return null;
     }
-    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[facilityIndex].get('drinkingWaterHeaters') as FormArray;
+    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[
+      facilityIndex
+    ].get("drinkingWaterHeaters") as FormArray;
     return drinkingWaterHeatersArray;
   }
 
   addDrinkWaterHeater(recordedSystemIndex: number, facilityIndex: number) {
-    this.drinkingWaterFacility = this.getDrinkingWaterFacilityArray(recordedSystemIndex);
+    this.drinkingWaterFacility =
+      this.getDrinkingWaterFacilityArray(recordedSystemIndex);
     console.log("drinkingWaterFacility", this.drinkingWaterFacility);
-    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[facilityIndex].get('drinkingWaterHeaters') as FormArray;
+    const drinkingWaterHeatersArray = this.drinkingWaterFacility.controls[
+      facilityIndex
+    ].get("drinkingWaterHeaters") as FormArray;
     drinkingWaterHeatersArray.push(
       this.fb.group({
         consecutiveNumber: [""],
@@ -324,21 +383,29 @@ export class ClosedContractPartnerComponent implements OnInit {
         roomType: [""],
         roomPosition: [""],
         positionDetail: [""],
-  
+
         unit: this.fb.array([]),
       })
     );
   }
 
-  removeDrinkWaterHeater(recordedSystemIndex: number, facilityIndex: number, heaterIndex: number) {
-    const drinkingWaterHeatersArray = this.getDrinkingWaterHeaterArray(recordedSystemIndex, facilityIndex);
+  removeDrinkWaterHeater(
+    recordedSystemIndex: number,
+    facilityIndex: number,
+    heaterIndex: number
+  ) {
+    const drinkingWaterHeatersArray = this.getDrinkingWaterHeaterArray(
+      recordedSystemIndex,
+      facilityIndex
+    );
     if (!drinkingWaterHeatersArray) {
-      console.error(`No drinkingWaterHeaters FormArray at index ${facilityIndex}`);
+      console.error(
+        `No drinkingWaterHeaters FormArray at index ${facilityIndex}`
+      );
       return null;
     }
     drinkingWaterHeatersArray.removeAt(heaterIndex);
   }
-
 
   //CONTACT
   get contactArray() {
@@ -349,7 +416,7 @@ export class ClosedContractPartnerComponent implements OnInit {
     const contactForm = this.fb.group({
       contactAttemptOn: new FormControl({ value: "", disabled: false }),
       contactPersonCustomer: new FormControl({ value: "", disabled: false }),
-      agentCP: new FormControl({ value: "ss", disabled: false }),
+      agentCP: new FormControl({ value: "", disabled: false }),
       result: new FormControl({ value: "", disabled: false }),
       remark: new FormControl({ value: "", disabled: false }),
     });

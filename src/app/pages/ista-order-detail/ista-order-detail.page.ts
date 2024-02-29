@@ -22,7 +22,7 @@ export class IstaOrderDetailPage implements OnInit {
   createdAt: string;
   updatedAt: string;
   currentStatusIndex: number = 0;
-  statuses: string[] = ['RECEIVED', 'PLANNED', 'POSTPONED', 'CANCELLED'];
+  statuses: string[] = ['RECEIVED', 'PLANNED', 'POSTPONED', 'CANCELLED', 'CLOSEDCONTRACTPARTNER', 'NOTPOSSIBLE', 'REJECTED'];
   showStatusMenu = false;
   segmentVisible: boolean = false;
 
@@ -102,7 +102,7 @@ export class IstaOrderDetailPage implements OnInit {
   }
 
   createComponent(status: string) {
-    if (status === 'RECEIVED' || status === 'PLANNED' || status === 'CANCELLED' || status === 'POSTPONED') {
+    if (status === 'RECEIVED' || status === 'PLANNED' || status === 'CANCELLED' || status === 'POSTPONED' || status === 'CLOSEDCONTRACTPARTNER' || status === 'NOTPOSSIBLE' || status === 'REJECTED') {
       this.segmentVisible = true;
     }
     // Implementiere die Logik zur Erstellung einer leeren Komponente mit dem gegebenen Status
@@ -214,7 +214,7 @@ export class IstaOrderDetailPage implements OnInit {
 
   sortComponentsByDate() {
     // Statuswerte in der Reihenfolge, wie sie sortiert werden sollen
-    const statusOrder = ['Rejected', 'ClosedContractPartner', 'NotPossible', 'Received', 'Postponed'];
+    const statusOrder = ['Rejected', 'ClosedContractPartner', 'NotPossible', 'Received', 'Postponed', 'Planned', 'Cancelled', 'Rejected',];
   
     // Sortiere den response Array
     this.response.sort((a, b) => {

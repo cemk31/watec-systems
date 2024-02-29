@@ -34,7 +34,7 @@
               <ion-item fill="outline">
                 <ion-icon color="primary" slot="start" name="lock-closed" aria-hidden="true"></ion-icon>
                 <ion-label position="floating">Passwort</ion-label>
-                <ion-input type="password" [(ngModel)]="login.password" name="password" required></ion-input>
+                <ion-input type="password" [(ngModel)]="login.password" name="password" required (keyup.enter)="onLogin()"></ion-input>
               </ion-item>
             </ion-list>
 

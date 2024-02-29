@@ -2,7 +2,7 @@
   <ion-grid>
     <ion-row>
       <ion-toolbar color="light">
-        <h1>Auftrag #{{orderNumber}}</h1> 
+        <h1>Auftrag #{{orderNumber}}</h1>
       </ion-toolbar>
     </ion-row>
     <ion-row>
@@ -28,78 +28,87 @@
     <ion-row>
       <ion-col size="6">
         <!-- Toggle-Button mit einer kleinen Animation -->
-        <ion-button id="segmentButton" fill="outline" (click)="toggleSegmentVisibility()" [class.active]="segmentVisible">
+        <ion-button id="segmentButton" fill="outline" (click)="toggleSegmentVisibility()"
+          [class.active]="segmentVisible">
           <ion-icon name="add-outline"></ion-icon>
           Status hinzufügen
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row *ngIf="segmentVisible">
-        <ion-col>
-          <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')" layout="icon-start">
-            <ion-icon name="checkmark-outline"></ion-icon>
-            EMPFANGEN
-            <!-- (RECEIVED) -->
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')" layout="icon-start">
-            <ion-icon name="calendar-outline"></ion-icon>
-            IN PLANUNG 
-            <!-- (PLANNED) -->
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')" layout="icon-start">
-            <ion-icon name="pause-outline"></ion-icon>
-            Verschoben 
-            <!-- (POSTPONED) -->
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')" layout="icon-start">
-            <ion-icon name="ban-outline"></ion-icon>
-            Storno 
-            <!-- (CANCELLED) -->
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')" layout="icon-start">
-            <ion-icon name="close-circle-outline"></ion-icon>
-            Abgelehnt
-          </ion-segment-button>
-        </ion-col>
-        <ion-col>
-          <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')" layout="icon-start">
-            <ion-icon name="play-circle-outline"></ion-icon>
-            Ausführung erfolgt
-          </ion-segment-button>
-        </ion-col>
-        <!-- <ion-col>
+      <ion-col>
+        <ion-segment-button value="received" color="success" (click)="setStatus('RECEIVED')" layout="icon-start">
+          <ion-icon name="checkmark-outline"></ion-icon>
+          EMPFANGEN
+          <!-- (RECEIVED) -->
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="planned" color="primary" (click)="setStatus('PLANNED')" layout="icon-start">
+          <ion-icon name="calendar-outline"></ion-icon>
+          IN PLANUNG
+          <!-- (PLANNED) -->
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="postponed" color="warning" (click)="setStatus('POSTPONED')" layout="icon-start">
+          <ion-icon name="pause-outline"></ion-icon>
+          Verschoben
+          <!-- (POSTPONED) -->
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="cancelled" color="danger" (click)="setStatus('CANCELLED')" layout="icon-start">
+          <ion-icon name="ban-outline"></ion-icon>
+          Storno
+          <!-- (CANCELLED) -->
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="rejected" color="danger" (click)="setStatus('REJECTED')" layout="icon-start">
+          <ion-icon name="close-circle-outline"></ion-icon>
+          Abgelehnt
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="closed" color="success" (click)="setStatus('CLOSED')" layout="icon-start">
+          <ion-icon name="checkmark-done-outline"></ion-icon>
+          Abgeschlossen
+        </ion-segment-button>
+      </ion-col>
+      <ion-col>
+        <ion-segment-button value="executing" color="medium" (click)="setStatus('EXECUTING')" layout="icon-start">
+          <ion-icon name="play-circle-outline"></ion-icon>
+          Auftrag erfolgreich erledigt!
+        </ion-segment-button>
+      </ion-col>
+      <!-- <ion-col>
           <ion-segment-button value="twa" color="tertiary" (click)="setStatus('TWA')" layout="icon-start">
             <ion-icon name="paper-plane-outline"></ion-icon>
             TWA
           </ion-segment-button>
         </ion-col> -->
-        <ion-col>
-          <ion-segment-button value="closed" color="success" (click)="setStatus('CLOSED')" layout="icon-start">
-            <ion-icon name="checkmark-done-outline"></ion-icon>
-            Abgeschlossen
-          </ion-segment-button>
-        </ion-col>
+
     </ion-row>
     <ion-grid>
-          <app-create-received *ngIf="currentStatus === 'RECEIVED'" (formSubmit)="onSubmitReceived()" [orderId]="[orderNumber]" ></app-create-received>
-          <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()" [orderId]="[orderNumber]"></app-create-planned>
-          <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()" [orderId]="[orderNumber]"></app-create-postponed>
-          <app-create-cancelled *ngIf="currentStatus === 'CANCELLED'" (formSubmit)="onSubmitCancelled()" [orderId]="[orderNumber]"></app-create-cancelled>  
-          <app-create-rejected *ngIf="currentStatus === 'REJECTED'" (formSubmit)="onSubmitRejected()" [orderId]="[orderNumber]"></app-create-rejected>
-          <app-create-execution-on-site-done *ngIf="currentStatus === 'EXECUTING'" (formSubmit)="onExecutionOnSiteDoneSubmit()" [orderId]="[orderNumber]"></app-create-execution-on-site-done>
-          <app-create-closed-contract-partner-twa *ngIf="currentStatus === 'TWA'" (formSubmit)="onClosedContractPartnerTwaSubmit()" [orderId]="[orderNumber]"></app-create-closed-contract-partner-twa>
-          <app-closed-contract-partner *ngIf="currentStatus === 'CLOSED'" (formSubmit)="onClosedContractPartnerSubmit()" [orderId]="[orderNumber]"></app-closed-contract-partner>
-          <app-general></app-general>
+      <app-create-received *ngIf="currentStatus === 'RECEIVED'" (formSubmit)="onSubmitReceived()"
+        [orderId]="[orderNumber]"></app-create-received>
+      <app-create-planned *ngIf="currentStatus === 'PLANNED'" (formSubmit)="onSubmitPlanned()"
+        [orderId]="[orderNumber]"></app-create-planned>
+      <app-create-postponed *ngIf="currentStatus === 'POSTPONED'" (formSubmit)="onSubmitPostponed()"
+        [orderId]="[orderNumber]"></app-create-postponed>
+      <app-create-cancelled *ngIf="currentStatus === 'CANCELLED'" (formSubmit)="onSubmitCancelled()"
+        [orderId]="[orderNumber]"></app-create-cancelled>
+      <app-create-rejected *ngIf="currentStatus === 'REJECTED'" (formSubmit)="onSubmitRejected()"
+        [orderId]="[orderNumber]"></app-create-rejected>
+      <app-create-execution-on-site-done *ngIf="currentStatus === 'EXECUTING'"
+        (formSubmit)="onExecutionOnSiteDoneSubmit()" [orderId]="[orderNumber]"></app-create-execution-on-site-done>
+      <app-create-closed-contract-partner-twa *ngIf="currentStatus === 'TWA'"
+        (formSubmit)="onClosedContractPartnerTwaSubmit()"
+        [orderId]="[orderNumber]"></app-create-closed-contract-partner-twa>
+      <app-closed-contract-partner *ngIf="currentStatus === 'CLOSED'" (formSubmit)="onClosedContractPartnerSubmit()"
+        [orderId]="[orderNumber]"></app-closed-contract-partner>
+      <app-general></app-general>
     </ion-grid>
-
-  
   </ion-grid>
 </ion-content>

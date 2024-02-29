@@ -86,6 +86,10 @@ import { format } from 'date-fns';
         this.statusIcon = 'checkmark-circle-outline';
         this.statusColor = 'success';
         return 'Ausführung vor Ort erledigt';
+      } else if (actualStatus === 'CLOSEDCONTRACTPARTNER') {
+        this.statusIcon = 'checkmark-circle-outline';
+        this.statusColor = 'success';
+        return 'Trinkwasseranalyse erledigt';
       }
       else {
         return 'Unbekannt';

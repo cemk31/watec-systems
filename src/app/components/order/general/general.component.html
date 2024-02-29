@@ -399,6 +399,55 @@
             </div>
           </ion-accordion>
         </div>
+        <div *ngFor="let closedContractParnter of response?.ClosedContractPartner">
+          <ion-accordion>
+            <ion-item slot="header" color="light"><ion-label color="secondary"><ion-icon size="medium"
+                  name="checkmark-done-outline"></ion-icon><b>closedContractParnter</b> -
+                (ID: #{{closedContractParnter?.id}}) / {{formatDate(closedContractParnter.createdAt)}}</ion-label>
+            </ion-item>
+            <div class="ion-padding" slot="content">
+              <ion-item>
+                <ion-label position="floating">Order Status Type:</ion-label>
+                <ion-input type="number" [value]="response.orderstatusType" formControlName="orderstatusType"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Set On:</ion-label>
+                <ion-input type="text" [value]="formatDate(response.setOn)" formControlName="setOn"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Deficiency Description:</ion-label>
+                <ion-input type="text" [value]="response.deficiencyDescription" formControlName="deficiencyDescription"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Registration Health Authorities On:</ion-label>
+                <ion-input type="text" [value]="response.registrationHealthAuthoritiesOn" formControlName="registrationHealthAuthoritiesOn"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Extraordinary Expenditure Reason:</ion-label>
+                <ion-input type="text" [value]="response.extraordinaryExpenditureReason" formControlName="extraordinaryExpenditureReason"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Order ID:</ion-label>
+                <ion-input type="number" [value]="response.orderId" formControlName="orderId"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Created At:</ion-label>
+                <ion-input type="text" [value]="formatDate(response.createdAt)" formControlName="createdAt"></ion-input>
+              </ion-item>
+              
+              <ion-item>
+                <ion-label position="floating">Updated At:</ion-label>
+                <ion-input type="text" [value]="formatDate(response.updatedAt) " formControlName="updatedAt"></ion-input>
+              </ion-item>
+            </div>
+          </ion-accordion>
+        </div>
       </ion-accordion-group>
     </div>
 

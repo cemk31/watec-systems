@@ -6,7 +6,6 @@ import {
   Validators,
   FormControl,
 } from "@angular/forms";
-import { th } from "date-fns/locale";
 
 @Component({
   selector: "app-create-closed-contract-partner-twa",
@@ -42,7 +41,7 @@ export class CreateClosedContractPartnerTWAComponent implements OnInit {
       orderstatusType: [""],
       closedContractPartnerTWAReason: [""],
       deficiencyDescription: new FormControl({ value: "", disabled: false }),
-      registrationHealthAuthoritiesOn: [""],
+      registrationHealthAuthoritiesOn: ["", Validators.required ],
       extraordinaryExpenditureReason: [""],
       suppliedDocuments: this.fb.array([]),
       recordedSystem: this.fb.array([]),
@@ -296,7 +295,6 @@ export class CreateClosedContractPartnerTWAComponent implements OnInit {
   }
 
   addRecordedSystem() {
-    console.log("addRecordedSystem");
     if (this.recordedSystemFormArray === null) {
       this.createClosedContractPartnerTWAForm.setControl(
         "recordedSystem",

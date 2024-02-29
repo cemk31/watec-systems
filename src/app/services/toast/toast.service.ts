@@ -10,7 +10,6 @@ export class ToastService {
             position: 'top',
             color: 'success'
         });
-
         toast.present();
     }
 }

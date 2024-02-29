@@ -26,8 +26,6 @@ export class CreateExecutionOnSiteDoneComponent implements OnInit {
   }
 
   onExecutionOnSiteDoneSubmit() {
-    console.log(this.createExecutionOnSiteForm.value);
-    
     const accessToken = sessionStorage.getItem("access_token");
     const authorization = accessToken ? "Bearer " + accessToken : null;
     let headers = new HttpHeaders();
@@ -47,7 +45,14 @@ export class CreateExecutionOnSiteDoneComponent implements OnInit {
         console.log(response);
         this.isSubmitted = true;
         this.createExecutionOnSiteForm.disable(); // Disable all fields in the form
-        this.presentToast("AUFTRAG ERLEDIGT!", 10000, 'success', 'middle');
+        this.presentToast("Auftrag als erledigt markiert!, Seite aktualisiert sich!", 10000, 'success', 'middle');
+        if (!response) {
+          this.presentToast("Auftrag konnte nicht als erledigt markiert werden!", 10000, 'danger', 'middle');
+        }
+        // setTimeout(() => {
+        //   location.reload(); // Refresh the page after 5 seconds
+        // }, 5000);
+        
       },
       error: (error) => {
         console.error('There was an error!', error);

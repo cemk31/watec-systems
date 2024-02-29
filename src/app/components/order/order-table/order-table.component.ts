@@ -83,8 +83,8 @@ export class OrderTableComponent implements OnInit {
             order.actualStatus = 'Verschoben';
             order.actualStatusColor = 'warning';
           } else if (order.actualStatus === 'closed') {
-            order.actualStatus = 'Abgeschlossen';
-            order.actualStatusColor = 'success';
+            order.actualStatus = 'geschlossen';
+            order.actualStatusColor = 'danger';
           } else if (order.actualStatus === 'cancelled') {
             order.actualStatus = 'Storno';
             order.actualStatusColor = 'danger';
@@ -92,8 +92,11 @@ export class OrderTableComponent implements OnInit {
             order.actualStatus = 'Abgelehnt';
             order.actualStatusColor = 'danger';
           } else if (order.actualStatus === 'done') {
-            order.actualStatus = 'ERLEDIGT';
+            order.actualStatus = 'erf. Abgeschlossen';
             order.actualStatusColor = 'secondary';
+          } else if (order.actualStatus = 'closedContractPartner') {
+            order.actualStatus = 'TWA abgeschlossen';
+            order.actualStatusColor = 'primary';
           }
         });
 
